@@ -26,6 +26,7 @@ class Index(models.Model):
 
     class Meta:
         ordering = ['index_set', 'name']
+        unique_together = ['index_set', 'name']
         verbose_name = 'Sequencing Index'
         verbose_name_plural = 'Sequencing Indexes'
 
@@ -38,6 +39,7 @@ class IndexSet(models.Model):
     name = models.CharField(
         help_text='Enter the name of the index sequence set.',
         max_length=255,
+        unique=True,
     )
 
     description = models.TextField(
