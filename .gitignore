@@ -92,3 +92,4 @@ ENV/
 # Django project
 /manage.py
 /mysite/
+db.sqlite3*
