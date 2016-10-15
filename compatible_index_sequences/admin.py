@@ -13,7 +13,7 @@ class IndexAdmin(admin.ModelAdmin):
     fields = ['name', 'sequence', 'index_set']
     list_display = ['name', 'sequence', 'index_set']
     list_filter = ['index_set']
-    search_fields = ['name', 'sequence', 'index_set']
+    search_fields = ['name', 'sequence', 'index_set__name']
 
 
 @admin.register(IndexSet)
