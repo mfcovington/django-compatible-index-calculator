@@ -1,0 +1,778 @@
+[
+  {
+    "model": "compatible_index_sequences.indexset",
+    "fields": {
+      "description": "Amaryllis Nucleics Index Set",
+      "name": "Amaryllis Nucleics",
+      "url": "http://amaryllisnucleics.com/downloads/"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX01",
+      "sequence": "ATGATTGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX02",
+      "sequence": "GACTGCCT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX03",
+      "sequence": "GCTATTCT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX04",
+      "sequence": "AGCGTTAC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX05",
+      "sequence": "GTGCTACA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX06",
+      "sequence": "CGTGGTGC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX07",
+      "sequence": "AACGAGTC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX08",
+      "sequence": "ATAGTATG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX09",
+      "sequence": "TCGGTTGG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX10",
+      "sequence": "ATGTTGCG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX11",
+      "sequence": "CGTGTGTT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX12",
+      "sequence": "GTATCTCG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX13",
+      "sequence": "CTTGAACT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX14",
+      "sequence": "AATCACCT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX15",
+      "sequence": "CGGCGATG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX16",
+      "sequence": "GATGTGCC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX17",
+      "sequence": "TGCTCATG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX18",
+      "sequence": "TTAGCCAG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX19",
+      "sequence": "CCTGGAAG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX20",
+      "sequence": "CCATCAGG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX21",
+      "sequence": "CGGCAGAT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX22",
+      "sequence": "TCGATATC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX23",
+      "sequence": "TCATGCTG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX24",
+      "sequence": "CGATGCCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX25",
+      "sequence": "GCCTGAAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX26",
+      "sequence": "ACATCTTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX27",
+      "sequence": "GTGGCTGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX28",
+      "sequence": "TTGCTTAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX29",
+      "sequence": "AACAGGCG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX30",
+      "sequence": "CGCAACCG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX31",
+      "sequence": "ACGCCGAG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX32",
+      "sequence": "CGGTTACC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX33",
+      "sequence": "GGTCAATT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX34",
+      "sequence": "GCGTACAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX35",
+      "sequence": "CTACATGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX36",
+      "sequence": "TTGAGGAG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX37",
+      "sequence": "GAATCAAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX38",
+      "sequence": "TCCTCGGT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX39",
+      "sequence": "GCGCATTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX40",
+      "sequence": "ATAAGAAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX41",
+      "sequence": "TACCATTG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX42",
+      "sequence": "TCGAATCG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX43",
+      "sequence": "TCCGCTCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX44",
+      "sequence": "GTTGGATA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX45",
+      "sequence": "CCGGTGCT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX46",
+      "sequence": "GTTGTCGG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX47",
+      "sequence": "ACTTAACC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX48",
+      "sequence": "TGTCCGGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX49",
+      "sequence": "TTCTGACG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX50",
+      "sequence": "AGACACGG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX51",
+      "sequence": "TGACTAGT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX52",
+      "sequence": "CACGGCTG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX53",
+      "sequence": "GAGAAGGT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX54",
+      "sequence": "TTACACTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX55",
+      "sequence": "TCTAACTT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX56",
+      "sequence": "AGTGCATC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX57",
+      "sequence": "GCAAGGCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX58",
+      "sequence": "CATAGATT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX59",
+      "sequence": "ACCAGCGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX60",
+      "sequence": "GATCCTTG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX61",
+      "sequence": "CTACGGCG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX62",
+      "sequence": "TGTTATCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX63",
+      "sequence": "GACGGTAG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX64",
+      "sequence": "CCACCTCT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX65",
+      "sequence": "AGTATACT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX66",
+      "sequence": "TCAACGTG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX67",
+      "sequence": "ACTCAGGT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX68",
+      "sequence": "CAGAACGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX69",
+      "sequence": "GTCAGGTT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX70",
+      "sequence": "AGGTATTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX71",
+      "sequence": "AATTGCGG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX72",
+      "sequence": "GTAGAGAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX73",
+      "sequence": "GGTCGTAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX74",
+      "sequence": "TTAGGTCT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX75",
+      "sequence": "GATGACAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX76",
+      "sequence": "TAACGGTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX77",
+      "sequence": "GTCAACAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX78",
+      "sequence": "CAAGATAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX79",
+      "sequence": "CTATTCTT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX80",
+      "sequence": "GGCTAGGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX81",
+      "sequence": "CATCTTCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX82",
+      "sequence": "GTGACATG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX83",
+      "sequence": "TGCCGTCC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX84",
+      "sequence": "CACACGTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX85",
+      "sequence": "TAGACACC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX86",
+      "sequence": "ATTCATAG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX87",
+      "sequence": "TCACCTAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX88",
+      "sequence": "TAGTAAGG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX89",
+      "sequence": "GGTTCGCT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX90",
+      "sequence": "ACTATCAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX91",
+      "sequence": "CGCTCCAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX92",
+      "sequence": "GCCGAATG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX93",
+      "sequence": "CGCGATTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX94",
+      "sequence": "AAGAGCAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX95",
+      "sequence": "TCTGCCGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Amaryllis Nucleics"],
+      "name": "INDEX96",
+      "sequence": "TCTCTCCG"
+    }
+  }
+]

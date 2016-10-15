@@ -62,6 +62,16 @@ Create and perform ``compatible_index_sequences`` migrations:
     python manage.py migrate
 
 
+Pre-Populate Database
+=====================
+
+Add commercial index sets to the database:
+
+.. code-block:: sh
+
+    python manage.py loaddata compatible_index_sequences/fixtures/*.json
+
+
 Usage
 =====
 

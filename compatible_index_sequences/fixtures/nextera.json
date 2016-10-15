@@ -1,0 +1,106 @@
+[
+  {
+    "model": "compatible_index_sequences.indexset",
+    "fields": {
+      "description": "Illumina Nextera Index Kit - Index 1 (i7) Adapters",
+      "name": "Nextera i7",
+      "url": "http://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N701",
+      "sequence": "TAAGGCGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N702",
+      "sequence": "CGTACTAG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N703",
+      "sequence": "AGGCAGAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N704",
+      "sequence": "TCCTGAGC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N705",
+      "sequence": "GGACTCCT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N706",
+      "sequence": "TAGGCATG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N707",
+      "sequence": "CTCTCTAC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N708",
+      "sequence": "CAGAGAGG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N709",
+      "sequence": "GCTACGCT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N710",
+      "sequence": "CGAGGCTG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N711",
+      "sequence": "AAGAGGCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Nextera i7"],
+      "name": "N712",
+      "sequence": "GTAGAGGA"
+    }
+  }
+]

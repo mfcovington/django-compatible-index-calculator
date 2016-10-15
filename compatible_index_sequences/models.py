@@ -4,6 +4,13 @@ from django.core.validators import RegexValidator
 from django.db import models
 
 
+class IndexSetManager(models.Manager):
+
+    def get_by_natural_key(self, name):
+        """For importing data via fixtures without specifying primary key"""
+        return self.get(name=name)
+
+
 class Index(models.Model):
 
     index_set = models.ForeignKey('IndexSet', on_delete=models.CASCADE)
@@ -35,6 +42,8 @@ class Index(models.Model):
 
 
 class IndexSet(models.Model):
+
+    objects = IndexSetManager()
 
     name = models.CharField(
         help_text='Enter the name of the index sequence set.',

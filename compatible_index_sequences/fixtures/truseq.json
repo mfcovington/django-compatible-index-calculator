@@ -1,0 +1,202 @@
+[
+  {
+    "model": "compatible_index_sequences.indexset",
+    "fields": {
+      "description": "Illumina TruSeq Index Set",
+      "name": "TruSeq",
+      "url": "http://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 01",
+      "sequence": "ATCACG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 02",
+      "sequence": "CGATGT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 03",
+      "sequence": "TTAGGC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 04",
+      "sequence": "TGACCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 05",
+      "sequence": "ACAGTG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 06",
+      "sequence": "GCCAAT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 07",
+      "sequence": "CAGATC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 08",
+      "sequence": "ACTTGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 09",
+      "sequence": "GATCAG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 10",
+      "sequence": "TAGCTT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 11",
+      "sequence": "GGCTAC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 12",
+      "sequence": "CTTGTA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 13",
+      "sequence": "AGTCAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 14",
+      "sequence": "AGTTCC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 15",
+      "sequence": "ATGTCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 16",
+      "sequence": "CCGTCC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 18",
+      "sequence": "GTCCGC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 19",
+      "sequence": "GTGAAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 20",
+      "sequence": "GTGGCC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 21",
+      "sequence": "GTTTCG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 22",
+      "sequence": "CGTACG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 23",
+      "sequence": "GAGTGG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 25",
+      "sequence": "ACTGAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["TruSeq"],
+      "name": "Index 27",
+      "sequence": "ATTCCT"
+    }
+  }
+]

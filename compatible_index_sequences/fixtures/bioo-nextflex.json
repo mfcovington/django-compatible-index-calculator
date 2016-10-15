@@ -1,0 +1,778 @@
+[
+  {
+    "model": "compatible_index_sequences.indexset",
+    "fields": {
+      "description": "Bioo Scientific NEXTflex qRNA-Seq v2",
+      "name": "NEXTflex qRNA-Seq v2",
+      "url": "http://www.biooscientific.com/Portals/0/IEM/Bioo-Scientific-qRNA-Seq-v2-Barcoded-Primers-v1-1-15.pdf"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 01",
+      "sequence": "GTGTTCTA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 02",
+      "sequence": "AAACATCG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 03",
+      "sequence": "CATCAAGT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 04",
+      "sequence": "GTCTGTCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 05",
+      "sequence": "AACAACCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 06",
+      "sequence": "CATACCAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 07",
+      "sequence": "TGGAACAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 08",
+      "sequence": "ACCTCCAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 09",
+      "sequence": "ACACGACC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 10",
+      "sequence": "CTGAGCCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 11",
+      "sequence": "ACACAGAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 12",
+      "sequence": "TATCAGCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 13",
+      "sequence": "CTGTAGCC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 14",
+      "sequence": "TGGCTTCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 15",
+      "sequence": "CCAGTTCA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 16",
+      "sequence": "AGATGTAC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 17",
+      "sequence": "ACAGCAGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 18",
+      "sequence": "ACAAGCTA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 19",
+      "sequence": "ACGCTCGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 20",
+      "sequence": "CACTTCGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 21",
+      "sequence": "AAGACGGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 22",
+      "sequence": "AACGCTTA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 23",
+      "sequence": "GAATCTGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 24",
+      "sequence": "ATCCTGTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 25",
+      "sequence": "AGTACAAG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 26",
+      "sequence": "ACCACTGT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 27",
+      "sequence": "AACTCACC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 28",
+      "sequence": "CGCATACA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 29",
+      "sequence": "AGGCTAAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 30",
+      "sequence": "GCCAAGAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 31",
+      "sequence": "ATGCCTAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 32",
+      "sequence": "GGTGCGAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 33",
+      "sequence": "CAATGGAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 34",
+      "sequence": "ATCATTCC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 35",
+      "sequence": "CAAGACTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 36",
+      "sequence": "AACCGAGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 37",
+      "sequence": "AAGAGATC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 38",
+      "sequence": "CAAGGAGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 39",
+      "sequence": "CCGTGAGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 40",
+      "sequence": "CCGAAGTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 41",
+      "sequence": "ACAGATTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 42",
+      "sequence": "GACTAGTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 43",
+      "sequence": "CGACTGGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 44",
+      "sequence": "CGGATTGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 45",
+      "sequence": "ACATTGGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 46",
+      "sequence": "AATGTTGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 47",
+      "sequence": "CAACCACA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 48",
+      "sequence": "CCGACAAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 49",
+      "sequence": "AACGTGAT"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 50",
+      "sequence": "GGAGAACA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 51",
+      "sequence": "AAGGACAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 52",
+      "sequence": "GTACGCAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 53",
+      "sequence": "AGAGTCAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 54",
+      "sequence": "TTCACGCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 55",
+      "sequence": "CACCTTAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 56",
+      "sequence": "GAGCTGAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 57",
+      "sequence": "GCCACATA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 58",
+      "sequence": "AGCACCTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 59",
+      "sequence": "GCTAACGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 60",
+      "sequence": "AGTCACTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 61",
+      "sequence": "GATGAATC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 62",
+      "sequence": "TGAAGAGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 63",
+      "sequence": "CGCTGATC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 64",
+      "sequence": "GAGTTAGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 65",
+      "sequence": "ATTGGCTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 66",
+      "sequence": "CGAACTTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 67",
+      "sequence": "AATCCGTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 68",
+      "sequence": "ATAGCGAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 69",
+      "sequence": "TAGGATGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 70",
+      "sequence": "CAGCGTTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 71",
+      "sequence": "GCTCGGTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 72",
+      "sequence": "CGACACAC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 73",
+      "sequence": "CAGATCTG"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 74",
+      "sequence": "GATAGACA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 75",
+      "sequence": "AAGGTACA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 76",
+      "sequence": "CCTAATCC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 77",
+      "sequence": "AGATCGCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 78",
+      "sequence": "ACGTATCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 79",
+      "sequence": "AGCAGGAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 80",
+      "sequence": "ACTATGCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 81",
+      "sequence": "GCGAGTAA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 82",
+      "sequence": "AGTGGTCA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 83",
+      "sequence": "CCATCCTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 84",
+      "sequence": "CTGGCATA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 85",
+      "sequence": "AGCCATGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 86",
+      "sequence": "CCTCTATC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 87",
+      "sequence": "TCCGTCTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 88",
+      "sequence": "GTCGTAGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 89",
+      "sequence": "GAACAGGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 90",
+      "sequence": "CTCAATGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 91",
+      "sequence": "CCTCCTGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 92",
+      "sequence": "ATTGAGGA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 93",
+      "sequence": "GACAGTGC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 94",
+      "sequence": "CTAAGGTC"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 95",
+      "sequence": "TGGTGGTA"
+    }
+  },
+  {
+  "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["NEXTflex qRNA-Seq v2"],
+      "name": "Index 96",
+      "sequence": "TCTTCACA"
+    }
+  }
+]
