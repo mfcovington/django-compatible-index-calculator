@@ -1,0 +1,30 @@
+{% load list2table %}
+
+<div class="col-md-6">
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ index_set.name }}</h3>
+    </div>
+
+    <table class="table table-condensed">
+      {% for row in index_set.index_set.all|list2table:8 %}
+        <tr>
+          {% for index in row  %}
+            <td>
+              <div class="idx">
+                {{ index.name }}
+                <div hidden>
+                  {{ index.sequence }}
+                </div>
+              </div>
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+
+    <div class="panel-footer"></div>
+
+  </div>
+</div>

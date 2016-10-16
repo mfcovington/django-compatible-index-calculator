@@ -1,0 +1,34 @@
+/****************/
+/* Index Tables */
+/****************/
+
+.page-header,
+.panel-title {
+  text-align: center;
+}
+
+td {
+  border: 1px solid #ddd;
+  cursor: default;
+  font-size: 10px;
+  padding: 0 !important;
+  text-align: center;
+}
+
+.idx {
+  border: 3px solid transparent;
+}
+
+.selected {
+  border: 3px solid #46AA68;
+  font-weight: bold;
+}
+
+.incompatible {
+  background-color: #EFA5C2;
+  color: #C95381;
+}
+
+.selected.incompatible {
+  border: 3px solid #C95381;
+}
