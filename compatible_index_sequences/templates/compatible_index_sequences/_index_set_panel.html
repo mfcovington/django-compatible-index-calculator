@@ -8,10 +8,10 @@
         {{ index_set.name }}
         <span class="pull-right">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button type="button" class="btn btn-success btn-select-all">
+            <button type="button" class="btn btn-success btn-select-all btn-border">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-danger btn-deselect-all">
+            <button type="button" class="btn btn-danger btn-deselect-all btn-border">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
           </div>
@@ -26,7 +26,7 @@
             <td>
               <div class="idx">
                 {{ index.name }}
-                <div hidden>
+                <div class="sequence" style="display: none;">
                   {{ index.sequence }}
                 </div>
               </div>

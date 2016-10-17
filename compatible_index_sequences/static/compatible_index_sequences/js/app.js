@@ -41,3 +41,9 @@ $('.btn-deselect-all').click(function() {
 $('.btn-deselect-all-master').click(function() {
   $('.idx').removeClass('selected');
 });
+
+// Toggle index sequences
+$('.btn-toggle-sequences').click(function() {
+  $('.sequence').toggle();
+  $('.glyphicon-toggle-sequences').toggle();
+});
