@@ -26,3 +26,18 @@ $(function () {
       isMouseDown = false;
     });
 });
+
+// Select all indexes in an index set
+$('.btn-select-all').click(function() {
+  $(this).closest('.panel').find('.idx').addClass('selected');
+});
+
+// Deselect all indexes in an index set
+$('.btn-deselect-all').click(function() {
+  $(this).closest('.panel').find('.idx').removeClass('selected');
+});
+
+// Deselect all indexes
+$('.btn-deselect-all-master').click(function() {
+  $('.idx').removeClass('selected');
+});

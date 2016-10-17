@@ -31,3 +31,22 @@ td {
 .selected.incompatible {
   border: 3px solid #C95381;
 }
+
+/*******************************/
+/* Select/Deselect All Buttons */
+/*******************************/
+
+.btn-select-all,
+.btn-select-all:hover,
+.btn-select-all:focus,
+.btn-select-all:active,
+.btn-deselect-all,
+.btn-deselect-all:hover,
+.btn-deselect-all:focus,
+.btn-deselect-all:active,
+.btn-deselect-all-master,
+.btn-deselect-all-master:hover,
+.btn-deselect-all-master:focus,
+.btn-deselect-all-master:active {
+  border-color: black;
+}

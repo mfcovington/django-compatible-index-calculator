@@ -4,7 +4,19 @@
   <div class="panel panel-default">
 
     <div class="panel-heading">
-      <h3 class="panel-title">{{ index_set.name }}</h3>
+      <h3 class="panel-title">
+        {{ index_set.name }}
+        <span class="pull-right">
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" class="btn btn-success btn-select-all">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger btn-deselect-all">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </div>
+        </span>
+      </h3>
     </div>
 
     <table class="table table-condensed">
