@@ -17,9 +17,40 @@
             <button type="button" class="btn btn-danger btn-deselect-all-master btn-border">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
+            <button type="button" class="btn btn-default btn-border" data-toggle="collapse" data-target="#configurationPanel" aria-expanded="false" aria-controls="configurationPanel">
+              <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </button>
           </div>
         </span>
       </h1>
+    </div>
+
+    <div class="collapse" id="configurationPanel">
+      <div class="well">
+        <div class="row">
+          <form class="form-horizontal">
+            <div class="form-group col-sm-6">
+              <label class="control-label col-lg-8" for="config-length-manual">Manually Set Index Length <small>(unchecked for auto):</small></label>
+              <div class="col-lg-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input id="config-length-manual" type="checkbox" aria-label="...">
+                  </span>
+                  <input id="config-length" type="text" class="form-control" aria-label="..." value="6" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <label class="control-label col-lg-8" for="config-distance">Minimum Hamming Distance:</label>
+              <div class="col-lg-4">
+                <div class="input-group">
+                  <input id="config-distance" type="text" class="form-control" aria-label="..." value="3">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <div class="row">

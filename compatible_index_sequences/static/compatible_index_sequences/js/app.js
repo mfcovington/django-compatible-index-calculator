@@ -52,10 +52,33 @@ $('.btn-toggle-sequences').click(function() {
   $('.glyphicon-toggle-sequences').toggle();
 });
 
+// Toggle manual index length configuration
+$('#config-length-manual').click(function() {
+  $('#config-length').prop('disabled', function( i, val ) {
+    return !val;
+  });
+  checkCompatibility();
+});
+
+// Respond to manual index length changes
+$('#config-length').on('change paste keyup', function() {
+  checkCompatibility();
+});
+
+// Respond to minimum hamming distances changes
+$('#config-distance').on('change paste keyup', function() {
+  checkCompatibility();
+});
+
 
 function hamming(input1, input2) {
-  var length = Math.min(input1.length, input2.length);
   var distance = 0;
+  var length;
+  if ($('#config-length-manual').is(':checked')) {
+    length = $('#config-length')[0].value;
+  } else {
+    var length = Math.min(input1.length, input2.length);
+  }
 
   for ( i = 0; i < length; i++ ) {
     if ( input1[ i ] !== input2[ i ] ) {
@@ -67,7 +90,7 @@ function hamming(input1, input2) {
 
 
 function checkCompatibility() {
-  var min_dist = 3;
+  var min_dist = $('#config-distance')[0].value;
   var selected = $('.idx.selected');
   var notSelected = $('.idx').not('.selected');
   var incompatible = new Array();
