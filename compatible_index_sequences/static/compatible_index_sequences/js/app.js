@@ -84,6 +84,14 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
+// Toggle active index sets
+$('#config-visibility :checkbox').change(function() {
+  var indexSetId = $(this).attr('index_set_id');
+  $('#index_set_' + indexSetId).toggle();
+  $('#index_set_' + indexSetId + ' .panel').find('.idx').removeClass('selected');
+  checkCompatibility();
+});
+
 
 function hamming(input1, input2) {
   var distance = 0;

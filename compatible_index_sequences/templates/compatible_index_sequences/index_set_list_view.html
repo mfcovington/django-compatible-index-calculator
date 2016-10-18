@@ -51,6 +51,16 @@
                 </div>
               </div>
             </div>
+
+            <div id="config-visibility" class="col-sm-12">
+              <legend>Index Set Visibility</legend>
+              {% for index_set in object_list %}
+                  <div class="checkbox-inline">
+                    <label for="config-visibility-{{ index_set.id }}" class="control-label checkbox-inline"><input type="checkbox" id="config-visibility-{{ index_set.id }}" index_set_id="{{ index_set.id }}" checked>{{ index_set.name }}</label>
+                  </div>
+              {% endfor %}
+            </div>
+
           </form>
         </div>
       </div>
