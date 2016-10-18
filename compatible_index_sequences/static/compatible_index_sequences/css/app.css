@@ -7,6 +7,11 @@
   text-align: center;
 }
 
+table {
+    table-layout:fixed;
+    width:100%;
+}
+
 td {
   border: 1px solid #ddd;
   cursor: default;
