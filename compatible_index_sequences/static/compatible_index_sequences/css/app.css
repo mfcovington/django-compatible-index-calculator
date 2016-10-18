@@ -42,6 +42,7 @@ td {
 
 .btn-border,
 .btn-border:hover,
+.btn-border:disabled:hover,
 .btn-border:focus,
 .btn-border:active {
   border-color: black;

@@ -79,6 +79,11 @@ $('#config-distance').on('change paste keyup', function() {
   checkCompatibility();
 });
 
+// Add tooltip functionality
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 
 function hamming(input1, input2) {
   var distance = 0;
