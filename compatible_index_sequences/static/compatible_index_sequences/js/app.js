@@ -6,15 +6,23 @@ $(function () {
     isSelected;
 
   $(".idx")
-    .mousedown(function () {
+    .mousedown(function (e) {
       isMouseDown = true;
-      $(this).toggleClass("selected");
-      isSelected = $(this).hasClass("selected");
+      if (e.shiftKey) {
+        deselectIncompatible($(this));
+      } else {
+        $(this).toggleClass("selected");
+        isSelected = $(this).hasClass("selected");
+      }
       return false; // prevent text selection
     })
-    .mouseover(function () {
+    .mouseover(function (e) {
       if (isMouseDown) {
-        $(this).toggleClass("selected", isSelected);
+        if (e.shiftKey) {
+          deselectIncompatible($(this));
+        } else {
+          $(this).toggleClass("selected", isSelected);
+        }
       }
     })
     .bind("selectstart", function () {
@@ -123,4 +131,25 @@ function checkCompatibility() {
 
   $('.idx').removeClass('incompatible');
   $(incompatible).addClass('incompatible');
+}
+
+
+function deselectIncompatible(index) {
+  if (!$(index).is('.selected.incompatible')) {
+    return;
+  }
+
+  var min_dist = $('#config-distance')[0].value;
+  var allIndexes = $('.idx');
+  var sequence1 = index.children('.sequence').text().trim();
+
+  for (var i = 0; i < allIndexes.length; i++) {
+    if ($(allIndexes[i]).hasClass('selected') && allIndexes[i] !== index[0]) {
+      var sequence2 = $(allIndexes[i]).children('.sequence').text().trim();
+      var hamming_distance = hamming(sequence1, sequence2);
+      if ( hamming_distance < min_dist ) {
+        $(allIndexes[i]).removeClass('selected');
+      }
+    }
+  }
 }
