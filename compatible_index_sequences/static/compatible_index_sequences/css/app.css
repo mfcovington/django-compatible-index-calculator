@@ -32,6 +32,10 @@ td {
   border: 3px solid #C95381;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 /******************/
 /* Toggle Buttons */
 /******************/

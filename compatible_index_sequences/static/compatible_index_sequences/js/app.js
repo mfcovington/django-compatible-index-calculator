@@ -50,6 +50,7 @@ $('.btn-deselect-all-master').click(function() {
 $('.btn-toggle-sequences').click(function() {
   $('.sequence').toggle();
   $('.glyphicon-toggle-sequences').toggle();
+  $('.idx-name').toggleClass('bold');
 });
 
 // Toggle manual index length configuration
