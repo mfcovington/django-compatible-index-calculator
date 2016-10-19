@@ -142,6 +142,31 @@ function checkCompatibility() {
     }
   }
 
+  // Disable select/deselect all buttons when they are irrelevant
+  if (s_length > 0) {
+    $('.btn-deselect-all-master').prop('disabled', false);
+  } else {
+    $('.btn-deselect-all-master').prop('disabled', true);
+  }
+
+  var indexSetList = $('.index_set');
+  for (var i = 0; i < indexSetList.length; i++) {
+    var selectedSubset = $(indexSetList[i]).find('.idx.selected');
+    var selectAllBtn = $(indexSetList[i]).find('.btn-select-all');
+    var deselectAllBtn = $(indexSetList[i]).find('.btn-deselect-all');
+
+    if (selectedSubset.length === 0) {
+      $(selectAllBtn).prop('disabled', false);
+      $(deselectAllBtn).prop('disabled', true);
+    } else if (selectedSubset.length === $(indexSetList[i]).find('.idx').length) {
+      $(selectAllBtn).prop('disabled', true);
+      $(deselectAllBtn).prop('disabled', false);
+    } else {
+      $(selectAllBtn).prop('disabled', false);
+      $(deselectAllBtn).prop('disabled', false);
+    }
+  }
+
   $('.idx').removeClass('incompatible');
   $(incompatible).addClass('incompatible');
 }

@@ -1,6 +1,6 @@
 {% load list2table %}
 
-<div id="index_set_{{ index_set.id }}" class="col-md-6">
+<div id="index_set_{{ index_set.id }}" class="col-md-6 index_set">
   <div class="panel panel-default">
 
     <div class="panel-heading">
@@ -11,7 +11,7 @@
             <button type="button" class="btn btn-success btn-select-all btn-border">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-danger btn-deselect-all btn-border">
+            <button type="button" class="btn btn-danger btn-deselect-all btn-border" disabled>
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
           </div>
