@@ -1,0 +1,27 @@
+{% extends "compatible_index_sequences/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block title %}Custom Index List Results | {{ block.super }}{% endblock title %}
+
+{% block content %}
+  <div class="container">
+
+    <h1>Custom Index List</h1>
+    <ul>
+      {% for index in index_list %}
+        <li class="sequence">{{ index }}</li>
+      {% endfor %}
+    </ul>
+
+    <h1>Incompatible Index Pairs</h1>
+    <ul>
+      {% for pair in incompatible_index_pairs %}
+        <li class="sequence">
+          {{ pair|join:" - " }}
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+{% endblock content %}

@@ -57,6 +57,7 @@ td {
 /* Checking Custom List */
 /************************/
 
+.sequence,
 textarea {
   font-family: monospace;
 }
