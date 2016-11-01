@@ -10,7 +10,16 @@
     <h1>Custom Index List</h1>
     <ul>
       {% for index in index_list %}
-        <li class="sequence">{{ index }}</li>
+        <li>
+          <span class="sequence">{{ index.sequence }}</span>
+          {% if index.index_set_data %}
+            {% for index_set in index.index_set_data %}
+              {{ index_set.index_set }}:{{ index_set.name }}
+            {% endfor %}
+          {% else %}
+            -
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
 

@@ -3,7 +3,7 @@ from django.views.generic import ListView
 
 from .forms import CustomIndexListForm
 from .models import Index, IndexSet
-from .utils import find_incompatible_index_pairs
+from .utils import find_incompatible_index_pairs, lookup_index_set
 
 
 def check_custom_index_list(request):
@@ -11,10 +11,17 @@ def check_custom_index_list(request):
     if request.method == 'POST':
         form = CustomIndexListForm(request.POST)
         if form.is_valid():
-            index_list = form.cleaned_data['index_list'].splitlines()
+            custom_index_list = form.cleaned_data['index_list'].splitlines()
+            incompatible_index_pairs = find_incompatible_index_pairs(
+                custom_index_list)
+            index_list = []
+            for sequence in custom_index_list:
+                index_set_data = lookup_index_set(sequence)
+                index_list.append(
+                    {'sequence': sequence, 'index_set_data': index_set_data})
             context = {
                 'index_list': index_list,
-                'incompatible_index_pairs': find_incompatible_index_pairs(index_list),
+                'incompatible_index_pairs': incompatible_index_pairs,
             }
             return render(request, 'compatible_index_sequences/custom_index_list_results.html', context)
         else:

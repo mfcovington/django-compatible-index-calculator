@@ -1,4 +1,5 @@
 import itertools
+from .models import Index
 
 
 def find_incompatible_index_pairs(index_list, min_distance=3):
@@ -19,6 +20,10 @@ def hamming_distance(this, that):
         return 0
     else:
         return sum(1 for a, b in zip(this, that) if a != b)
+
+
+def lookup_index_set(index, complete_index_set=Index):
+    return complete_index_set.objects.filter(sequence=index)
 
 
 def minimum_index_length(index_list):
