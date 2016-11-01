@@ -52,3 +52,11 @@ td {
 .btn-border:active {
   border-color: black;
 }
+
+/************************/
+/* Checking Custom List */
+/************************/
+
+textarea {
+  font-family: monospace;
+}

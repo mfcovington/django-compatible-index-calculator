@@ -1,0 +1,18 @@
+{% extends "compatible_index_sequences/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block title %}sicTool - Check Custom Index List{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <form action="/check_list/" method="post">
+      {% csrf_token %}
+      <legend>sicTool for Custom Index List</legend>
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-default">Submit</button>
+      {% endbuttons %}
+    </form>
+  </div>
+{% endblock content %}
