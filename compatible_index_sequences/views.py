@@ -29,6 +29,7 @@ def check_custom_index_list(request):
 
             context = {
                 'index_list': index_list,
+                'incompatible_indexes': [item for sublist in incompatible_index_pairs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_index_pairs, incompatible_alignments),
             }
             return render(request, 'compatible_index_sequences/custom_index_list_results.html', context)

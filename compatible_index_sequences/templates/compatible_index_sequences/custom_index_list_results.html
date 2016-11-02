@@ -35,7 +35,7 @@
         </thead>
         <tbody>
           {% for index in index_list %}
-            <tr>
+            <tr {% if index.sequence in incompatible_indexes %}class="danger"{% endif %}>
               <td class="sequence">{{ index.sequence }}</td>
               <td>
                 {% for index_set in index.index_set_data %}
