@@ -7,11 +7,15 @@
 {% block content %}
   <div class="container">
 
-    <h1>Incompatible Index Pairs</h1>
-    <ul>
-      {% for pair in incompatible_index_pairs %}
-        <li class="sequence">
-          {{ pair|join:" - " }}
+    <div class="page-header">
+      <h1>Incompatible Index Pairs</h1>
+    </div>
+    <ul class="list-inline">
+      {% for pair, alignment in incompatible_index_pairs %}
+        <li class="sequence well">
+          {{ pair.0 }}<br>
+          {{ alignment }}<br>
+          {{ pair.1 }}
         </li>
       {% endfor %}
     </ul>

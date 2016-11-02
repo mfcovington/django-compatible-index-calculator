@@ -13,6 +13,10 @@ def find_incompatible_index_pairs(index_list, min_distance=3):
     return incompatible_pairs
 
 
+def generate_alignment(this, that):
+    return ''.join(['|' if a == b else ' ' for a, b in zip(this, that)])
+
+
 def hamming_distance(this, that):
     if not this or not that or len(this) != len(that):
         return None
