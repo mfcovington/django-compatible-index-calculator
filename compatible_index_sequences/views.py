@@ -45,8 +45,8 @@ def custom_index_list_results(request):
         request, 'compatible_index_sequences/custom_index_list_results.html')
 
 
-def tool_chooser(request):
-    return render(request, 'compatible_index_sequences/tool_chooser.html')
+def select_mode(request):
+    return render(request, 'compatible_index_sequences/select_mode.html')
 
 
 class IndexSetDetailView(DetailView):
