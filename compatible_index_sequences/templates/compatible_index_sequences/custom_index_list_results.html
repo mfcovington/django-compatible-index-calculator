@@ -34,12 +34,10 @@
             <tr>
               <td class="sequence">{{ index.sequence }}</td>
               <td>
-                {% if index.index_set_data %}
-                  {% for index_set in index.index_set_data %}
-                    {% if not forloop.first %}&bull;{% endif %}
-                    {{ index_set.index_set }} ({{ index_set.name }})
-                  {% endfor %}
-                {% endif %}
+                {% for index_set in index.index_set_data %}
+                  {% if not forloop.first %}&bull;{% endif %}
+                  {{ index_set.index_set }} ({{ index_set.name }})
+                {% endfor %}
               </td>
             </tr>
           {% endfor %}
