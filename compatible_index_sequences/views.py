@@ -55,7 +55,7 @@ class IndexSetDetailView(DetailView):
     template_name = 'compatible_index_sequences/index_set_detail_view.html'
 
 
-class IndexSetListView(ListView):
+class InteractiveView(ListView):
 
     model = IndexSet
-    template_name = 'compatible_index_sequences/index_set_list_view.html'
+    template_name = 'compatible_index_sequences/interactive.html'
