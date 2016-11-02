@@ -37,7 +37,7 @@ Add ``compatible_index_sequences`` and its dependencies to ``INSTALLED_APPS`` in
     INSTALLED_APPS = (
         ...
         'compatible_index_sequences.apps.CompatibleIndexSequencesConfig',
-        'bootstrap',
+        'bootstrap3',
     )
 
 
