@@ -35,7 +35,7 @@
               <td class="sequence">{{ index.sequence }}</td>
               <td>
                 {% for index_set in index.index_set_data %}
-                  {% if not forloop.first %}&bull;{% endif %}
+                  {% if not forloop.first %}<br>{% endif %}
                   {{ index_set.index_set }} ({{ index_set.name }})
                 {% endfor %}
               </td>
