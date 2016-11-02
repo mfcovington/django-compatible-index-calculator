@@ -36,7 +36,10 @@
               <td>
                 {% for index_set in index.index_set_data %}
                   {% if not forloop.first %}<br>{% endif %}
-                  {{ index_set.index_set }} ({{ index_set.name }})
+                  <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set.index_set.pk %}" target="_blank">
+                    {{ index_set.index_set }}
+                    ({{ index_set.name }})
+                  </a>
                 {% endfor %}
               </td>
             </tr>

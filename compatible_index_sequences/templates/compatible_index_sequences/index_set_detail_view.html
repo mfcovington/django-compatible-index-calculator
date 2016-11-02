@@ -1,0 +1,33 @@
+{% extends "compatible_index_sequences/base.html" %}
+
+{% block title %}{{ object.name }} | {{ block.super }}{% endblock title %}
+
+{% block content %}
+  <div class="container">
+
+    <div class="page-header">
+      <h1>
+        {{ object.name }}
+      </h1>
+    </div>
+
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>Index Name</th>
+          <th>Index Sequence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# {% for index in object.indexes.all %} #}
+        {% for index in object.index_set.all %}
+          <tr>
+            <td>{{ index.name }}</td>
+            <td class="sequence">{{ index.sequence }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+{% endblock content %}

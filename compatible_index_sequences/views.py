@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 
 from .forms import CustomIndexListForm
 from .models import Index, IndexSet
@@ -37,6 +37,12 @@ def check_custom_index_list(request):
 def custom_index_list_results(request):
     return render(
         request, 'compatible_index_sequences/custom_index_list_results.html', context)
+
+
+class IndexSetDetailView(DetailView):
+
+    model = IndexSet
+    template_name = 'compatible_index_sequences/index_set_detail_view.html'
 
 
 class IndexSetListView(ListView):

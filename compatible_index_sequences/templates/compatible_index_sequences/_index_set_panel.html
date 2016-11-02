@@ -5,7 +5,9 @@
 
     <div class="panel-heading">
       <h3 class="panel-title">
-        {{ index_set.name }}
+        <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set.pk %}" target="_blank">
+          {{ index_set.name }}
+        </a>
         <span class="pull-right">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-success btn-select-all btn-border">
