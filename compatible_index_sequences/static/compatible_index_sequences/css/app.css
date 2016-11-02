@@ -68,3 +68,28 @@ textarea {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+/****************/
+/* Mode Chooser */
+/****************/
+
+.thumbnail {
+  max-width: 310px;
+}
+
+.thumbnail {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.thumbnail a:hover {
+  text-decoration: none;
+}
+
+.thumbnail {
+  border-color: #87CEEB;
+}
+
+.thumbnail:hover {
+  border-color: #FFC98D;
+}
