@@ -7,7 +7,7 @@ from .utils import (
     find_incompatible_index_pairs, generate_alignment, lookup_index_set)
 
 
-def check_custom_index_list(request):
+def custom(request):
     form = CustomIndexListForm()
     if request.method == 'POST':
         form = CustomIndexListForm(request.POST)
@@ -32,17 +32,17 @@ def check_custom_index_list(request):
                 'incompatible_indexes': [item for sublist in incompatible_index_pairs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_index_pairs, incompatible_alignments),
             }
-            return render(request, 'compatible_index_sequences/custom_index_list_results.html', context)
+            return render(request, 'compatible_index_sequences/custom_results.html', context)
         else:
             print("INVALID INPUT")
 
     return render(
-        request, 'compatible_index_sequences/check_custom_index_list.html', {'form': form})
+        request, 'compatible_index_sequences/custom.html', {'form': form})
 
 
-def custom_index_list_results(request):
+def custom_results(request):
     return render(
-        request, 'compatible_index_sequences/custom_index_list_results.html')
+        request, 'compatible_index_sequences/custom_results.html')
 
 
 def select_mode(request):

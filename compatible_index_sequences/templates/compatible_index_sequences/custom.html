@@ -6,7 +6,7 @@
 
 {% block content %}
   <div class="container">
-    <form action="{% url 'compatible_index_sequences:check_custom_index_list' %}" method="post">
+    <form action="{% url 'compatible_index_sequences:custom' %}" method="post">
       {% csrf_token %}
       <legend>sicTool for Custom Index List</legend>
       {% bootstrap_form form %}
