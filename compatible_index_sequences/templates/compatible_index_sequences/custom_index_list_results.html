@@ -7,22 +7,6 @@
 {% block content %}
   <div class="container">
 
-    <h1>Custom Index List</h1>
-    <ul>
-      {% for index in index_list %}
-        <li>
-          <span class="sequence">{{ index.sequence }}</span>
-          {% if index.index_set_data %}
-            {% for index_set in index.index_set_data %}
-              {{ index_set.index_set }}:{{ index_set.name }}
-            {% endfor %}
-          {% else %}
-            -
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-
     <h1>Incompatible Index Pairs</h1>
     <ul>
       {% for pair in incompatible_index_pairs %}
@@ -31,6 +15,37 @@
         </li>
       {% endfor %}
     </ul>
+
+    <hr>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Custom Index List</h3>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Index Sequence</th>
+            <th>Associated Index Sets</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for index in index_list %}
+            <tr>
+              <td class="sequence">{{ index.sequence }}</td>
+              <td>
+                {% if index.index_set_data %}
+                  {% for index_set in index.index_set_data %}
+                    {% if not forloop.first %}&bull;{% endif %}
+                    {{ index_set.index_set }} ({{ index_set.name }})
+                  {% endfor %}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
   </div>
 {% endblock content %}
