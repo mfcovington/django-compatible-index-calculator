@@ -35,17 +35,14 @@ def check_custom_index_list(request):
             return render(request, 'compatible_index_sequences/custom_index_list_results.html', context)
         else:
             print("INVALID INPUT")
-    context = {
-        'index_list': Index.objects.all(),
-        'form': form,
-    }
+
     return render(
-        request, 'compatible_index_sequences/check_custom_index_list.html', context)
+        request, 'compatible_index_sequences/check_custom_index_list.html', {'form': form})
 
 
 def custom_index_list_results(request):
     return render(
-        request, 'compatible_index_sequences/custom_index_list_results.html', context)
+        request, 'compatible_index_sequences/custom_index_list_results.html')
 
 
 class IndexSetDetailView(DetailView):
