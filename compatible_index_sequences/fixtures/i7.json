@@ -1,0 +1,106 @@
+[
+  {
+    "model": "compatible_index_sequences.indexset",
+    "fields": {
+      "description": "Illumina Index 1 (i7) Adapter Set",
+      "name": "Index 1 (i7) Adapter",
+      "url": "http://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D701",
+      "sequence": "ATTACTCG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D702",
+      "sequence": "TCCGGAGA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D703",
+      "sequence": "CGCTCATT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D704",
+      "sequence": "GAGATTCC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D705",
+      "sequence": "ATTCAGAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D706",
+      "sequence": "GAATTCGT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D707",
+      "sequence": "CTGAAGCT"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D708",
+      "sequence": "TAATGCGC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D709",
+      "sequence": "CGGCTATG"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D710",
+      "sequence": "TCCGCGAA"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D711",
+      "sequence": "TCTCGCGC"
+    }
+  },
+  {
+    "model": "compatible_index_sequences.index",
+    "fields": {
+      "index_set": ["Index 1 (i7) Adapter"],
+      "name": "D712",
+      "sequence": "AGCGATAG"
+    }
+  }
+]
