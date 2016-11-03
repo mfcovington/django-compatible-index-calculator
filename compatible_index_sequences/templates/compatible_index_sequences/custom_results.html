@@ -17,6 +17,10 @@
           {{ alignment }}<br>
           {{ pair.1 }}
         </li>
+      {% empty %}
+        <div class="alert alert-success">
+          All index sequences are compatible!
+        </div>
       {% endfor %}
     </ul>
 
