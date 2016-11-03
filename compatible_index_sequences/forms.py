@@ -22,3 +22,12 @@ class CustomIndexListForm(forms.Form):
         validators=[validators.MaxLengthValidator(0)],
         widget=forms.HiddenInput,
     )
+
+    def clean(self):
+        cleaned_data = super(CustomIndexListForm, self).clean()
+        index_list = cleaned_data.get('index_list')
+        samplesheet = cleaned_data.get('samplesheet')
+
+        if index_list == '' and samplesheet is None:
+            raise forms.ValidationError(
+                'Please enter index sequences and/or upload a sample sheet.')
