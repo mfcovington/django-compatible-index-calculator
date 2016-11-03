@@ -1,3 +1,5 @@
+import codecs
+import csv
 import itertools
 from .models import Index
 
@@ -24,6 +26,22 @@ def hamming_distance(this, that):
         return 0
     else:
         return sum(1 for a, b in zip(this, that) if a != b)
+
+
+def index_list_from_samplesheet(request):
+    index_list = []
+    file = request.FILES.get('samplesheet')
+
+    if file:
+        reader = csv.reader(codecs.iterdecode(file, 'utf-8'))
+        ok = 0
+        for row in reader:
+            if ok == 1:
+                index_list.append(row[5])
+            if row[0] == 'Sample_ID':
+                ok = 1
+
+    return index_list
 
 
 def lookup_index_set(index, complete_index_set=Index):

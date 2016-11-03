@@ -4,7 +4,8 @@ from django.views.generic import DetailView, ListView
 from .forms import CustomIndexListForm
 from .models import Index, IndexSet
 from .utils import (
-    find_incompatible_index_pairs, generate_alignment, lookup_index_set)
+    find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
+    lookup_index_set)
 
 
 def custom(request):
@@ -13,6 +14,7 @@ def custom(request):
         form = CustomIndexListForm(request.POST)
         if form.is_valid():
             custom_index_list = form.cleaned_data['index_list'].splitlines()
+            custom_index_list.extend(index_list_from_samplesheet(request))
 
             incompatible_index_pairs = find_incompatible_index_pairs(
                 custom_index_list)

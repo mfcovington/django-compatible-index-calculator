@@ -8,9 +8,13 @@ class CustomIndexListForm(forms.Form):
 
     index_list = forms.CharField(
         label='Enter index sequences',
-        required=True,
+        required=False,
         widget=forms.Textarea(
             attrs={'placeholder': placeholder, 'rows': 20, }),
+    )
+    samplesheet = forms.FileField(
+        label="Upload 'SampleSheet.csv'",
+        required=False,
     )
     honeypot = forms.CharField(
         label="Leave empty.",
