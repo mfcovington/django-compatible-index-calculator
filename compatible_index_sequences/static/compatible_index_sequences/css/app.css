@@ -57,6 +57,18 @@ table.index-set {
 /* Checking Custom List */
 /************************/
 
+#incompatible-alignments hr {
+  margin-top: 10px;
+}
+
+#incompatible-alignments ul {
+  margin-left: 0;
+}
+
+#incompatible-alignments .alert {
+  margin-bottom: 10px;
+}
+
 .sequence,
 textarea {
   font-family: monospace;
@@ -67,6 +79,8 @@ textarea {
   margin-right: 15px;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /****************/

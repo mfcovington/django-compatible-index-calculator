@@ -8,23 +8,32 @@
   <div class="container">
 
     <div class="page-header">
-      <h1>Incompatible Index Pairs</h1>
+      <h1>Custom Index List Results</h1>
     </div>
-    <ul class="list-inline">
-      {% for pair, alignment in incompatible_index_pairs %}
-        <li class="sequence well">
-          {{ pair.0 }}<br>
-          {{ alignment }}<br>
-          {{ pair.1 }}
-        </li>
-      {% empty %}
-        <div class="alert alert-success">
-          All index sequences are compatible!
-        </div>
-      {% endfor %}
-    </ul>
 
-    <hr>
+    {% if incompatible_indexes %}
+      <div id="incompatible-alignments">
+        <div class="alert alert-danger">
+          Incompatible index pairs detected!
+        </div>
+        <ul class="list-inline">
+          {% for pair, alignment in incompatible_index_pairs %}
+            <li class="sequence well">
+              {{ pair.0 }}<br>
+              {{ alignment }}<br>
+              {{ pair.1 }}
+            </li>
+          {% empty %}
+          {% endfor %}
+        </ul>
+        <hr>
+      </div>
+    {% else %}
+      <div class="alert alert-success">
+        All index sequences are compatible!
+      </div>
+      <hr>
+    {% endif %}
 
     <div class="panel panel-default">
       <div class="panel-heading">
