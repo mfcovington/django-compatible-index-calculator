@@ -42,11 +42,6 @@ def custom(request):
         request, 'compatible_index_sequences/custom.html', {'form': form})
 
 
-def custom_results(request):
-    return render(
-        request, 'compatible_index_sequences/custom_results.html')
-
-
 def select_mode(request):
     return render(request, 'compatible_index_sequences/select_mode.html')
 
