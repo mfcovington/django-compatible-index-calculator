@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from .views import (
     IndexSetDetailView, InteractiveView, custom,
-    custom_results, select_mode)
+    export_samplesheet, select_mode)
 
 
 urlpatterns = [
