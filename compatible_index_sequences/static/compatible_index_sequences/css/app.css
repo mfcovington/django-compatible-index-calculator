@@ -69,6 +69,14 @@ table.index-set {
   margin-bottom: 10px;
 }
 
+.alert-success p + form#export-csv {
+  margin-top: 10px;
+}
+
+.alert-success form#export-csv .form-group {
+  margin-bottom: 5px;
+}
+
 .sequence,
 textarea {
   font-family: monospace;

@@ -30,7 +30,19 @@
       </div>
     {% else %}
       <div class="alert alert-success">
-        All index sequences are compatible!
+        <p>
+          All index sequences are compatible!
+        </p>
+        <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
+          {% csrf_token %}
+          {% bootstrap_form hidden_download_form %}
+          {% buttons %}
+            <button type="submit" class="btn btn-success">
+              <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+              SampleSheet.csv
+            </button>
+          {% endbuttons %}
+        </form>
       </div>
       <hr>
     {% endif %}

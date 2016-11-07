@@ -1,7 +1,11 @@
+import csv
+import datetime
+
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
-from .forms import CustomIndexListForm
+from .forms import CustomIndexListForm, HiddenSampleSheetDownloadForm
 from .models import Index, IndexSet
 from .utils import (
     find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
@@ -29,10 +33,13 @@ def custom(request):
                 index_list.append(
                     {'sequence': sequence, 'index_set_data': index_set_data})
 
+            hidden_download_form = HiddenSampleSheetDownloadForm(
+                initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})
             context = {
                 'index_list': index_list,
                 'incompatible_indexes': [item for sublist in incompatible_index_pairs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_index_pairs, incompatible_alignments),
+                'hidden_download_form': hidden_download_form,
             }
             return render(request, 'compatible_index_sequences/custom_results.html', context)
         else:
@@ -40,6 +47,44 @@ def custom(request):
 
     return render(
         request, 'compatible_index_sequences/custom.html', {'form': form})
+
+
+def export_samplesheet(request):
+
+    data = [
+        ['[Header]', '', '', '', '', '', '', ''],
+        ['IEMFileVersion', '4', '', '', '', '', '', ''],
+        ['InvestigatorName', '', '', '', '', '', '', ''],
+        ['ExperimentName', '', '', '', '', '', '', ''],
+        ['Date', '', '', '', '', '', '', ''],
+        ['Workflow', '', '', '', '', '', '', ''],
+        ['Application', '', '', '', '', '', '', ''],
+        ['Assay', '', '', '', '', '', '', ''],
+        ['Description', '', '', '', '', '', '', ''],
+        ['Chemistry', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['[Reads]', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['[Settings]', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['[Data]', '', '', '', '', '', '', ''],
+        ['Sample_ID', 'Sample_Name', 'Sample_Plate', 'Sample_Well', 'I7_Index_ID', 'index', 'Sample_Project', 'Description'],
+    ]
+    index_list_csv = request.POST.get('index_list_csv')
+    for index in index_list_csv.split(','):
+        data.append(['', '', '', '', '', index, '', ''])
+
+    filename = 'SampleSheet.{:%Y%m%d.%H%M%S}.csv'.format(
+        datetime.datetime.now())
+    response = HttpResponse(content_type='text/csv')
+    response[
+        'Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    writer = csv.writer(response)
+    writer.writerows(data)
+
+    return response
 
 
 def select_mode(request):

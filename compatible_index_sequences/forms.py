@@ -31,3 +31,11 @@ class CustomIndexListForm(forms.Form):
         if index_list == '' and samplesheet is None:
             raise forms.ValidationError(
                 'Please enter index sequences and/or upload a sample sheet.')
+
+
+class HiddenSampleSheetDownloadForm(forms.Form):
+
+    index_list_csv = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput,
+    )
