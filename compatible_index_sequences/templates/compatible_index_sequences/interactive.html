@@ -1,11 +1,14 @@
 {% extends "compatible_index_sequences/base.html" %}
 
+{% load bootstrap3 %}
+
 {% block title %}Interactive | {{ block.super }}{% endblock title %}
 
 {% block content %}
   <div class="container">
 
     <div class="page-header">
+
       <h1>
         Sequencing Index Compatibility Tool
         <span class="pull-right">
@@ -26,6 +29,18 @@
           </div>
         </span>
       </h1>
+
+      <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form hidden_download_form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-success" disabled>
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+            SampleSheet.csv
+          </button>
+        {% endbuttons %}
+      </form>
+
     </div>
 
     <div class="collapse" id="configurationPanel">

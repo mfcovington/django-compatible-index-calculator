@@ -169,6 +169,23 @@ function checkCompatibility() {
 
   $('.idx').removeClass('incompatible');
   $(incompatible).addClass('incompatible');
+
+  // Enable/Disable Sample Sheet Export Button
+  $exportButton = $('#export-csv button[type="submit"]')
+  $exportList = $('#export-csv input#id_index_list_csv')[0]
+  if ( $('.idx.selected.incompatible').length > 0 ) {
+    $exportButton.addClass('btn-danger')
+    $exportButton.prop('disabled', true)
+  } else if ( $('.idx.selected').length > 0 ) {
+    $exportButton.removeClass('btn-danger')
+    $exportButton.prop('disabled', false)
+    $exportList.value = $.trim($('.idx.selected .sequence').text())
+                                                           .split(/\s+/)
+                                                           .join(',')
+  } else {
+    $exportButton.removeClass('btn-danger')
+    $exportButton.prop('disabled', true)
+  }
 }
 
 

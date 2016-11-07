@@ -35,6 +35,10 @@ class CustomIndexListForm(forms.Form):
 
 class HiddenSampleSheetDownloadForm(forms.Form):
 
+    filename = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput,
+    )
     index_list_csv = forms.CharField(
         required=False,
         widget=forms.HiddenInput,

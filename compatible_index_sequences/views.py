@@ -76,8 +76,9 @@ def export_samplesheet(request):
     for index in index_list_csv.split(','):
         data.append(['', '', '', '', '', index, '', ''])
 
-    filename = 'SampleSheet.{:%Y%m%d.%H%M%S}.csv'.format(
-        datetime.datetime.now())
+    filename = request.POST.get('filename')
+    if filename == '':
+        filename = 'SampleSheet.{:%Y%m%d.%H%M%S}.csv'.format(datetime.datetime.now())
     response = HttpResponse(content_type='text/csv')
     response[
         'Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
@@ -101,3 +102,8 @@ class InteractiveView(ListView):
 
     model = IndexSet
     template_name = 'compatible_index_sequences/interactive.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(InteractiveView, self).get_context_data(**kwargs)
+        context['hidden_download_form'] = HiddenSampleSheetDownloadForm()
+        return context
