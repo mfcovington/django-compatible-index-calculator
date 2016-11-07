@@ -61,6 +61,11 @@ class IndexSet(models.Model):
         help_text='Enter a URL associated with this index sequence set.',
     )
 
+    visible_in_interactive = models.BooleanField(
+        default=True,
+        help_text='Make visible by default in interactive mode.',
+    )
+
     class Meta:
         ordering = ['name']
         verbose_name = 'Sequencing Index Set'

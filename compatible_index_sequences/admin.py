@@ -18,7 +18,8 @@ class IndexAdmin(admin.ModelAdmin):
 
 @admin.register(IndexSet)
 class IndexSetAdmin(admin.ModelAdmin):
-    fields = ['name', 'description', 'url']
+    fields = ['name', 'description', 'url', 'visible_in_interactive']
     inlines = [IndexInline]
-    list_display = ['name', 'url']
+    list_display = ['name', 'visible_in_interactive', 'url']
+    list_filter = ['visible_in_interactive']
     search_fields = ['name', 'description']

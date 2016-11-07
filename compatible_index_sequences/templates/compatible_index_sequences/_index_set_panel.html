@@ -1,6 +1,6 @@
 {% load list2table %}
 
-<div id="index_set_{{ index_set.id }}" class="col-md-6 index_set">
+<div id="index_set_{{ index_set.id }}" class="col-md-6 index_set" {% if not index_set.visible_in_interactive %}style="display: none;"{% endif %}>
   <div class="panel panel-default">
 
     <div class="panel-heading">
