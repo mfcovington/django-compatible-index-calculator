@@ -1,6 +1,6 @@
 {% extends "compatible_index_sequences/base.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap3 sekizai_tags %}
 
 {% block title %}Results | {{ block.super }}{% endblock title %}
 
@@ -78,4 +78,10 @@
     </div>
 
   </div>
+
+  {% addtoblock "js" %}
+    <script type="text/javascript">
+      $(document).ready(nameSampleSheet)
+    </script>
+  {% endaddtoblock %}
 {% endblock content %}

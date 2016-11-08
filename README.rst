@@ -38,6 +38,7 @@ Add ``compatible_index_sequences`` and its dependencies to ``INSTALLED_APPS`` in
         ...
         'compatible_index_sequences.apps.CompatibleIndexSequencesConfig',
         'bootstrap3',
+        'sekizai',
     )
 
 
@@ -51,6 +52,34 @@ Add the ``compatible_index_sequences`` URLs to the site's ``urls.py``:
         ...
         url(r'^compatible_index_sequences/', include('compatible_index_sequences.urls', namespace='compatible_index_sequences')),
     ]
+
+
+Add ``sekizai`` settings:
+
+- For **Django versions before 1.10**, add ``sekizai.context_processors.sekizai`` to ``TEMPLATE_CONTEXT_PROCESSORS``:
+
+  .. code-block:: python
+
+      from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+      TEMPLATE_CONTEXT_PROCESSORS += ('sekizai.context_processors.sekizai',)
+
+
+- For **Django versions 1.10 and later**, add ``sekizai.context_processors.sekizai`` to ``TEMPLATES``:
+
+  .. code-block:: python
+
+      TEMPLATES = [
+          {
+              # ...
+              'OPTIONS': {
+                  'context_processors': [
+                      # ...
+                      'sekizai.context_processors.sekizai',
+                  ],
+              },
+          },
+      ]
+
 
 Migrations
 ==========
