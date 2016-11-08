@@ -3,11 +3,13 @@
 $(function () {
 
   var isMouseDown = false,
+    isSetChanged = false,
     isSelected;
 
   $(".idx")
     .mousedown(function (e) {
       isMouseDown = true;
+      isSetChanged = true;
       if (e.shiftKey) {
         deselectIncompatible($(this));
       } else {
@@ -32,7 +34,10 @@ $(function () {
   $(document)
     .mouseup(function () {
       isMouseDown = false;
-      checkCompatibility();
+      if (isSetChanged) {
+        checkCompatibility();
+        isSetChanged = false;
+      }
     });
 });
 
@@ -173,6 +178,7 @@ function checkCompatibility() {
   // Enable/Disable Sample Sheet Export Button
   $exportButton = $('#export-csv button[type="submit"]')
   $exportList = $('#export-csv input#id_index_list_csv')[0]
+  var $exportFilename = $('#export-csv input#id_filename')[0]
   if ( $('.idx.selected.incompatible').length > 0 ) {
     $exportButton.addClass('btn-danger')
     $exportButton.prop('disabled', true)
@@ -182,6 +188,7 @@ function checkCompatibility() {
     $exportList.value = $.trim($('.idx.selected .sequence').text())
                                                            .split(/\s+/)
                                                            .join(',')
+    $exportFilename.value = nameSampleSheet();
   } else {
     $exportButton.removeClass('btn-danger')
     $exportButton.prop('disabled', true)
@@ -207,4 +214,11 @@ function deselectIncompatible(index) {
       }
     }
   }
+}
+
+
+function nameSampleSheet() {
+  var dateTimeStamp = $.format.toBrowserTimeZone(new Date(), "yyyyMMdd.HHmmss");
+  var filename = 'SampleSheet.' + dateTimeStamp + '.csv'
+  return filename
 }
