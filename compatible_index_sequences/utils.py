@@ -9,7 +9,7 @@ def find_incompatible_index_pairs(index_list, min_distance=3):
     incompatible_pairs = []
     for pair in itertools.combinations(index_list, 2):
         distance = hamming_distance(
-            pair[0][0:index_length], pair[1][0:index_length])
+            pair[0][0:index_length].upper(), pair[1][0:index_length].upper())
         if distance < min_distance:
             incompatible_pairs.append(pair)
     return incompatible_pairs

@@ -130,7 +130,8 @@ function checkCompatibility() {
     for ( var s2 = s1 + 1; s2 < s_length; s2++) {
       var sequence1 = $( selected[s1] ).children('.sequence').text().trim();
       var sequence2 = $( selected[s2] ).children('.sequence').text().trim();
-      var hamming_distance = hamming(sequence1, sequence2);
+      var hamming_distance = hamming(sequence1.toUpperCase(),
+                                     sequence2.toUpperCase());
       if ( hamming_distance < min_dist ) {
         incompatible.push(selected[s1], selected[s2]);
       }
@@ -140,7 +141,8 @@ function checkCompatibility() {
     for ( var n = 0; n < n_length; n++) {
       var sequence1 = $( selected[s1] ).children('.sequence').text().trim();
       var sequence2 = $( notSelected[n] ).children('.sequence').text().trim();
-      var hamming_distance = hamming(sequence1, sequence2);
+      var hamming_distance = hamming(sequence1.toUpperCase(),
+                                     sequence2.toUpperCase());
       if ( hamming_distance < min_dist ) {
         incompatible.push(notSelected[n]);
       }
@@ -207,7 +209,8 @@ function deselectIncompatible(index) {
   for (var i = 0; i < allIndexes.length; i++) {
     if ($(allIndexes[i]).hasClass('selected') && allIndexes[i] !== index[0]) {
       var sequence2 = $(allIndexes[i]).children('.sequence').text().trim();
-      var hamming_distance = hamming(sequence1, sequence2);
+      var hamming_distance = hamming(sequence1.toUpperCase(),
+                                     sequence2.toUpperCase());
       if ( hamming_distance < min_dist ) {
         $(allIndexes[i]).removeClass('selected');
       }
