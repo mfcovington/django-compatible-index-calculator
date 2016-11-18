@@ -1,6 +1,46 @@
 from django import forms
 from django.core import validators
 
+from .models import IndexSet
+
+
+class AutoIndexListForm(forms.Form):
+
+    index_set_1 = forms.ModelChoiceField(
+        queryset=IndexSet.objects.all(),
+        required=True,
+    )
+    subset_size_1 = forms.IntegerField(
+        label="Number of indexes to use",
+        min_value = 1,
+        required=True,
+    )
+
+    index_set_2 = forms.ModelChoiceField(
+        queryset=IndexSet.objects.all(),
+        required=False,
+    )
+    subset_size_2 = forms.IntegerField(
+        label="Number of indexes to use",
+        min_value = 1,
+        required=False,
+    )
+
+    index_set_3 = forms.ModelChoiceField(
+        queryset=IndexSet.objects.all(),
+        required=False,
+    )
+    subset_size_3 = forms.IntegerField(
+        label="Number of indexes to use",
+        min_value = 1,
+        required=False,
+    )
+
+    samplesheet = forms.FileField(
+        label="Upload 'SampleSheet.csv'",
+        required=False,
+    )
+
 
 class CustomIndexListForm(forms.Form):
 

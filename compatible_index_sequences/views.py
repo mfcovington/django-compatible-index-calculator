@@ -1,15 +1,66 @@
 import csv
 import datetime
+import itertools
 
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
-from .forms import CustomIndexListForm, HiddenSampleSheetDownloadForm
+from .forms import (
+    AutoIndexListForm, CustomIndexListForm, HiddenSampleSheetDownloadForm)
 from .models import Index, IndexSet
 from .utils import (
     find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
     lookup_index_set)
+
+
+def auto(request):
+    form = AutoIndexListForm()
+    if request.method == 'POST':
+        form = AutoIndexListForm(request.POST)
+        if form.is_valid():
+            index_set_1 = form.cleaned_data['index_set_1']
+            subset_size_1 = form.cleaned_data['subset_size_1']
+            auto_set_1 = index_set_1.index_set.all()[0:subset_size_1]
+
+            index_set_2 = form.cleaned_data['index_set_2']
+            subset_size_2 = form.cleaned_data['subset_size_2']
+            try:
+                auto_set_2 = index_set_2.index_set.all()[0:subset_size_2]
+            except:
+                auto_set_2 = []
+
+            index_set_3 = form.cleaned_data['index_set_3']
+            subset_size_3 = form.cleaned_data['subset_size_3']
+            try:
+                auto_set_3 = index_set_3.index_set.all()[0:subset_size_3]
+            except:
+                auto_set_3 = []
+
+            index_list = []
+
+            for sequence in index_list_from_samplesheet(request):
+                index_set_data = lookup_index_set(sequence)
+                index_list.append(
+                    {'sequence': sequence, 'index_set_data': index_set_data})
+
+            for index in itertools.chain(auto_set_1, auto_set_2, auto_set_3):
+                sequence = index.sequence
+                index_set_data = lookup_index_set(sequence)
+                index_list.append(
+                    {'sequence': sequence, 'index_set_data': index_set_data})
+
+            hidden_download_form = HiddenSampleSheetDownloadForm(
+                initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})
+            context = {
+                'hidden_download_form': hidden_download_form,
+                'index_list': index_list,
+            }
+            return render(request, 'compatible_index_sequences/auto_results.html', context)
+        else:
+            print("INVALID INPUT")
+
+    return render(request, 'compatible_index_sequences/auto.html', {'form': form})
 
 
 def custom(request):

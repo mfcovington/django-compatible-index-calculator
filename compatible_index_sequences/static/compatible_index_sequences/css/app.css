@@ -115,3 +115,13 @@ textarea {
 .thumbnail:hover {
   border-color: #FFC98D;
 }
+
+/*******************/
+/* Required Fields */
+/*******************/
+
+.required-fields .control-label:after {
+  color: rgb(169, 68, 66);
+  content: "*";
+  padding-left: 2px;
+}
