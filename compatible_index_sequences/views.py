@@ -11,7 +11,11 @@ from .forms import (
 from .models import Index, IndexSet
 from .utils import (
     find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
-    lookup_index_set)
+    is_self_compatible, minimum_index_length)
+
+
+def lookup_index_set(index, complete_index_set=Index):
+    return complete_index_set.objects.filter(sequence=index)
 
 
 def auto(request):
@@ -21,22 +25,64 @@ def auto(request):
         if form.is_valid():
             index_set_1 = form.cleaned_data['index_set_1']
             subset_size_1 = form.cleaned_data['subset_size_1']
-            auto_set_1 = index_set_1.index_set.all()[0:subset_size_1]
 
             index_set_2 = form.cleaned_data['index_set_2']
             subset_size_2 = form.cleaned_data['subset_size_2']
-            try:
-                auto_set_2 = index_set_2.index_set.all()[0:subset_size_2]
-            except:
-                auto_set_2 = []
 
             index_set_3 = form.cleaned_data['index_set_3']
             subset_size_3 = form.cleaned_data['subset_size_3']
+
+            min_length_1 = index_set_1.min_length()
+
             try:
-                auto_set_3 = index_set_3.index_set.all()[0:subset_size_3]
+                min_length_2 = index_set_2.min_length()
             except:
+                min_length_2 = float('inf')
+                is_selected_2 = False
+            else:
+                is_selected_2 = True
+
+            try:
+                min_length_3 = index_set_3.min_length()
+            except:
+                min_length_3 = float('inf')
+                is_selected_3 = False
+            else:
+                is_selected_3 = True
+
+            min_length = min(min_length_1, min_length_2, min_length_3)
+
+
+            is_self_compatible_1 = index_set_1.is_self_compatible(length=min_length)
+
+            for auto_set_1 in itertools.combinations(index_set_1.index_set.all(), subset_size_1):
+                auto_set_2 = []
                 auto_set_3 = []
 
+                index_list_1 = [i.sequence for i in auto_set_1]
+                if not is_self_compatible_1:
+                    if not is_self_compatible(index_list_1, length=min_length):
+                        next
+
+                if is_selected_2:
+                    is_self_compatible_2 = index_set_2.is_self_compatible(length=min_length)
+                    for auto_set_2 in itertools.combinations(index_set_2.index_set.all(), subset_size_2):
+                        index_list_2 = [i.sequence for i in auto_set_2]
+
+                        if not is_self_compatible_2:
+                            if not is_self_compatible(index_list_2, length=min_length):
+                                next
+
+                        index_list_12 = []
+                        index_list_12.extend(index_list_1)
+                        index_list_12.extend(index_list_2)
+
+                        if not is_self_compatible(index_list_12, length=min_length):
+                            next
+                        else:
+                            break
+
+                break
             index_list = []
 
             for sequence in index_list_from_samplesheet(request):

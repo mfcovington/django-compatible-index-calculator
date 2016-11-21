@@ -1,7 +1,10 @@
+import itertools
 import re
 
 from django.core.validators import RegexValidator
 from django.db import models
+
+from .utils import hamming_distance, minimum_index_length
 
 
 class IndexSetManager(models.Manager):
@@ -70,6 +73,20 @@ class IndexSet(models.Model):
         ordering = ['name']
         verbose_name = 'Sequencing Index Set'
         verbose_name_plural = 'Sequencing Index Sets'
+
+    def min_length(self):
+        index_list = [i.sequence for i in self.index_set.all()]
+        return min([len(i) for i in index_list])
+
+    def is_self_compatible(self, min_distance=3, length=float('inf')):
+        index_length = min(self.min_length(), length)
+        index_list = [i.sequence for i in self.index_set.all()]
+        for pair in itertools.combinations(index_list, 2):
+            distance = hamming_distance(
+                pair[0][0:index_length].upper(), pair[1][0:index_length].upper())
+            if distance < min_distance:
+                return False
+        return True
 
     def __str__(self):
         return self.name
