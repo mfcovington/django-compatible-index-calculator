@@ -11,7 +11,7 @@ from .forms import (
 from .models import Index, IndexSet
 from .utils import (
     find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
-    is_self_compatible, minimum_index_length)
+    is_self_compatible, minimum_index_length, remove_incompatible_indexes_from_queryset)
 
 
 def lookup_index_set(index, complete_index_set=Index):
@@ -69,8 +69,14 @@ def auto(request):
 
                 if is_selected_2:
                     compatible_set = False
-                    is_self_compatible_2 = index_set_2.is_self_compatible(length=min_length)
-                    for auto_set_2 in itertools.combinations(index_set_2.index_set.all(), subset_size_2):
+
+                    index_set_2_trunc = remove_incompatible_indexes_from_queryset(
+                        index_set_2, index_list_1, length=min_length)
+
+                    is_self_compatible_2 = is_self_compatible(
+                        [i.sequence for i in index_set_2_trunc], length=min_length)
+
+                    for auto_set_2 in itertools.combinations(index_set_2_trunc, subset_size_2):
                         index_list_2 = [i.sequence for i in auto_set_2]
 
                         if not is_self_compatible_2:
@@ -93,8 +99,15 @@ def auto(request):
                             compatible_set = True
                             if is_selected_3:
                                 compatible_set = False
-                                is_self_compatible_3 = index_set_3.is_self_compatible(length=min_length)
-                                for auto_set_3 in itertools.combinations(index_set_3.index_set.all(), subset_size_3):
+
+                                index_set_3_trunc = remove_incompatible_indexes_from_queryset(
+                                    index_set_3, index_list_12, length=min_length)
+
+
+                                is_self_compatible_3 = is_self_compatible(
+                                    [i.sequence for i in index_set_3_trunc], length=min_length)
+
+                                for auto_set_3 in itertools.combinations(index_set_3_trunc, subset_size_3):
                                     index_list_3 = [i.sequence for i in auto_set_3]
 
                                     if not is_self_compatible_3:
@@ -117,7 +130,9 @@ def auto(request):
                                         compatible_set = True
                                         break
                             break
-                break
+
+                if compatible_set:
+                    break
 
             if not compatible_set:
                 print('WARNING: NO COMPATIBLE SETS FOUND')

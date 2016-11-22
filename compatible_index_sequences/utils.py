@@ -56,3 +56,16 @@ def is_self_compatible(index_list, min_distance=3, length=float('inf')):
         if distance < min_distance:
             return False
     return True
+
+
+def remove_incompatible_indexes_from_queryset(index_set, index_list, min_distance=3, length=float('inf')):
+    index_length = min(index_set.min_length(), minimum_index_length(index_list), length)
+    incompatible_indexes = []
+
+    for index_1, seq_2 in itertools.product(index_set.index_set.all(), index_list):
+        seq_1 = index_1.sequence
+        distance = hamming_distance(seq_1[0:index_length], seq_2[0:index_length])
+        if distance < min_distance:
+            incompatible_indexes.append(index_1)
+
+    return index_set.index_set.exclude(pk__in=[i.pk for i in incompatible_indexes])
