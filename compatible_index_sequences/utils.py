@@ -44,6 +44,22 @@ def index_list_from_samplesheet(request):
     return index_list
 
 
+def join_two_compatible_sets(a_sequences, b_sequences, b_is_self_compatible,
+                             length=float('inf')):
+    if not b_is_self_compatible:
+        if not is_self_compatible(b_sequences, length=length):
+            return None
+
+    ab_sequences = []
+    ab_sequences.extend(a_sequences)
+    ab_sequences.extend(b_sequences)
+
+    if is_self_compatible(ab_sequences, length=length):
+        return ab_sequences
+    else:
+        return None
+
+
 def minimum_index_length(index_list):
     return min([len(i) for i in index_list])
 

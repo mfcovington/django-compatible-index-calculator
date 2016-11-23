@@ -11,7 +11,8 @@ from .forms import (
 from .models import Index, IndexSet
 from .utils import (
     find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
-    is_self_compatible, minimum_index_length, remove_incompatible_indexes_from_queryset)
+    join_two_compatible_sets, is_self_compatible, minimum_index_length,
+    remove_incompatible_indexes_from_queryset)
 
 
 def lookup_index_set(index, complete_index_set=Index):
@@ -52,7 +53,7 @@ def auto(request):
 
             min_length = min(min_length_1, min_length_2, min_length_3)
 
-            compatible_set = False
+            compatible_set = None
             is_self_compatible_1 = index_set_1.is_self_compatible(length=min_length)
             for auto_set_1 in itertools.combinations(index_set_1.index_set.all(), subset_size_1):
                 auto_set_2 = []
@@ -63,71 +64,49 @@ def auto(request):
                     if not is_self_compatible(index_list_1, length=min_length):
                         next
                     else:
-                        compatible_set = True
+                        compatible_set = index_list_1
                 else:
-                    compatible_set = True
+                    compatible_set = index_list_1
 
                 if is_selected_2:
-                    compatible_set = False
-
+                    compatible_set = None
                     index_set_2_trunc = remove_incompatible_indexes_from_queryset(
                         index_set_2, index_list_1, length=min_length)
 
                     is_self_compatible_2 = is_self_compatible(
                         [i.sequence for i in index_set_2_trunc], length=min_length)
 
+                    if len(index_set_2_trunc) > subset_size_2:
+                        next
+
                     for auto_set_2 in itertools.combinations(index_set_2_trunc, subset_size_2):
                         index_list_2 = [i.sequence for i in auto_set_2]
+                        index_list_12 = join_two_compatible_sets(
+                            index_list_1, index_list_2, is_self_compatible_2, min_length)
+                        compatible_set = index_list_12
 
-                        if not is_self_compatible_2:
-                            if not is_self_compatible(index_list_2, length=min_length):
-                                compatible_set = False
-                                next
-                            else:
-                                compatible_set = True
-                        else:
-                            compatible_set = True
-
-                        index_list_12 = []
-                        index_list_12.extend(index_list_1)
-                        index_list_12.extend(index_list_2)
-
-                        if not is_self_compatible(index_list_12, length=min_length):
-                            compatible_set = False
+                        if not compatible_set:
                             next
                         else:
-                            compatible_set = True
                             if is_selected_3:
-                                compatible_set = False
-
+                                compatible_set = None
                                 index_set_3_trunc = remove_incompatible_indexes_from_queryset(
                                     index_set_3, index_list_12, length=min_length)
-
 
                                 is_self_compatible_3 = is_self_compatible(
                                     [i.sequence for i in index_set_3_trunc], length=min_length)
 
+                                if len(index_set_3_trunc) > subset_size_3:
+                                    next
+
                                 for auto_set_3 in itertools.combinations(index_set_3_trunc, subset_size_3):
                                     index_list_3 = [i.sequence for i in auto_set_3]
+                                    compatible_set = join_two_compatible_sets(
+                                        index_list_12, index_list_3, is_self_compatible_3, min_length)
 
-                                    if not is_self_compatible_3:
-                                        if not is_self_compatible(index_list_3, length=min_length):
-                                            compatible_set = False
-                                            next
-                                        else:
-                                            compatible_set = True
-                                    else:
-                                        compatible_set = True
-
-                                    index_list_123 = []
-                                    index_list_123.extend(index_list_12)
-                                    index_list_123.extend(index_list_3)
-
-                                    if not is_self_compatible(index_list_123, length=min_length):
-                                        compatible_set = False
+                                    if not compatible_set:
                                         next
                                     else:
-                                        compatible_set = True
                                         break
                             break
 
