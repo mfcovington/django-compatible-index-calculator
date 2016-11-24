@@ -41,6 +41,42 @@ class AutoIndexListForm(forms.Form):
         required=False,
     )
 
+    def clean(self):
+        cleaned_data = super(AutoIndexListForm, self).clean()
+        index_set_1 = cleaned_data.get('index_set_1')
+        index_set_2 = cleaned_data.get('index_set_2')
+        index_set_3 = cleaned_data.get('index_set_3')
+        subset_size_1 = cleaned_data.get('subset_size_1')
+        subset_size_2 = cleaned_data.get('subset_size_2')
+        subset_size_3 = cleaned_data.get('subset_size_3')
+
+        set_size_1 = len(index_set_1.index_set.all())
+        if subset_size_1 > set_size_1:
+            raise forms.ValidationError(
+                'Number of indexes used ({}) exceeds the number available ({}) for Index set 1 ({}).'.format(
+                    subset_size_1, set_size_1, index_set_1))
+
+        if index_set_2 is not None:
+            if subset_size_2 is None:
+                raise forms.ValidationError(
+                    'Please enter number of indexes to use for Index set 2.')
+
+            set_size_2 = len(index_set_2.index_set.all())
+            if subset_size_2 > set_size_2:
+                raise forms.ValidationError(
+                    'Number of indexes used ({}) exceeds the number available ({}) for Index set 2 ({}).'.format(
+                        subset_size_2, set_size_2, index_set_2))
+        if index_set_3 is not None:
+            if subset_size_3 is None:
+                raise forms.ValidationError(
+                    'Please enter number of indexes to use for Index set 3.')
+
+            set_size_3 = len(index_set_3.index_set.all())
+            if subset_size_3 > set_size_3:
+                raise forms.ValidationError(
+                    'Number of indexes used ({}) exceeds the number available ({}) for Index set 3 ({}).'.format(
+                        subset_size_3, set_size_3, index_set_3))
+
 
 class CustomIndexListForm(forms.Form):
 
