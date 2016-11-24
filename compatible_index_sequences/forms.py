@@ -77,6 +77,10 @@ class AutoIndexListForm(forms.Form):
                     'Number of indexes used ({}) exceeds the number available ({}) for Index set 3 ({}).'.format(
                         subset_size_3, set_size_3, index_set_3))
 
+        selected_sets = [s for s in [index_set_1, index_set_2, index_set_3] if s is not None]
+        if len(selected_sets) > len(set(selected_sets)):
+            raise forms.ValidationError('You selected the same index set multiple times.')
+
 
 class CustomIndexListForm(forms.Form):
 
