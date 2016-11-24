@@ -12,7 +12,7 @@ from .models import Index, IndexSet
 from .utils import (
     find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
     join_two_compatible_sets, is_self_compatible, minimum_index_length,
-    remove_incompatible_indexes_from_queryset)
+    optimize_set_order, remove_incompatible_indexes_from_queryset)
 
 
 def lookup_index_set(index, complete_index_set=Index):
@@ -24,85 +24,93 @@ def auto(request):
     if request.method == 'POST':
         form = AutoIndexListForm(request.POST)
         if form.is_valid():
-            index_set_1 = form.cleaned_data['index_set_1']
-            subset_size_1 = form.cleaned_data['subset_size_1']
+            index_set_list = [
+                form.cleaned_data['index_set_1'],
+                form.cleaned_data['index_set_2'],
+                form.cleaned_data['index_set_3']
+            ]
+            subset_size_list = [
+                form.cleaned_data['subset_size_1'],
+                form.cleaned_data['subset_size_2'],
+                form.cleaned_data['subset_size_3']
+            ]
 
-            index_set_2 = form.cleaned_data['index_set_2']
-            subset_size_2 = form.cleaned_data['subset_size_2']
+            order = optimize_set_order(*index_set_list)
+            index = {'set': [], 'size': []}
+            for o in order:
+                index['set'].append(index_set_list[o])
+                index['size'].append(subset_size_list[o])
 
-            index_set_3 = form.cleaned_data['index_set_3']
-            subset_size_3 = form.cleaned_data['subset_size_3']
-
-            min_length_1 = index_set_1.min_length()
+            min_length_0 = index['set'][0].min_length()
 
             try:
-                min_length_2 = index_set_2.min_length()
+                min_length_1 = index['set'][1].min_length()
+            except:
+                min_length_1 = float('inf')
+                is_selected_1 = False
+            else:
+                is_selected_1 = True
+
+            try:
+                min_length_2 = index['set'][2].min_length()
             except:
                 min_length_2 = float('inf')
                 is_selected_2 = False
             else:
                 is_selected_2 = True
 
-            try:
-                min_length_3 = index_set_3.min_length()
-            except:
-                min_length_3 = float('inf')
-                is_selected_3 = False
-            else:
-                is_selected_3 = True
-
-            min_length = min(min_length_1, min_length_2, min_length_3)
+            min_length = min(min_length_0, min_length_1, min_length_2)
 
             compatible_set = None
-            is_self_compatible_1 = index_set_1.is_self_compatible(length=min_length)
-            for auto_set_1 in itertools.combinations(index_set_1.index_set.all(), subset_size_1):
+            is_self_compatible_0 = index['set'][0].is_self_compatible(length=min_length)
+            for auto_set_0 in itertools.combinations(index['set'][0].index_set.all(), index['size'][0]):
+                auto_set_1 = []
                 auto_set_2 = []
-                auto_set_3 = []
 
-                index_list_1 = [i.sequence for i in auto_set_1]
-                if not is_self_compatible_1:
-                    if not is_self_compatible(index_list_1, length=min_length):
+                index_list_0 = [i.sequence for i in auto_set_0]
+                if not is_self_compatible_0:
+                    if not is_self_compatible(index_list_0, length=min_length):
                         next
                     else:
-                        compatible_set = index_list_1
+                        compatible_set = index_list_0
                 else:
-                    compatible_set = index_list_1
+                    compatible_set = index_list_0
 
-                if is_selected_2:
+                if is_selected_1:
                     compatible_set = None
-                    index_set_2_trunc = remove_incompatible_indexes_from_queryset(
-                        index_set_2, index_list_1, length=min_length)
+                    index_set_1_trunc = remove_incompatible_indexes_from_queryset(
+                        index['set'][1], index_list_0, length=min_length)
 
-                    is_self_compatible_2 = is_self_compatible(
-                        [i.sequence for i in index_set_2_trunc], length=min_length)
+                    is_self_compatible_1 = is_self_compatible(
+                        [i.sequence for i in index_set_1_trunc], length=min_length)
 
-                    if len(index_set_2_trunc) > subset_size_2:
+                    if len(index_set_1_trunc) > index['size'][1]:
                         next
 
-                    for auto_set_2 in itertools.combinations(index_set_2_trunc, subset_size_2):
-                        index_list_2 = [i.sequence for i in auto_set_2]
-                        index_list_12 = join_two_compatible_sets(
-                            index_list_1, index_list_2, is_self_compatible_2, min_length)
-                        compatible_set = index_list_12
+                    for auto_set_1 in itertools.combinations(index_set_1_trunc, index['size'][1]):
+                        index_list_1 = [i.sequence for i in auto_set_1]
+                        index_list_01 = join_two_compatible_sets(
+                            index_list_0, index_list_1, is_self_compatible_1, min_length)
+                        compatible_set = index_list_01
 
                         if not compatible_set:
                             next
                         else:
-                            if is_selected_3:
+                            if is_selected_2:
                                 compatible_set = None
-                                index_set_3_trunc = remove_incompatible_indexes_from_queryset(
-                                    index_set_3, index_list_12, length=min_length)
+                                index_set_2_trunc = remove_incompatible_indexes_from_queryset(
+                                    index['set'][2], index_list_01, length=min_length)
 
-                                is_self_compatible_3 = is_self_compatible(
-                                    [i.sequence for i in index_set_3_trunc], length=min_length)
+                                is_self_compatible_2 = is_self_compatible(
+                                    [i.sequence for i in index_set_2_trunc], length=min_length)
 
-                                if len(index_set_3_trunc) > subset_size_3:
+                                if len(index_set_2_trunc) > index['size'][2]:
                                     next
 
-                                for auto_set_3 in itertools.combinations(index_set_3_trunc, subset_size_3):
-                                    index_list_3 = [i.sequence for i in auto_set_3]
+                                for auto_set_2 in itertools.combinations(index_set_2_trunc, index['size'][2]):
+                                    index_list_2 = [i.sequence for i in auto_set_2]
                                     compatible_set = join_two_compatible_sets(
-                                        index_list_12, index_list_3, is_self_compatible_3, min_length)
+                                        index_list_01, index_list_2, is_self_compatible_2, min_length)
 
                                     if not compatible_set:
                                         next

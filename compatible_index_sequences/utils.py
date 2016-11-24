@@ -74,6 +74,23 @@ def is_self_compatible(index_list, min_distance=3, length=float('inf')):
     return True
 
 
+def optimize_set_order(*index_set_list):
+    ordering = range(len(index_set_list))
+    set_lengths = []
+    seq_lengths = []
+
+    for index_set in index_set_list:
+        try:
+            set_lengths.append(len(index_set.index_set.all()))
+            seq_lengths.append(index_set.min_length())
+        except:
+            set_lengths.append(float('inf'))
+            seq_lengths.append(0)
+
+    return [o for (stl, sql, o) in sorted(
+        zip(set_lengths, seq_lengths, ordering), key=lambda x: (-x[1], x[0]))]
+
+
 def remove_incompatible_indexes_from_queryset(index_set, index_list, min_distance=3, length=float('inf')):
     index_length = min(index_set.min_length(), minimum_index_length(index_list), length)
     incompatible_indexes = []
