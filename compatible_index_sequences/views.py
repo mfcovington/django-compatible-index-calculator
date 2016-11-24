@@ -131,7 +131,7 @@ def auto(request):
                 index_list.append(
                     {'sequence': sequence, 'index_set_data': index_set_data})
 
-            for index in itertools.chain(auto_set_1, auto_set_2, auto_set_3):
+            for index in itertools.chain(auto_set_0, auto_set_1, auto_set_2):
                 sequence = index.sequence
                 index_set_data = lookup_index_set(sequence)
                 index_list.append(
