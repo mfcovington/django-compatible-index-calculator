@@ -45,7 +45,7 @@ class AutoIndexListForm(forms.Form):
         label='Extend maximum search time from 10 seconds to 1 minute.<br>'
               '<small>Some searches may take a while to finish, especially '
               'those that involve index sets with different sequence lengths. '
-              'The <a href="{}">interactive tool</a> can be useful in such '
+              '<a href="{}">Interactive mode</a> can be useful in such '
               'situations.</small>'.format('/interactive/'),
         required=False,
     )

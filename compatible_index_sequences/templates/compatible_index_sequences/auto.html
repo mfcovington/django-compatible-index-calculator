@@ -12,6 +12,22 @@
 
       {% bootstrap_form_errors form %}
 
+      {% if timed_out %}
+        <div class="alert alert-danger alert-dismissable alert-link">
+          <button class="close" type="button" data-dismiss="alert" aria-hidden="true">×</button>
+          <p>
+            {% if form.extend_search_time.value %}
+              The maximum search time of 1 minute was reached.
+            {% else %}
+              The default search time of 10 seconds was reached. Below, you can extend the search time to 1 minute.
+            {% endif %}
+          </p>
+          <p>
+            <small>Some searches may take a while to finish, especially those that involve index sets with different sequence lengths. <a href="{% url 'compatible_index_sequences:interactive' %}">Interactive mode</a> can be useful in such situations.</small>
+          </p>
+        </div>
+      {% endif %}
+
       <div class="row required-fields">
         <div class="col-sm-8">
           {% bootstrap_field form.index_set_1 %}

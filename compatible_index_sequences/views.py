@@ -67,6 +67,7 @@ def auto(request):
             min_length = min(min_length_0, min_length_1, min_length_2)
 
             start_time = time.time()
+            timed_out = False
             if form.cleaned_data['extend_search_time']:
                 timeout = 60
             else:
@@ -82,7 +83,7 @@ def auto(request):
                 if not is_self_compatible_0:
                     if not is_self_compatible(index_list_0, length=min_length):
                         if is_timed_out(start_time, timeout):
-                            auto_set_0 = []
+                            timed_out = True
                             break
                         next
                     else:
@@ -111,8 +112,7 @@ def auto(request):
 
                         if not compatible_set:
                             if is_timed_out(start_time, timeout):
-                                auto_set_0 = []
-                                auto_set_1 = []
+                                timed_out = True
                                 break
                             next
                         else:
@@ -134,9 +134,7 @@ def auto(request):
 
                                     if not compatible_set:
                                         if is_timed_out(start_time, timeout):
-                                            auto_set_0 = []
-                                            auto_set_1 = []
-                                            auto_set_2 = []
+                                            timed_out = True
                                             break
                                         next
                                     else:
@@ -148,6 +146,13 @@ def auto(request):
 
             if not compatible_set:
                 print('WARNING: NO COMPATIBLE SETS FOUND')
+
+            if timed_out:
+                context = {
+                    'form': form,
+                    'timed_out': True,
+                }
+                return render(request, 'compatible_index_sequences/auto.html', context)
 
             index_list = []
 
