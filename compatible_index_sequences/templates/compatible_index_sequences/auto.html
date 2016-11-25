@@ -10,6 +10,8 @@
       {% csrf_token %}
       <legend>sicTool for Custom Index List</legend>
 
+      {% bootstrap_form_errors form %}
+
       <div class="row required-fields">
         <div class="col-sm-8">
           {% bootstrap_field form.index_set_1 %}
