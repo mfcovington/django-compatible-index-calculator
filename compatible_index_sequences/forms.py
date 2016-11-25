@@ -41,6 +41,15 @@ class AutoIndexListForm(forms.Form):
         required=False,
     )
 
+    extend_search_time = forms.BooleanField(
+        label='Extend maximum search time from 10 seconds to 1 minute.<br>'
+              '<small>Some searches may take a while to finish, especially '
+              'those that involve index sets with different sequence lengths. '
+              'The <a href="{}">interactive tool</a> can be useful in such '
+              'situations.</small>'.format('/interactive/'),
+        required=False,
+    )
+
     def clean(self):
         cleaned_data = super(AutoIndexListForm, self).clean()
         index_set_1 = cleaned_data.get('index_set_1')

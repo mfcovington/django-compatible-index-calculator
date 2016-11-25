@@ -1,6 +1,7 @@
 import csv
 import datetime
 import itertools
+import time
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -61,6 +62,12 @@ def auto(request):
 
             min_length = min(min_length_0, min_length_1, min_length_2)
 
+            start_time = time.time()
+            if form.cleaned_data['extend_search_time']:
+                timeout = 60
+            else:
+                timeout = 10
+
             compatible_set = None
             is_self_compatible_0 = index['set'][0].is_self_compatible(length=min_length)
             for auto_set_0 in itertools.combinations(index['set'][0].index_set.all(), index['size'][0]):
@@ -70,6 +77,9 @@ def auto(request):
                 index_list_0 = [i.sequence for i in auto_set_0]
                 if not is_self_compatible_0:
                     if not is_self_compatible(index_list_0, length=min_length):
+                        if time.time() - start_time > timeout:
+                            auto_set_0 = []
+                            break
                         next
                     else:
                         compatible_set = index_list_0
@@ -94,6 +104,10 @@ def auto(request):
                         compatible_set = index_list_01
 
                         if not compatible_set:
+                            if time.time() - start_time > timeout:
+                                auto_set_0 = []
+                                auto_set_1 = []
+                                break
                             next
                         else:
                             if is_selected_2:
@@ -113,6 +127,11 @@ def auto(request):
                                         index_list_01, index_list_2, is_self_compatible_2, min_length)
 
                                     if not compatible_set:
+                                        if time.time() - start_time > timeout:
+                                            auto_set_0 = []
+                                            auto_set_1 = []
+                                            auto_set_2 = []
+                                            break
                                         next
                                     else:
                                         break
