@@ -16,6 +16,10 @@ from .utils import (
     optimize_set_order, remove_incompatible_indexes_from_queryset)
 
 
+def is_timed_out(start_time, timeout):
+    return time.time() - start_time > timeout
+
+
 def lookup_index_set(index, complete_index_set=Index):
     return complete_index_set.objects.filter(sequence=index)
 
@@ -77,7 +81,7 @@ def auto(request):
                 index_list_0 = [i.sequence for i in auto_set_0]
                 if not is_self_compatible_0:
                     if not is_self_compatible(index_list_0, length=min_length):
-                        if time.time() - start_time > timeout:
+                        if is_timed_out(start_time, timeout):
                             auto_set_0 = []
                             break
                         next
@@ -98,13 +102,15 @@ def auto(request):
                         next
 
                     for auto_set_1 in itertools.combinations(index_set_1_trunc, index['size'][1]):
+                        auto_set_2 = []
+
                         index_list_1 = [i.sequence for i in auto_set_1]
                         index_list_01 = join_two_compatible_sets(
                             index_list_0, index_list_1, is_self_compatible_1, min_length)
                         compatible_set = index_list_01
 
                         if not compatible_set:
-                            if time.time() - start_time > timeout:
+                            if is_timed_out(start_time, timeout):
                                 auto_set_0 = []
                                 auto_set_1 = []
                                 break
@@ -127,7 +133,7 @@ def auto(request):
                                         index_list_01, index_list_2, is_self_compatible_2, min_length)
 
                                     if not compatible_set:
-                                        if time.time() - start_time > timeout:
+                                        if is_timed_out(start_time, timeout):
                                             auto_set_0 = []
                                             auto_set_1 = []
                                             auto_set_2 = []
