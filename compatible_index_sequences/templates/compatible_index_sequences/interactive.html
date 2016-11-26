@@ -7,10 +7,10 @@
 {% block content %}
   <div class="container">
 
-    <div class="page-header">
+    <div>
 
-      <h1>
-        Sequencing Index Compatibility Tool
+      <legend >
+        Interactive Mode
         <span class="pull-right">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-primary btn-border btn-toggle-sequences">
@@ -28,7 +28,7 @@
             </button>
           </div>
         </span>
-      </h1>
+      </legend >
 
       <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
         {% csrf_token %}
