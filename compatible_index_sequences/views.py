@@ -1,7 +1,6 @@
 import csv
 import datetime
 import itertools
-import time
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -11,13 +10,10 @@ from .forms import (
     AutoIndexListForm, CustomIndexListForm, HiddenSampleSheetDownloadForm)
 from .models import Index, IndexSet
 from .utils import (
-    find_incompatible_index_pairs, generate_alignment, index_list_from_samplesheet,
-    join_two_compatible_sets, is_self_compatible, minimum_index_length,
-    optimize_set_order, remove_incompatible_indexes_from_queryset)
-
-
-def is_timed_out(start_time, timeout):
-    return time.time() - start_time > timeout
+    find_compatible_subset, find_incompatible_index_pairs, generate_alignment,
+    index_list_from_samplesheet, join_two_compatible_sets, is_self_compatible,
+    minimum_index_length, optimize_set_order,
+    remove_incompatible_indexes_from_queryset)
 
 
 def lookup_index_set(index, complete_index_set=Index):
@@ -66,83 +62,13 @@ def auto(request):
 
             min_length = min(min_length_0, min_length_1, min_length_2)
 
-            start_time = time.time()
             timed_out = False
             if form.cleaned_data['extend_search_time']:
                 timeout = 60
             else:
                 timeout = 10
 
-            compatible_set = None
-            is_self_compatible_0 = index['set'][0].is_self_compatible(length=min_length)
-            for auto_set_0 in itertools.combinations(index['set'][0].index_set.all(), index['size'][0]):
-                auto_set_1 = []
-                auto_set_2 = []
-
-                index_list_0 = [i.sequence for i in auto_set_0]
-                if not is_self_compatible_0:
-                    if not is_self_compatible(index_list_0, length=min_length):
-                        if is_timed_out(start_time, timeout):
-                            timed_out = True
-                            break
-                        next
-                    else:
-                        compatible_set = index_list_0
-                else:
-                    compatible_set = index_list_0
-
-                if is_selected_1:
-                    compatible_set = None
-                    index_set_1_trunc = remove_incompatible_indexes_from_queryset(
-                        index['set'][1], index_list_0, length=min_length)
-
-                    is_self_compatible_1 = is_self_compatible(
-                        [i.sequence for i in index_set_1_trunc], length=min_length)
-
-                    if len(index_set_1_trunc) > index['size'][1]:
-                        next
-
-                    for auto_set_1 in itertools.combinations(index_set_1_trunc, index['size'][1]):
-                        auto_set_2 = []
-
-                        index_list_1 = [i.sequence for i in auto_set_1]
-                        index_list_01 = join_two_compatible_sets(
-                            index_list_0, index_list_1, is_self_compatible_1, min_length)
-                        compatible_set = index_list_01
-
-                        if not compatible_set:
-                            if is_timed_out(start_time, timeout):
-                                timed_out = True
-                                break
-                            next
-                        else:
-                            if is_selected_2:
-                                compatible_set = None
-                                index_set_2_trunc = remove_incompatible_indexes_from_queryset(
-                                    index['set'][2], index_list_01, length=min_length)
-
-                                is_self_compatible_2 = is_self_compatible(
-                                    [i.sequence for i in index_set_2_trunc], length=min_length)
-
-                                if len(index_set_2_trunc) > index['size'][2]:
-                                    next
-
-                                for auto_set_2 in itertools.combinations(index_set_2_trunc, index['size'][2]):
-                                    index_list_2 = [i.sequence for i in auto_set_2]
-                                    compatible_set = join_two_compatible_sets(
-                                        index_list_01, index_list_2, is_self_compatible_2, min_length)
-
-                                    if not compatible_set:
-                                        if is_timed_out(start_time, timeout):
-                                            timed_out = True
-                                            break
-                                        next
-                                    else:
-                                        break
-                            break
-
-                if compatible_set:
-                    break
+            compatible_set = find_compatible_subset(index['set'], index['size'], min_length=min_length, previous_list=[], timeout=timeout)
 
             if not compatible_set:
                 print('WARNING: NO COMPATIBLE SETS FOUND')
@@ -161,8 +87,8 @@ def auto(request):
                 index_list.append(
                     {'sequence': sequence, 'index_set_data': index_set_data})
 
-            for index in itertools.chain(auto_set_0, auto_set_1, auto_set_2):
-                sequence = index.sequence
+            for index in compatible_set:
+                sequence = index
                 index_set_data = lookup_index_set(sequence)
                 index_list.append(
                     {'sequence': sequence, 'index_set_data': index_set_data})
