@@ -19,7 +19,7 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
         index_set = index_set_list.popleft()
         current_list = [i.sequence for i in index_set.index_set.all()]
     except:
-        return []
+        return None
 
     index_list = remove_incompatible_indexes_from_queryset(
         current_list, previous_list, length=min_length)
@@ -50,7 +50,7 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
                 timeout, start_time)
             if new_list:
                 compatible_subset.extend(new_list)
-            else:
+            elif new_list is not None:
                 compatible_subset = []
 
         if compatible_subset:
