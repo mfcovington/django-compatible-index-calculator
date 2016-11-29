@@ -109,7 +109,7 @@ def auto(request):
 def custom(request):
     form = CustomIndexListForm()
     if request.method == 'POST':
-        form = CustomIndexListForm(request.POST)
+        form = CustomIndexListForm(request.POST, request.FILES)
         if form.is_valid():
             custom_index_list = form.cleaned_data['index_list'].splitlines()
             custom_index_list.extend(index_list_from_samplesheet(request))
