@@ -196,7 +196,9 @@ def remove_incompatible_indexes_from_queryset(index_set, index_list, min_distanc
     incompatible_indexes = []
 
     for seq_1, seq_2 in itertools.product(index_set, index_list):
-        distance = hamming_distance(seq_1[0:index_length], seq_2[0:index_length])
+        distance = hamming_distance(
+            seq_1[0:index_length].upper(),
+            seq_2[0:index_length].upper())
         if distance < min_distance:
             incompatible_indexes.append(seq_1)
 
