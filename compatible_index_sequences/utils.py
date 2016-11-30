@@ -137,7 +137,10 @@ def join_two_compatible_sets(a_sequences, b_sequences, b_is_self_compatible,
 
 def minimum_index_length_from_lists(*index_list):
     index_list = [item for sublist in index_list for item in sublist]
-    return min([len(i) for i in index_list])
+    if len(index_list) > 0:
+        return min([len(i) for i in index_list])
+    else:
+        return float('inf')
 
 
 def minimum_index_length_from_sets(index_set_list):
