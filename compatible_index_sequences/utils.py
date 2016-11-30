@@ -70,9 +70,15 @@ def find_incompatible_index_pairs(index_list, min_distance=3):
     return incompatible_pairs
 
 
-def generate_alignment(this, that):
-    return ''.join(
+def generate_alignment(this, that, mark_unaligned=True):
+    alignment = ''.join(
         ['|' if a == b else ' ' for a, b in zip(this.upper(), that.upper())])
+
+    if mark_unaligned:
+        len_diff = abs(len(this) - len(that))
+        alignment += '-' * len_diff
+
+    return alignment
 
 
 def hamming_distance(this, that):
