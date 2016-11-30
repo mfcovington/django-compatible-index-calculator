@@ -91,7 +91,11 @@ def auto(request):
                 index['set'], index['size'], min_length=min_length,
                 previous_list=custom_list, timeout=timeout)
 
-            if not compatible_set:
+            if compatible_set:
+                index_list.extend(
+                    generate_index_list_with_index_set_data(compatible_set))
+            else:
+                index_list = []
                 print('WARNING: NO COMPATIBLE SETS FOUND')
 
             if find_compatible_subset.timed_out:
@@ -102,9 +106,6 @@ def auto(request):
                 print('WARNING: TIMED OUT')
                 return render(
                     request, 'compatible_index_sequences/auto.html', context)
-
-            index_list.extend(
-                generate_index_list_with_index_set_data(compatible_set))
 
             hidden_download_form = HiddenSampleSheetDownloadForm(
                 initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})
