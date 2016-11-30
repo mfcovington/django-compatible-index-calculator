@@ -12,7 +12,8 @@ from .models import Index, IndexSet
 from .utils import (
     find_compatible_subset, find_incompatible_index_pairs,
     generate_incompatible_alignments, index_list_from_samplesheet,
-    is_self_compatible, minimum_index_length, optimize_set_order)
+    is_self_compatible, minimum_index_length_from_lists,
+    minimum_index_length_from_sets, optimize_set_order)
 
 
 def generate_index_list_with_index_set_data(index_list):
@@ -51,30 +52,18 @@ def auto(request):
 
             try:
                 custom_list = [i['sequence'] for i in index_list]
-                min_length_custom_list = minimum_index_length(custom_list)
             except:
                 custom_list = []
-                min_length_custom_list = float('inf')
 
             index = {'set': [], 'size': []}
             for o in order:
                 index['set'].append(index_set_list[o])
                 index['size'].append(subset_size_list[o])
 
-            min_length_0 = index['set'][0].min_length()
-
-            try:
-                min_length_1 = index['set'][1].min_length()
-            except:
-                min_length_1 = float('inf')
-
-            try:
-                min_length_2 = index['set'][2].min_length()
-            except:
-                min_length_2 = float('inf')
-
-            min_length = min(min_length_0, min_length_1, min_length_2,
-                             min_length_custom_list)
+            min_length = min(
+                minimum_index_length_from_lists(custom_list),
+                minimum_index_length_from_sets(index['set'])
+            )
 
             if not is_self_compatible(custom_list, length=min_length):
                 incompatible_index_pairs = find_incompatible_index_pairs(

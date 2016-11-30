@@ -62,7 +62,7 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
 
 
 def find_incompatible_index_pairs(index_list, min_distance=3):
-    index_length = minimum_index_length(index_list)
+    index_length = minimum_index_length_from_lists(index_list)
     incompatible_pairs = []
     for pair in itertools.combinations(index_list, 2):
         distance = hamming_distance(
@@ -135,16 +135,26 @@ def join_two_compatible_sets(a_sequences, b_sequences, b_is_self_compatible,
         return None
 
 
-def minimum_index_length(*index_list):
+def minimum_index_length_from_lists(*index_list):
     index_list = [item for sublist in index_list for item in sublist]
     return min([len(i) for i in index_list])
+
+
+def minimum_index_length_from_sets(index_set_list):
+    min_length = float('inf')
+    for index_set in index_set_list:
+        try:
+            min_length = min(index_set.min_length(), min_length)
+        except:
+            pass
+    return min_length
 
 
 def is_self_compatible(index_list, min_distance=3, length=float('inf')):
     if len(index_list) == 0:
         return True
 
-    index_length = min(minimum_index_length(index_list), length)
+    index_length = min(minimum_index_length_from_lists(index_list), length)
     for pair in itertools.combinations(index_list, 2):
         distance = hamming_distance(
             pair[0][0:index_length].upper(), pair[1][0:index_length].upper())
@@ -174,7 +184,7 @@ def remove_incompatible_indexes_from_queryset(index_set, index_list, min_distanc
     if index_list == []:
         return index_set
 
-    index_length = min(minimum_index_length(index_set, index_list), length)
+    index_length = min(minimum_index_length_from_lists(index_set, index_list), length)
     incompatible_indexes = []
 
     for seq_1, seq_2 in itertools.product(index_set, index_list):

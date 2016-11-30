@@ -4,7 +4,7 @@ import re
 from django.core.validators import RegexValidator
 from django.db import models
 
-from .utils import hamming_distance, minimum_index_length
+from .utils import hamming_distance
 
 
 class IndexSetManager(models.Manager):
