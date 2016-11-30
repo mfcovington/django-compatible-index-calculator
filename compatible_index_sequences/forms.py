@@ -4,7 +4,34 @@ from django.core import validators
 from .models import IndexSet
 
 
-class AutoIndexListForm(forms.Form):
+class BaseForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        try:
+            rows = kwargs.pop('rows')
+        except:
+            rows = 20
+        placeholder = 'ATGATTGA (one sequence per line)'
+        super(BaseForm, self).__init__(*args, **kwargs)
+        self.fields['index_list'].widget = forms.Textarea(
+            attrs={'placeholder': placeholder, 'rows': rows, })
+
+    index_list = forms.CharField(
+        label='Enter index sequences',
+        required=False,
+    )
+    samplesheet = forms.FileField(
+        label="Upload 'SampleSheet.csv'",
+        required=False,
+    )
+    honeypot = forms.CharField(
+        label="Leave empty.",
+        required=False,
+        validators=[validators.MaxLengthValidator(0)],
+        widget=forms.HiddenInput,
+    )
+
+
+class AutoIndexListForm(BaseForm):
 
     index_set_1 = forms.ModelChoiceField(
         queryset=IndexSet.objects.all(),
@@ -96,26 +123,7 @@ class AutoIndexListForm(forms.Form):
             raise forms.ValidationError('You selected the same index set multiple times.')
 
 
-class CustomIndexListForm(forms.Form):
-
-    placeholder = 'ATGATTGA (one sequence per line)'
-
-    index_list = forms.CharField(
-        label='Enter index sequences',
-        required=False,
-        widget=forms.Textarea(
-            attrs={'placeholder': placeholder, 'rows': 20, }),
-    )
-    samplesheet = forms.FileField(
-        label="Upload 'SampleSheet.csv'",
-        required=False,
-    )
-    honeypot = forms.CharField(
-        label="Leave empty.",
-        required=False,
-        validators=[validators.MaxLengthValidator(0)],
-        widget=forms.HiddenInput,
-    )
+class CustomIndexListForm(BaseForm):
 
     def clean(self):
         cleaned_data = super(CustomIndexListForm, self).clean()

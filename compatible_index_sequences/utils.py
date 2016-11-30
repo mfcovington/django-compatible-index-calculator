@@ -83,6 +83,13 @@ def generate_alignment(this, that, mark_unaligned=True):
     return alignment
 
 
+def generate_incompatible_alignments(incompatible_index_pairs):
+    incompatible_alignments = []
+    for pair in incompatible_index_pairs:
+        incompatible_alignments.append(generate_alignment(*pair))
+    return incompatible_alignments
+
+
 def hamming_distance(this, that):
     if not this or not that or len(this) != len(that):
         return None
@@ -134,6 +141,9 @@ def minimum_index_length(*index_list):
 
 
 def is_self_compatible(index_list, min_distance=3, length=float('inf')):
+    if len(index_list) == 0:
+        return True
+
     index_length = min(minimum_index_length(index_list), length)
     for pair in itertools.combinations(index_list, 2):
         distance = hamming_distance(

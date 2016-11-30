@@ -10,10 +10,18 @@ from .forms import (
     AutoIndexListForm, CustomIndexListForm, HiddenSampleSheetDownloadForm)
 from .models import Index, IndexSet
 from .utils import (
-    find_compatible_subset, find_incompatible_index_pairs, generate_alignment,
-    index_list_from_samplesheet, join_two_compatible_sets, is_self_compatible,
-    minimum_index_length, optimize_set_order,
-    remove_incompatible_indexes_from_queryset)
+    find_compatible_subset, find_incompatible_index_pairs,
+    generate_incompatible_alignments, index_list_from_samplesheet,
+    is_self_compatible, minimum_index_length, optimize_set_order)
+
+
+def generate_index_list_with_index_set_data(index_list):
+    index_list_with_data = []
+    for sequence in index_list:
+        index_set_data = lookup_index_set(sequence)
+        index_list_with_data.append(
+            {'sequence': sequence, 'index_set_data': index_set_data})
+    return index_list_with_data
 
 
 def lookup_index_set(index, complete_index_set=Index):
@@ -21,9 +29,9 @@ def lookup_index_set(index, complete_index_set=Index):
 
 
 def auto(request):
-    form = AutoIndexListForm()
+    form = AutoIndexListForm(rows=10)
     if request.method == 'POST':
-        form = AutoIndexListForm(request.POST)
+        form = AutoIndexListForm(request.POST, request.FILES, rows=10)
         if form.is_valid():
             index_set_list = [
                 form.cleaned_data['index_set_1'],
@@ -36,7 +44,18 @@ def auto(request):
                 form.cleaned_data['subset_size_3']
             ]
 
+            users_index_list = form.cleaned_data['index_list'].splitlines()
+            users_index_list.extend(index_list_from_samplesheet(request))
+            index_list = generate_index_list_with_index_set_data(users_index_list)
             order = optimize_set_order(*index_set_list)
+
+            try:
+                custom_list = [i['sequence'] for i in index_list]
+                min_length_custom_list = minimum_index_length(custom_list)
+            except:
+                custom_list = []
+                min_length_custom_list = float('inf')
+
             index = {'set': [], 'size': []}
             for o in order:
                 index['set'].append(index_set_list[o])
@@ -48,26 +67,40 @@ def auto(request):
                 min_length_1 = index['set'][1].min_length()
             except:
                 min_length_1 = float('inf')
-                is_selected_1 = False
-            else:
-                is_selected_1 = True
 
             try:
                 min_length_2 = index['set'][2].min_length()
             except:
                 min_length_2 = float('inf')
-                is_selected_2 = False
-            else:
-                is_selected_2 = True
 
-            min_length = min(min_length_0, min_length_1, min_length_2)
+            min_length = min(min_length_0, min_length_1, min_length_2,
+                             min_length_custom_list)
+
+            if not is_self_compatible(custom_list, length=min_length):
+                incompatible_index_pairs = find_incompatible_index_pairs(
+                    custom_list)
+                incompatible_alignments = generate_incompatible_alignments(
+                    incompatible_index_pairs)
+                index_list = generate_index_list_with_index_set_data(custom_list)
+
+                context = {
+                    'index_list': index_list,
+                    'incompatible_indexes':
+                        [item for sublist in incompatible_index_pairs for item in sublist],
+                    'incompatible_index_pairs':
+                        zip(incompatible_index_pairs, incompatible_alignments),
+                }
+                return render(
+                    request, 'compatible_index_sequences/custom_results.html', context)
 
             if form.cleaned_data['extend_search_time']:
                 timeout = 60
             else:
                 timeout = 10
 
-            compatible_set = find_compatible_subset(index['set'], index['size'], min_length=min_length, previous_list=[], timeout=timeout)
+            compatible_set = find_compatible_subset(
+                index['set'], index['size'], min_length=min_length,
+                previous_list=custom_list, timeout=timeout)
 
             if not compatible_set:
                 print('WARNING: NO COMPATIBLE SETS FOUND')
@@ -77,20 +110,12 @@ def auto(request):
                     'form': form,
                     'timed_out': True,
                 }
-                return render(request, 'compatible_index_sequences/auto.html', context)
+                print('WARNING: TIMED OUT')
+                return render(
+                    request, 'compatible_index_sequences/auto.html', context)
 
-            index_list = []
-
-            for sequence in index_list_from_samplesheet(request):
-                index_set_data = lookup_index_set(sequence)
-                index_list.append(
-                    {'sequence': sequence, 'index_set_data': index_set_data})
-
-            for index in compatible_set:
-                sequence = index
-                index_set_data = lookup_index_set(sequence)
-                index_list.append(
-                    {'sequence': sequence, 'index_set_data': index_set_data})
+            index_list.extend(
+                generate_index_list_with_index_set_data(compatible_set))
 
             hidden_download_form = HiddenSampleSheetDownloadForm(
                 initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})
@@ -116,15 +141,10 @@ def custom(request):
             incompatible_index_pairs = find_incompatible_index_pairs(
                 custom_index_list)
 
-            incompatible_alignments = []
-            for pair in incompatible_index_pairs:
-                incompatible_alignments.append(generate_alignment(*pair))
+            incompatible_alignments = generate_incompatible_alignments(
+                incompatible_index_pairs)
 
-            index_list = []
-            for sequence in custom_index_list:
-                index_set_data = lookup_index_set(sequence)
-                index_list.append(
-                    {'sequence': sequence, 'index_set_data': index_set_data})
+            index_list = generate_index_list_with_index_set_data(custom_index_list)
 
             hidden_download_form = HiddenSampleSheetDownloadForm(
                 initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})

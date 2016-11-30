@@ -9,48 +9,54 @@
 
     <legend>Results</legend>
 
-    <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
-      {% csrf_token %}
-      {% bootstrap_form hidden_download_form %}
-      {% buttons %}
-        <button type="submit" class="btn btn-success">
-          <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-          SampleSheet.csv
-        </button>
-      {% endbuttons %}
-    </form>
+    {% if index_list|length > 0 %}
+      <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form hidden_download_form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+            SampleSheet.csv
+          </button>
+        {% endbuttons %}
+      </form>
 
-    <hr>
+      <hr>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Auto Index List</h3>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Index Sequence</th>
-            <th>Associated Index Sets</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for index in index_list %}
-            <tr {% if index.sequence in incompatible_indexes %}class="danger"{% endif %}>
-              <td class="sequence">{{ index.sequence }}</td>
-              <td>
-                {% for index_set in index.index_set_data %}
-                  {% if not forloop.first %}<br>{% endif %}
-                  <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set.index_set.pk %}" target="_blank">
-                    {{ index_set.index_set }}
-                    ({{ index_set.name }})
-                  </a>
-                {% endfor %}
-              </td>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Auto Index List</h3>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Index Sequence</th>
+              <th>Associated Index Sets</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {% for index in index_list %}
+              <tr {% if index.sequence in incompatible_indexes %}class="danger"{% endif %}>
+                <td class="sequence">{{ index.sequence }}</td>
+                <td>
+                  {% for index_set in index.index_set_data %}
+                    {% if not forloop.first %}<br>{% endif %}
+                    <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set.index_set.pk %}" target="_blank">
+                      {{ index_set.index_set }}
+                      ({{ index_set.name }})
+                    </a>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="alert alert-danger">
+        No compatible index subsets were found. <a href="javascript:history.go(-1)">Change your search parameters</a> or try using <a href="{% url 'compatible_index_sequences:interactive' %}">Interactive mode</a>.
+      </div>
+    {% endif %}
 
   </div>
 
