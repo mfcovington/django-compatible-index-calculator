@@ -8,6 +8,8 @@ from collections import deque
 def find_compatible_subset(index_set_list, subset_size_list, min_length,
                            previous_list=[], timeout=10, start_time=None):
 
+    find_compatible_subset.timed_out = False
+
     if start_time is None:
         start_time = time.time()
     compatible_subset = []
@@ -35,7 +37,7 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
         if not self_compatible_list:
             if not is_self_compatible(index_subset, length=min_length):
                 if is_timed_out(start_time, timeout=timeout):
-                    timed_out = True
+                    find_compatible_subset.timed_out = True
                     return []
                 continue
             else:

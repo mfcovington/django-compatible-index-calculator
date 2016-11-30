@@ -62,7 +62,6 @@ def auto(request):
 
             min_length = min(min_length_0, min_length_1, min_length_2)
 
-            timed_out = False
             if form.cleaned_data['extend_search_time']:
                 timeout = 60
             else:
@@ -73,7 +72,7 @@ def auto(request):
             if not compatible_set:
                 print('WARNING: NO COMPATIBLE SETS FOUND')
 
-            if timed_out:
+            if find_compatible_subset.timed_out:
                 context = {
                     'form': form,
                     'timed_out': True,
