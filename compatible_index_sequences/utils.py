@@ -101,9 +101,14 @@ def hamming_distance(this, that):
 
 def index_list_from_samplesheet(request):
     index_list = []
-    file = request.FILES.get('samplesheet')
+    file_list = [
+        request.FILES.get('samplesheet_1'),
+        request.FILES.get('samplesheet_2')
+    ]
 
-    if file:
+    for file in file_list:
+        if file is None:
+            continue
         reader = csv.reader(codecs.iterdecode(file, 'utf-8'))
         ok = 0
         for row in reader:

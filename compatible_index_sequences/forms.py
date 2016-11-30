@@ -19,7 +19,11 @@ class BaseForm(forms.Form):
         label='Enter index sequences',
         required=False,
     )
-    samplesheet = forms.FileField(
+    samplesheet_1 = forms.FileField(
+        label="Upload 'SampleSheet.csv'",
+        required=False,
+    )
+    samplesheet_2 = forms.FileField(
         label="Upload 'SampleSheet.csv'",
         required=False,
     )
@@ -60,11 +64,6 @@ class AutoIndexListForm(BaseForm):
     subset_size_3 = forms.IntegerField(
         label="Number of indexes to use",
         min_value = 1,
-        required=False,
-    )
-
-    samplesheet = forms.FileField(
-        label="Upload 'SampleSheet.csv'",
         required=False,
     )
 
@@ -128,9 +127,10 @@ class CustomIndexListForm(BaseForm):
     def clean(self):
         cleaned_data = super(CustomIndexListForm, self).clean()
         index_list = cleaned_data.get('index_list')
-        samplesheet = cleaned_data.get('samplesheet')
+        samplesheet_1 = cleaned_data.get('samplesheet_1')
+        samplesheet_2 = cleaned_data.get('samplesheet_2')
 
-        if index_list == '' and samplesheet is None:
+        if index_list == '' and samplesheet_1 is None and samplesheet_2 is None:
             raise forms.ValidationError(
                 'Please enter index sequences and/or upload a sample sheet.')
 

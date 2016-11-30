@@ -9,7 +9,8 @@
     <form action="{% url 'compatible_index_sequences:custom' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <legend>Custom List Mode</legend>
-      {% bootstrap_form form %}
+      {% bootstrap_form_errors form %}
+      {% include "compatible_index_sequences/_base_form_fields.html" %}
       {% buttons %}
         <button type="submit" class="btn btn-default">Submit</button>
       {% endbuttons %}
