@@ -125,3 +125,11 @@ textarea {
   content: "*";
   padding-left: 2px;
 }
+
+/*****************/
+/* Miscellaneous */
+/*****************/
+
+#n-mer {
+  color: rgb(150, 150, 150);
+}

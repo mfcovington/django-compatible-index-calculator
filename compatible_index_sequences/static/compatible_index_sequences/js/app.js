@@ -156,6 +156,9 @@ function checkCompatibility() {
     $('.btn-deselect-all-master').prop('disabled', true);
   }
 
+  // Display n-mer length being used for index comparisons
+  updateNMerStatus(  s_length, min_length  );
+
   var indexSetList = $('.index_set');
   for (var i = 0; i < indexSetList.length; i++) {
     var selectedSubset = $(indexSetList[i]).find('.idx.selected');
@@ -238,4 +241,19 @@ function nameSampleSheet() {
   var dateTimeStamp = $.format.toBrowserTimeZone(new Date(), "yyyyMMdd.HHmmss");
   var filename = 'SampleSheet.' + dateTimeStamp + '.csv'
   $('#export-csv input#id_filename')[0].value = filename;
+}
+
+
+function updateNMerStatus( selected_length, min_index_length ) {
+  if ($('#config-length-manual').is(':checked')) {
+    manual_length = $('#config-length')[0].value;
+    if ( manual_length == '' ) {
+      manual_length = 'N';
+    }
+    $('#n-mer').text('\u2014 Comparing ' + manual_length + '-mers');
+  } else if (selected_length > 0) {
+    $('#n-mer').text('\u2014 Comparing ' + min_index_length + '-mers');
+  } else {
+    $('#n-mer').text('');
+  }
 }
