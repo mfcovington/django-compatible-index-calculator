@@ -98,15 +98,14 @@ $('#config-visibility :checkbox').change(function() {
 });
 
 
-function hamming(input1, input2) {
-  var distance = 0;
-  var length;
+function hamming(input1, input2, length) {
   if ($('#config-length-manual').is(':checked')) {
     length = $('#config-length')[0].value;
-  } else {
-    var length = Math.min(input1.length, input2.length);
+  } else if ( length == null ) {
+    length = Math.min(input1.length, input2.length);
   }
 
+  var distance = 0;
   for ( i = 0; i < length; i++ ) {
     if ( input1[ i ] !== input2[ i ] ) {
       distance += 1;
@@ -124,6 +123,7 @@ function checkCompatibility() {
 
   var s_length = selected.length;
   var n_length = notSelected.length;
+  var min_length = minimumIndexLength(selected);
 
   // compare all members of selected set to self
   for ( var s1 = 0; s1 < s_length; s1++) {
@@ -131,7 +131,7 @@ function checkCompatibility() {
       var sequence1 = $( selected[s1] ).children('.sequence').text().trim();
       var sequence2 = $( selected[s2] ).children('.sequence').text().trim();
       var hamming_distance = hamming(sequence1.toUpperCase(),
-                                     sequence2.toUpperCase());
+                                     sequence2.toUpperCase(), min_length);
       if ( hamming_distance < min_dist ) {
         incompatible.push(selected[s1], selected[s2]);
       }
@@ -142,7 +142,7 @@ function checkCompatibility() {
       var sequence1 = $( selected[s1] ).children('.sequence').text().trim();
       var sequence2 = $( notSelected[n] ).children('.sequence').text().trim();
       var hamming_distance = hamming(sequence1.toUpperCase(),
-                                     sequence2.toUpperCase());
+                                     sequence2.toUpperCase(), min_length);
       if ( hamming_distance < min_dist ) {
         incompatible.push(notSelected[n]);
       }
@@ -206,16 +206,31 @@ function deselectIncompatible(index) {
   var allIndexes = $('.idx');
   var sequence1 = index.children('.sequence').text().trim();
 
+  var min_length = minimumIndexLength($('.idx.selected'));
+
   for (var i = 0; i < allIndexes.length; i++) {
     if ($(allIndexes[i]).hasClass('selected') && allIndexes[i] !== index[0]) {
       var sequence2 = $(allIndexes[i]).children('.sequence').text().trim();
       var hamming_distance = hamming(sequence1.toUpperCase(),
-                                     sequence2.toUpperCase());
+                                     sequence2.toUpperCase(), min_length);
       if ( hamming_distance < min_dist ) {
         $(allIndexes[i]).removeClass('selected');
       }
     }
   }
+}
+
+
+function minimumIndexLength(selected) {
+  var sequence_list = $( selected ).children('.sequence').map(function(){
+    return $.trim($(this).text());
+  }).get();
+
+  var min_length = Infinity;
+  for ( var i = 0; i < sequence_list.length; i++ ) {
+    min_length = Math.min(min_length, sequence_list[i].length);
+  }
+  return min_length;
 }
 
 
