@@ -69,7 +69,7 @@ def auto(request):
                 incompatible_index_pairs = find_incompatible_index_pairs(
                     custom_list)
                 incompatible_alignments = generate_incompatible_alignments(
-                    incompatible_index_pairs)
+                    incompatible_index_pairs, length=min_length)
                 index_list = generate_index_list_with_index_set_data(custom_list)
 
                 context = {
@@ -132,7 +132,8 @@ def custom(request):
                 custom_index_list)
 
             incompatible_alignments = generate_incompatible_alignments(
-                incompatible_index_pairs)
+                incompatible_index_pairs,
+                length=minimum_index_length_from_lists(custom_index_list))
 
             index_list = generate_index_list_with_index_set_data(custom_index_list)
 

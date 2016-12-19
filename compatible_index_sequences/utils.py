@@ -72,7 +72,7 @@ def find_incompatible_index_pairs(index_list, min_distance=3):
     return incompatible_pairs
 
 
-def generate_alignment(this, that, mark_unaligned=True):
+def generate_alignment(this, that, mark_unaligned=True, length=float('inf')):
     alignment = ''.join(
         ['|' if a == b else ' ' for a, b in zip(this.upper(), that.upper())])
 
@@ -80,13 +80,18 @@ def generate_alignment(this, that, mark_unaligned=True):
         len_diff = abs(len(this) - len(that))
         alignment += '-' * len_diff
 
+    if len(alignment) > length:
+        alignment = alignment[0:length] + '-' * (len(alignment) - length)
+
     return alignment
 
 
-def generate_incompatible_alignments(incompatible_index_pairs):
+def generate_incompatible_alignments(incompatible_index_pairs,
+                                     length=float('inf')):
     incompatible_alignments = []
     for pair in incompatible_index_pairs:
-        incompatible_alignments.append(generate_alignment(*pair))
+        incompatible_alignments.append(
+            generate_alignment(*pair, length=length))
     return incompatible_alignments
 
 
