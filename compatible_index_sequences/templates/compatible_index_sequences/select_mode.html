@@ -1,6 +1,6 @@
 {% extends "compatible_index_sequences/base.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap3 static %}
 
 {% block title %}Select Mode | {{ block.super }}{% endblock title %}
 
@@ -11,7 +11,7 @@
     <div class="item  col-xs-12 col-sm-4">
       <div class="thumbnail">
         <a href="{% url 'compatible_index_sequences:interactive' %}">
-          <img src="http://placehold.it/600x600" alt="#">
+          <img src="{% static 'compatible_index_sequences/img/interactive-mode.png' %}" alt="Interactive Mode">
           <div class="caption">
             <h4 class="group inner list-group-item-heading text-center">
               Interactive
@@ -27,7 +27,7 @@
     <div class="item  col-xs-12 col-sm-4">
       <div class="thumbnail">
         <a href="{% url 'compatible_index_sequences:auto' %}">
-          <img src="http://placehold.it/600x600" alt="#">
+          <img src="{% static 'compatible_index_sequences/img/automatic-mode.png' %}" alt="Automatic Mode">
           <div class="caption">
             <h4 class="group inner list-group-item-heading text-center">
               Automatic
@@ -43,7 +43,7 @@
     <div class="item  col-xs-12 col-sm-4">
       <div class="thumbnail">
         <a href="{% url 'compatible_index_sequences:custom' %}">
-          <img src="http://placehold.it/600x600" alt="#">
+          <img src="{% static 'compatible_index_sequences/img/custom-mode.png' %}" alt="Custom Mode">
           <div class="caption">
             <h4 class="group inner list-group-item-heading text-center">
               Custom
