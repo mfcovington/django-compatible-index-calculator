@@ -24,6 +24,10 @@ table.index-set {
   border: 3px solid transparent;
 }
 
+.idx:hover {
+  background-color: #87ceeb;
+}
+
 .selected {
   border: 3px solid #46AA68;
 }
