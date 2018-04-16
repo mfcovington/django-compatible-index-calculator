@@ -12,6 +12,10 @@ $(function () {
       isSetChanged = true;
       if (e.shiftKey) {
         deselectIncompatible($(this));
+      } else if (e.altKey) {
+        if ( $(this).hasClass('incompatible') && $(this).hasClass('selected')) {
+          flashIncompatible($(this));
+        }
       } else {
         $(this).toggleClass("selected");
         isSelected = $(this).hasClass("selected");
@@ -223,6 +227,40 @@ function deselectIncompatible(index) {
   }
 }
 
+function flashIncompatible(index) {
+  if (!$(index).is('.selected.incompatible')) {
+    return;
+  }
+
+  var min_dist = $('#config-distance')[0].value;
+  var allIndexes = $('.idx');
+  var sequence1 = index.children('.sequence').text().trim();
+
+  var min_length = minimumIndexLength($('.idx.selected'));
+
+  var incompatibleSelectedIndexes = $('.idx').filter('.incompatible.selected')
+  var indexesToFlash = [];
+
+  for (var i = 0; i < incompatibleSelectedIndexes.length; i++) {
+    var sequence2 = $(incompatibleSelectedIndexes[i]).children('.sequence').text().trim();
+    var hamming_distance = hamming(sequence1.toUpperCase(),
+                                   sequence2.toUpperCase(), min_length);
+    if ( hamming_distance < min_dist ) {
+      indexesToFlash.push($(incompatibleSelectedIndexes[i]))
+    }
+  }
+
+  $(indexesToFlash).each(function() {
+    $(this)
+      .animate({opacity: 0.25}, { duration: 200, queue: true})
+      .delay(400)
+      .animate({opacity: 1}, { duration: 200, queue: true})
+      .delay(200)
+      .animate({opacity: 0.25}, { duration: 200, queue: true})
+      .delay(400)
+      .animate({opacity: 1}, { duration: 200, queue: true})
+  });
+}
 
 function minimumIndexLength(selected) {
   var sequence_list = $( selected ).children('.sequence').map(function(){
