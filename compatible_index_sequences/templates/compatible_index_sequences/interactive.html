@@ -30,6 +30,19 @@
         </span>
       </legend >
 
+      <div class="well usage">
+        <p><strong>Click</strong> to select index names. Incompatible indices will be <span class="incompatible">highlighted</span> in red. If an incompatible index is selected, it will also have a red <span class="incompatible selected">border</span>.</p>
+        <p><strong>Alt-click</strong> on a selected and incompatible index to identify the other selected indices with which it is incompatible.</p>
+        <p><strong>Shift-click</strong> on a selected and incompatible index to deselect the other selected indices with which it is incompatible.</p>
+        <br>
+        <p>
+          Index sets can be selected/deselected in bulk using the <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>/<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> buttons.
+          Index sequences can be displayed or hidden with the <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>/<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> buttons.
+          To change parameters or view different index sets, click the <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span> button.
+          To toggle helpful tooltips, click the <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> button.
+        </p>
+      </div>
+
       <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
         {% csrf_token %}
         {% bootstrap_form hidden_download_form %}

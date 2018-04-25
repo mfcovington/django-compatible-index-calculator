@@ -137,3 +137,7 @@ textarea {
 #n-mer {
   color: rgb(150, 150, 150);
 }
+
+.usage.well p {
+  margin-bottom: 0;
+}
