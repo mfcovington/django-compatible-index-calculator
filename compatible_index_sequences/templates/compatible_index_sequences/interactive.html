@@ -10,7 +10,6 @@
     <div>
 
       <legend >
-        Interactive Mode <small id="n-mer"></small>
         <span class="pull-right">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-primary btn-border btn-toggle-sequences">
@@ -28,6 +27,18 @@
             </button>
           </div>
         </span>
+        <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
+          Interactive Mode
+          {% csrf_token %}
+          {% bootstrap_form hidden_download_form %}
+          <div class="form-group inline-form-buttons">
+            <button type="submit" class="btn btn-success btn-xs" disabled>
+              <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+              SampleSheet.csv
+            </button>
+          </div>
+          <small id="n-mer"></small>
+        </form>
       </legend >
 
       <div class="well usage">
@@ -42,17 +53,6 @@
           To toggle helpful tooltips, click the <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> button.
         </p>
       </div>
-
-      <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
-        {% csrf_token %}
-        {% bootstrap_form hidden_download_form %}
-        {% buttons %}
-          <button type="submit" class="btn btn-success" disabled>
-            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-            SampleSheet.csv
-          </button>
-        {% endbuttons %}
-      </form>
 
     </div>
 

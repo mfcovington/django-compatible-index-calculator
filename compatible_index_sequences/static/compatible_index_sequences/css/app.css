@@ -138,6 +138,10 @@ textarea {
   color: rgb(150, 150, 150);
 }
 
+.inline-form-buttons {
+  display: inline-block;
+}
+
 .usage.well p {
   margin-bottom: 0;
 }
