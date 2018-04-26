@@ -9,6 +9,12 @@
     <form action="{% url 'compatible_index_sequences:custom' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <legend>Custom List Mode</legend>
+      <div class="well usage">
+        <p>
+          To check a custom set of index sequences for compatibility, enter your index sequences and/or upload a sample sheet with index sequences.
+          Index sequences should be entered one per line, with no spaces or empty lines.
+        </p>
+      </div>
       {% bootstrap_form_errors form %}
       {% include "compatible_index_sequences/_base_form_fields.html" %}
       {% buttons %}
