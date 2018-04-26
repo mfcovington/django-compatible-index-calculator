@@ -8,6 +8,21 @@
   <div class="container">
     <legend>Select Mode</legend>
 
+    <div class="well usage">
+      <p>
+        The Amaryllis sicTool (<strong>S</strong>equencing <strong>I</strong>ndex <strong>C</strong>ompatibility <strong>Tool</strong>) helps prevent the accidental use of adapters with incompatible index sequences when performing Next Generation Sequencing experiments.
+        Using the Amaryllis sicTool, researchers can easily and confidently combine libraries made with adapters even from unrelated index sets.
+      </p>
+      <br>
+      <p>
+        The Amaryllis sicTool has three modes.
+        Use <strong>Interactive Mode</strong> to explore and visualize compatibility between index sequences from commercially available index sets.
+        <strong>Automatic Mode</strong> is useful when you are busy preparing to synthesize libraries and want someone else to choose a good set of compatible index sequences for you.
+        If you already have a set of index sequences, use <strong>Custom Mode</strong> to test their compatibility.
+        All three modes allow you to download a sample sheet template populated with your chosen set of compatible index sequences.
+      </p>
+    </div>
+
     <div class="item  col-xs-12 col-sm-4">
       <div class="thumbnail">
         <a href="{% url 'compatible_index_sequences:interactive' %}">
