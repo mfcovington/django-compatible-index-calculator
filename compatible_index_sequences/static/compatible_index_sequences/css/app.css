@@ -130,21 +130,9 @@ textarea {
   padding-left: 2px;
 }
 
-/*****************/
-/* Miscellaneous */
-/*****************/
-
-#feedback-btn {
-  background-color: #c80006;
-}
-
-#n-mer {
-  color: rgb(150, 150, 150);
-}
-
-.inline-form-buttons {
-  display: inline-block;
-}
+/**********************/
+/* Usage Instructions */
+/**********************/
 
 .usage.well p {
   margin-bottom: 0;
@@ -160,4 +148,20 @@ textarea {
 
 .usage.well p:last-child {
   margin-bottom: -10px;
+}
+
+/*****************/
+/* Miscellaneous */
+/*****************/
+
+#feedback-btn {
+  background-color: #c80006;
+}
+
+#n-mer {
+  color: rgb(150, 150, 150);
+}
+
+.inline-form-buttons {
+  display: inline-block;
 }
