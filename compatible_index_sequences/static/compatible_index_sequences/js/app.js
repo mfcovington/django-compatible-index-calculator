@@ -302,4 +302,4 @@ $('#feedback-btn').tooltip().eq(0).tooltip('show').tooltip('disable').one('mouse
 
 setTimeout(function() {
   $('#feedback-btn').tooltip().eq(0).tooltip('hide').tooltip('enable');
-}, 1000);
+}, 2000);
