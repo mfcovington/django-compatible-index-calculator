@@ -134,6 +134,10 @@ textarea {
 /* Miscellaneous */
 /*****************/
 
+#feedback-btn {
+  background-color: #c80006;
+}
+
 #n-mer {
   color: rgb(150, 150, 150);
 }

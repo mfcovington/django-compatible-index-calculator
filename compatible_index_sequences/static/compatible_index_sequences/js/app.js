@@ -295,3 +295,11 @@ function updateNMerStatus( selected_length, min_index_length ) {
     $('#n-mer').text('');
   }
 }
+
+$('#feedback-btn').tooltip().eq(0).tooltip('show').tooltip('disable').one('mouseout', function() {
+  $(this).tooltip('enable');
+});
+
+setTimeout(function() {
+  $('#feedback-btn').tooltip().eq(0).tooltip('hide').tooltip('enable');
+}, 1000);
