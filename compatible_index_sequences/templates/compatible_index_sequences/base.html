@@ -29,10 +29,44 @@
           <a href="http://amaryllisnucleics.com/feedback-sictool/" role="button" id="feedback-btn" class="btn btn-warning btn-sm btn-border" data-toggle="tooltip" data-trigger="hover" data-target=".btn" data-container="body" data-placement="top" data-title="Please Leave Feedback on sicTool Beta">
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
           </a>
+          <button type="button" class="btn btn-sm btn-info btn-border" data-toggle="modal" data-target="#aboutModal">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          </button>
         </div>
         Sequencing Index Compatibility Tool
       </h3>
     </div>
+
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="aboutModalLabel">Why use sicTool?</h4>
+          </div>
+          <div class="modal-body">
+
+            <p>Improvements to sequencing hardware and chemistry continue to increase the yield of data from individual high-throughput sequencing runs. As a result, it is now possible to multiplex samples much more deeply than just a few years ago. When multiplexing samples for sequencing, each sample library is constructed using an adapter with a different index sequence associated with it. This way, several libraries from distinct samples can be pooled together, sequenced as a pool, and demultiplexed based on the sample-specific index sequence from the adapter used to make that sample's library.</p>
+
+            <p>As a bioinformatician, one of the more common errors at the bench that I (Mike Covington) have had to work around is wet-lab researchers using the same or incompatible adapter index sequences for two different samples.</p>
+
+            <p>In a best case scenario, conflicts are noted before samples are pooled and incompatible libraries can be sequenced in separate sequencing runs. Although sequencing costs are falling in respect to $ per base, a full lane of sequencing is still expensive. If the incompatible libraries do get pooled and sequenced together, they typically need to be discarded and data for those samples are lost or must be re-generated. In the worst case scenario, the bioinformatician fails to notice that something has gone wrong and makes faulty conclusions based on compromised data.</p>
+
+            <p>To make life easier for bioinformatician and molecular biologist alike, I have created the Amaryllis Sequencing Index Compatibility Tool (sicTool). sicTool helps prevent accidental use of adapters with incompatible index sequences and allows researchers to easily and confidently combine libraries made with adapters from unrelated index sets from multiple kit manufacturers.</p>
+
+          </div>
+          <div class="modal-footer">
+            <a href="http://amaryllisnucleics.com/feedback-sictool/" role="button" id="feedback-btn" class="btn btn-warning btn-sm btn-border">
+              Leave Feedback
+              &nbsp;
+              <span class="glyphicon glyphicon-comment glyphicon-toggle-sequences" aria-hidden="true"></span>
+            </a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {% block content %}{% endblock %}
     {% bootstrap_javascript jquery=1 %}
     <script src="{% static 'compatible_index_sequences/js/jquery-dateFormat.min.js' %}"></script>
