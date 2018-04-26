@@ -10,6 +10,14 @@
       {% csrf_token %}
       <legend>Automatic Mode</legend>
 
+      <div class="well usage">
+        <p>
+          Preparing to do an experiment?
+          Specify which index sets you are using and how many libraries from each.
+          The Amaryllis sicTool will choose a compatible set of index sequences to use.
+        </p>
+      </div>
+
       {% bootstrap_form_errors form %}
 
       {% if timed_out %}
