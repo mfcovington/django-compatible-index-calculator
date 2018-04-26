@@ -120,6 +120,19 @@ textarea {
   border-color: #FFC98D;
 }
 
+a#sictool-select-mode {
+  color: rgb(51, 51, 51);
+  text-decoration: none;
+}
+
+a#sictool-select-mode:hover {
+  color: #555;
+}
+
+a#sictool-select-mode:active {
+  color: #888;
+}
+
 /*******************/
 /* Required Fields */
 /*******************/
