@@ -34,6 +34,9 @@ def auto(request):
     if request.method == 'POST':
         form = AutoIndexListForm(request.POST, request.FILES, rows=10)
         if form.is_valid():
+            config_distance = form.cleaned_data['config_distance']
+            config_length = form.cleaned_data['config_length']
+
             index_set_list = [
                 form.cleaned_data['index_set_1'],
                 form.cleaned_data['index_set_2'],
@@ -60,14 +63,18 @@ def auto(request):
                 index['set'].append(index_set_list[o])
                 index['size'].append(subset_size_list[o])
 
-            min_length = min(
-                minimum_index_length_from_lists(custom_list),
-                minimum_index_length_from_sets(index['set'])
-            )
+            if config_length is None:
+                min_length = min(
+                    minimum_index_length_from_lists(custom_list),
+                    minimum_index_length_from_sets(index['set'])
+                )
+            else:
+                min_length = config_length
 
-            if not is_self_compatible(custom_list, length=min_length):
+            if not is_self_compatible(custom_list, config_distance, min_length):
                 incompatible_index_pairs = find_incompatible_index_pairs(
-                    custom_list)
+                    custom_list, min_distance=config_distance,
+                    index_length=min_length)
                 incompatible_alignments = generate_incompatible_alignments(
                     incompatible_index_pairs, length=min_length)
                 index_list = generate_index_list_with_index_set_data(custom_list)
@@ -89,7 +96,8 @@ def auto(request):
 
             compatible_set = find_compatible_subset(
                 index['set'], index['size'], min_length=min_length,
-                previous_list=custom_list, timeout=timeout)
+                min_distance=config_distance, previous_list=custom_list,
+                timeout=timeout)
 
             if compatible_set:
                 index_list.extend(

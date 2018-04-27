@@ -6,7 +6,8 @@ from collections import deque
 
 
 def find_compatible_subset(index_set_list, subset_size_list, min_length,
-                           previous_list=[], timeout=10, start_time=None):
+                           min_distance=3, previous_list=[], timeout=10,
+                           start_time=None):
 
     find_compatible_subset.timed_out = False
 
@@ -30,12 +31,13 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
     if len(index_list) < subset_size:
         return []
 
-    self_compatible_list = is_self_compatible(index_list, length=min_length)
+    self_compatible_list = is_self_compatible(index_list, min_distance,
+                                              min_length)
 
     for index_subset in itertools.combinations(index_list, subset_size):
 
         if not self_compatible_list:
-            if not is_self_compatible(index_subset, length=min_length):
+            if not is_self_compatible(index_subset, min_distance, min_length):
                 if is_timed_out(start_time, timeout=timeout):
                     find_compatible_subset.timed_out = True
                     return []
@@ -48,8 +50,8 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
         if len(index_set_list) > 0:
             previous_list.extend(compatible_subset)
             new_list = find_compatible_subset(
-                index_set_list, subset_size_list, min_length, previous_list,
-                timeout, start_time)
+                index_set_list, subset_size_list, min_length, min_distance,
+                previous_list, timeout, start_time)
             if new_list:
                 compatible_subset.extend(new_list)
             elif new_list is not None:
@@ -136,16 +138,16 @@ def is_timed_out(start_time, timeout):
 
 
 def join_two_compatible_sets(a_sequences, b_sequences, b_is_self_compatible,
-                             length=float('inf')):
+                             min_distance=3, length=float('inf')):
     if not b_is_self_compatible:
-        if not is_self_compatible(b_sequences, length=length):
+        if not is_self_compatible(b_sequences, min_distance, length):
             return None
 
     ab_sequences = []
     ab_sequences.extend(a_sequences)
     ab_sequences.extend(b_sequences)
 
-    if is_self_compatible(ab_sequences, length=length):
+    if is_self_compatible(ab_sequences, min_distance, length):
         return ab_sequences
     else:
         return None
@@ -169,11 +171,15 @@ def minimum_index_length_from_sets(index_set_list):
     return min_length
 
 
-def is_self_compatible(index_list, min_distance=3, length=float('inf')):
+def is_self_compatible(index_list, min_distance=3, length=None):
     if len(index_list) == 0:
         return True
 
-    index_length = min(minimum_index_length_from_lists(index_list), length)
+    if length is None:
+        index_length = min(minimum_index_length_from_lists(index_list), float('inf'))
+    else:
+        index_length = length
+
     for pair in itertools.combinations(index_list, 2):
         distance = hamming_distance(
             pair[0][0:index_length].upper(), pair[1][0:index_length].upper())

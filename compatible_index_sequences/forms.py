@@ -86,6 +86,8 @@ class AutoIndexListForm(BaseForm):
 
     def clean(self):
         cleaned_data = super(AutoIndexListForm, self).clean()
+        config_distance = cleaned_data.get('config_distance')
+        config_length = cleaned_data.get('config_length')
         index_set_1 = cleaned_data.get('index_set_1')
         index_set_2 = cleaned_data.get('index_set_2')
         index_set_3 = cleaned_data.get('index_set_3')
