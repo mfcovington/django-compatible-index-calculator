@@ -7,9 +7,8 @@
 {% block content %}
   <div class="container">
 
-    <legend>Results</legend>
-
     {% if incompatible_indexes %}
+      <legend>Results</legend>
       <div id="incompatible-alignments">
         <div class="alert alert-danger">
           Incompatible index pairs detected!
@@ -27,20 +26,23 @@
         <hr>
       </div>
     {% else %}
+      <legend>
+        <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
+          Results
+          {% csrf_token %}
+          {% bootstrap_form hidden_download_form %}
+          <div class="form-group inline-form-buttons">
+            <button type="submit" class="btn btn-success btn-xs">
+              <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+              SampleSheet.csv
+            </button>
+          </div>
+        </form>
+      </legend>
       <div class="alert alert-success">
         <p>
           All index sequences are compatible!
         </p>
-        <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
-          {% csrf_token %}
-          {% bootstrap_form hidden_download_form %}
-          {% buttons %}
-            <button type="submit" class="btn btn-success">
-              <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-              SampleSheet.csv
-            </button>
-          {% endbuttons %}
-        </form>
       </div>
       <hr>
     {% endif %}

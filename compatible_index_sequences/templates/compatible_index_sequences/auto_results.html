@@ -7,21 +7,20 @@
 {% block content %}
   <div class="container">
 
-    <legend>Results</legend>
-
     {% if index_list|length > 0 %}
-      <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
-        {% csrf_token %}
-        {% bootstrap_form hidden_download_form %}
-        {% buttons %}
-          <button type="submit" class="btn btn-success">
-            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-            SampleSheet.csv
-          </button>
-        {% endbuttons %}
-      </form>
-
-      <hr>
+      <legend>
+        <form id="export-csv" action="{% url 'compatible_index_sequences:export_samplesheet' %}" method="post">
+          Results
+          {% csrf_token %}
+          {% bootstrap_form hidden_download_form %}
+          <div class="form-group inline-form-buttons">
+            <button type="submit" class="btn btn-success btn-xs">
+              <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+              SampleSheet.csv
+            </button>
+          </div>
+        </form>
+      </legend>
 
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -53,6 +52,7 @@
         </table>
       </div>
     {% else %}
+      <legend>Results</legend>
       <div class="alert alert-danger">
         No compatible index subsets were found. <a href="javascript:history.go(-1)">Change your search parameters</a> or try using <a href="{% url 'compatible_index_sequences:interactive' %}">Interactive mode</a>.
       </div>
