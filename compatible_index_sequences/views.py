@@ -126,6 +126,7 @@ def custom(request):
         form = CustomIndexListForm(request.POST, request.FILES)
         if form.is_valid():
             custom_index_list = form.cleaned_data['index_list'].splitlines()
+            custom_index_list = [i.replace(' ', '') for i in custom_index_list]
             custom_index_list.extend(index_list_from_samplesheet(request))
 
             incompatible_index_pairs = find_incompatible_index_pairs(
