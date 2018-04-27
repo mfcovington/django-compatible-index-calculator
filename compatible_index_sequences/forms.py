@@ -15,6 +15,14 @@ class BaseForm(forms.Form):
         self.fields['index_list'].widget = forms.Textarea(
             attrs={'placeholder': placeholder, 'rows': rows, })
 
+    config_distance = forms.IntegerField(
+        label='Minimum Hamming distance',
+        required=True,
+    )
+    config_length = forms.IntegerField(
+        label='Manually set index length (unchecked for auto)',
+        required=False,
+    )
     index_list = forms.CharField(
         label='Enter index sequences',
         required=False,
@@ -126,6 +134,8 @@ class CustomIndexListForm(BaseForm):
 
     def clean(self):
         cleaned_data = super(CustomIndexListForm, self).clean()
+        config_distance = cleaned_data.get('config_distance')
+        config_length = cleaned_data.get('config_length')
         index_list = cleaned_data.get('index_list')
         samplesheet_1 = cleaned_data.get('samplesheet_1')
         samplesheet_2 = cleaned_data.get('samplesheet_2')

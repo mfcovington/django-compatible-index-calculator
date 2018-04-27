@@ -125,17 +125,24 @@ def custom(request):
     if request.method == 'POST':
         form = CustomIndexListForm(request.POST, request.FILES)
         if form.is_valid():
+            config_distance = form.cleaned_data['config_distance']
+            config_length = form.cleaned_data['config_length']
             custom_index_list = form.cleaned_data['index_list'].splitlines()
             custom_index_list = list(filter(None, custom_index_list))
             custom_index_list = [i.replace(' ', '') for i in custom_index_list]
             custom_index_list.extend(index_list_from_samplesheet(request))
 
+            if config_length is None:
+                index_length = minimum_index_length_from_lists(custom_index_list)
+            else:
+                index_length = config_length
+
             incompatible_index_pairs = find_incompatible_index_pairs(
-                custom_index_list)
+                custom_index_list, min_distance=config_distance,
+                index_length=index_length)
 
             incompatible_alignments = generate_incompatible_alignments(
-                incompatible_index_pairs,
-                length=minimum_index_length_from_lists(custom_index_list))
+                incompatible_index_pairs, length=index_length)
 
             index_list = generate_index_list_with_index_set_data(custom_index_list)
 

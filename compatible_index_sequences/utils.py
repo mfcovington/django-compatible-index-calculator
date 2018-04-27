@@ -61,8 +61,11 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
     return compatible_subset
 
 
-def find_incompatible_index_pairs(index_list, min_distance=3):
-    index_length = minimum_index_length_from_lists(index_list)
+def find_incompatible_index_pairs(index_list, min_distance=3,
+                                  index_length=None):
+    if index_length is None:
+        index_length = minimum_index_length_from_lists(index_list)
+
     incompatible_pairs = []
     for pair in itertools.combinations(index_list, 2):
         distance = hamming_distance(
@@ -87,7 +90,10 @@ def generate_alignment(this, that, mark_unaligned=True, length=float('inf')):
 
 
 def generate_incompatible_alignments(incompatible_index_pairs,
-                                     length=float('inf')):
+                                     length=None):
+    if length is None:
+        length = float('inf')
+
     incompatible_alignments = []
     for pair in incompatible_index_pairs:
         incompatible_alignments.append(
