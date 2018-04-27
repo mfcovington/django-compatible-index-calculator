@@ -8,7 +8,17 @@
   <div class="container">
     <form action="{% url 'compatible_index_sequences:auto' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <legend>Automatic Mode</legend>
+
+      <legend>
+        <span class="pull-right">
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" class="btn btn-default btn-border" data-toggle="collapse" data-target="#configurationPanel" aria-expanded="false" aria-controls="configurationPanel">
+              <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </button>
+          </div>
+        </span>
+        <p class="legend-title">Automatic Mode</p>
+      </legend>
 
       <div class="well usage">
         <p>
@@ -16,6 +26,16 @@
           Specify which index sets you are using and how many libraries from each.
           The Amaryllis sicTool will choose a compatible set of index sequences to use.
         </p>
+      </div>
+
+      <div class="collapse" id="configurationPanel">
+        <div class="well">
+          <div class="row">
+            <form class="form-horizontal">
+              {% include "compatible_index_sequences/_compatibility_parameters.html" %}
+            </form>
+          </div>
+        </div>
       </div>
 
       {% bootstrap_form_errors form %}

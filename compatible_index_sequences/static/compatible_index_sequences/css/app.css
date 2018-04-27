@@ -178,3 +178,7 @@ a#sictool-select-mode:active {
 .inline-form-buttons {
   display: inline-block;
 }
+
+p.legend-title {
+  margin-bottom: 15px;
+}
