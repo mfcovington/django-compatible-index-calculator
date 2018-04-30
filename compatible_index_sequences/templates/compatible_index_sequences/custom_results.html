@@ -54,25 +54,62 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Index Sequence</th>
-            <th>Associated Index Sets</th>
+            {% if dual_indexed %}
+              <th>Index 1 (i7) Sequence</th>
+              <th>Associated Index Sets</th>
+              <th>Index 2 (i5) Sequence</th>
+              <th>Associated Index Sets</th>
+            {% else %}
+              <th>Index Sequence</th>
+              <th>Associated Index Sets</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
-          {% for index in index_list %}
-            <tr {% if index.sequence in incompatible_indexes %}class="danger"{% endif %}>
-              <td class="sequence">{{ index.sequence }}</td>
-              <td>
-                {% for index_set in index.index_set_data %}
-                  {% if not forloop.first %}<br>{% endif %}
-                  <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set.index_set.pk %}" target="_blank">
-                    {{ index_set.index_set }}
-                    ({{ index_set.name }})
-                  </a>
-                {% endfor %}
-              </td>
-            </tr>
-          {% endfor %}
+          {% if dual_indexed %}
+            {% for index_1, index_2 in index_list %}
+              <tr {% if index_1.sequence|add:"   "|add:index_2.sequence in incompatible_indexes %}class="danger"{% endif %}>
+                <td class="sequence">{{ index_1.sequence }}</td>
+                <td>
+                  {% for index_set_1 in index_1.index_set_data %}
+                    {% if not forloop.first %}<br>{% endif %}
+                    <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set_1.index_set.pk %}" target="_blank">
+                      {{ index_set_1.index_set }}
+                      ({{ index_set_1.name }})
+                    </a>
+                  {% endfor %}
+                </td>
+                <td class="sequence">{{ index_2.sequence }}</td>
+                <td>
+                  {% for index_set_2 in index_2.index_set_data %}
+                    {% if not forloop.first %}<br>{% endif %}
+                    <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set_2.index_set.pk %}" target="_blank">
+                      {{ index_set_2.index_set }}
+                      ({{ index_set_2.name }})
+                    </a>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            {% for index in index_list %}
+              <tr {% if index.sequence in incompatible_indexes %}class="danger"{% endif %}>
+                <td class="sequence">{{ index.sequence }}</td>
+                <td>
+                  {% for index_set in index.index_set_data %}
+                    {% if not forloop.first %}<br>{% endif %}
+                    <a href="{% url 'compatible_index_sequences:index_set_detail' pk=index_set.index_set.pk %}" target="_blank">
+                      {{ index_set.index_set }}
+                      ({{ index_set.name }})
+                    </a>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+
+
+
         </tbody>
       </table>
     </div>

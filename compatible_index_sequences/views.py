@@ -196,13 +196,19 @@ def custom(request):
             else:
                 incompatible_alignments_seqs = incompatible_index_pairs
 
-            index_list = generate_index_list_with_index_set_data(custom_index_list)
-
+            index_list = generate_index_list_with_index_set_data(
+                custom_index_list)
             hidden_download_form = HiddenSampleSheetDownloadForm(
                 initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})
+            if dual_indexed:
+                index_list_2 = generate_index_list_with_index_set_data(
+                    custom_index_list_2)
+                index_list = list(zip(index_list, index_list_2))
+
             context = {
+                'dual_indexed': dual_indexed,
                 'index_list': index_list,
-                'incompatible_indexes': [item for sublist in incompatible_index_pairs for item in sublist],
+                'incompatible_indexes': [item for sublist in incompatible_alignments_seqs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
                 'hidden_download_form': hidden_download_form,
             }
