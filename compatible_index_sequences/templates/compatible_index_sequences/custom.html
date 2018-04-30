@@ -56,6 +56,12 @@
           var hiddenField = $('#id_config_dual'),
               val = hiddenField.val();
           hiddenField.val(val === 'true' ? 'false' : 'true');
+          var inputText = $('#id_index_list'),
+              placeholder = inputText.attr("placeholder");
+          inputText.attr("placeholder",
+            placeholder === 'ATGATTGA (one sequence per line)'
+            ? 'ATGATTGA,CTAGGTCT (one comma-delimited dual-indexed pair of sequences per line)'
+            : 'ATGATTGA (one sequence per line)');
         })
       })
     </script>
