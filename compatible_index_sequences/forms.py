@@ -1,4 +1,5 @@
 from collections import Counter
+import re
 
 from django import forms
 from django.core import validators
@@ -164,6 +165,9 @@ class CustomIndexListForm(BaseForm):
         comma_count = Counter()
         for index in custom_index_list:
             comma_count[index.count(',')] += 1
+            if re.search('[^acgt,]', index, flags=re.IGNORECASE):
+                raise forms.ValidationError(
+                    'Input sequences must be composed of valid bases (e.g., ACGT).')
 
         dual_detected = False
         if len(comma_count) > 1:
