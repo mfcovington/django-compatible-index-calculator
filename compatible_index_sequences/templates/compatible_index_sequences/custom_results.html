@@ -16,9 +16,9 @@
         <ul class="list-inline">
           {% for pair, alignment in incompatible_index_pairs %}
             <li class="sequence well">
-              {{ pair.0 }}<br>
+              {{ pair.0|nbsp }}<br>
               {{ alignment|nbsp }}<br>
-              {{ pair.1 }}
+              {{ pair.1|nbsp }}
             </li>
           {% empty %}
           {% endfor %}

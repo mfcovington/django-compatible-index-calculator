@@ -179,6 +179,23 @@ def custom(request):
             incompatible_alignments = generate_incompatible_alignments(
                 incompatible_index_pairs, length=index_length)
 
+            incompatible_alignments_seqs = []
+
+            if dual_indexed:
+                incompatible_alignments_2 = generate_incompatible_alignments(
+                    incompatible_index_pairs_2, length=index_length)
+                incompatible_alignments = [
+                    '{} + {}'.format(a[0], a[1]) for a in zip(
+                        incompatible_alignments, incompatible_alignments_2)]
+                zipped_pairs = zip(
+                    incompatible_index_pairs, incompatible_index_pairs_2)
+                for pair_1, pair_2 in zipped_pairs:
+                    incompatible_alignments_seqs.append(
+                        ['{}   {}'.format(i[0], i[1])
+                            for i in zip(pair_1, pair_2)])
+            else:
+                incompatible_alignments_seqs = incompatible_index_pairs
+
             index_list = generate_index_list_with_index_set_data(custom_index_list)
 
             hidden_download_form = HiddenSampleSheetDownloadForm(
@@ -186,7 +203,7 @@ def custom(request):
             context = {
                 'index_list': index_list,
                 'incompatible_indexes': [item for sublist in incompatible_index_pairs for item in sublist],
-                'incompatible_index_pairs': zip(incompatible_index_pairs, incompatible_alignments),
+                'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
                 'hidden_download_form': hidden_download_form,
             }
             return render(request, 'compatible_index_sequences/custom_results.html', context)
