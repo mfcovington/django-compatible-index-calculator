@@ -27,7 +27,7 @@ def generate_index_list_with_index_set_data(index_list):
 
 
 def lookup_index_set(index, complete_index_set=Index):
-    return complete_index_set.objects.filter(sequence=index)
+    return complete_index_set.objects.filter(sequence__iexact=index)
 
 
 def auto(request):
