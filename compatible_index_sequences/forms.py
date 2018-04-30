@@ -1,7 +1,10 @@
+from collections import Counter
+
 from django import forms
 from django.core import validators
 
 from .models import IndexSet
+from .utils import index_list_from_samplesheet
 
 
 class BaseForm(forms.Form):
@@ -134,9 +137,16 @@ class AutoIndexListForm(BaseForm):
 
 class CustomIndexListForm(BaseForm):
 
+    config_dual = forms.BooleanField(
+        label='Dual-Indexed?',
+        required=False,
+        widget=forms.HiddenInput,
+    )
+
     def clean(self):
         cleaned_data = super(CustomIndexListForm, self).clean()
         config_distance = cleaned_data.get('config_distance')
+        config_dual = cleaned_data.get('config_dual')
         config_length = cleaned_data.get('config_length')
         index_list = cleaned_data.get('index_list')
         samplesheet_1 = cleaned_data.get('samplesheet_1')
@@ -145,6 +155,34 @@ class CustomIndexListForm(BaseForm):
         if index_list == '' and samplesheet_1 is None and samplesheet_2 is None:
             raise forms.ValidationError(
                 'Please enter index sequences and/or upload a sample sheet.')
+
+        custom_index_list = index_list.splitlines()
+        custom_index_list = list(filter(None, custom_index_list))
+        custom_index_list = [i.replace(' ', '') for i in custom_index_list]
+        custom_index_list.extend(index_list_from_samplesheet(files=self.files))
+
+        comma_count = Counter()
+        for index in custom_index_list:
+            comma_count[index.count(',')] += 1
+
+        dual_detected = False
+        if len(comma_count) > 1:
+            raise forms.ValidationError(
+                'Input is mix of single-indexing and dual-indexing.')
+        elif list(comma_count.keys())[0] == 1:
+            dual_detected = True
+        elif list(comma_count.keys())[0] != 0:
+            raise forms.ValidationError(
+                'Input sequences are neither single-indexed nor dual-indexed.')
+
+        if config_dual != dual_detected:
+            raise forms.ValidationError(
+                'Input sequences are inconsistent with choice of {}-indexing.'.format(
+                    'dual' if config_dual else 'single'))
+
+        cleaned_data['dual_indexed'] = dual_detected
+        cleaned_data['index_list'] = custom_index_list
+        return cleaned_data
 
 
 class HiddenSampleSheetDownloadForm(forms.Form):

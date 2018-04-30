@@ -1,10 +1,14 @@
 {% extends "compatible_index_sequences/base.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap3 sekizai_tags %}
 
 {% block title %}Custom | {{ block.super }}{% endblock title %}
 
 {% block content %}
+  {% addtoblock "css" %}
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  {% endaddtoblock %}
+
   <div class="container">
     <form action="{% url 'compatible_index_sequences:custom' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
@@ -12,6 +16,7 @@
       <legend>
         <span class="pull-right">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <input id="toggle-dual" type="checkbox" data-toggle="toggle" data-on="Dual-Indexed" data-off="Single-Indexed" data-onstyle="danger" data-offstyle="primary" data-size="mini" data-width="100">
             <button type="button" class="btn btn-default btn-border" data-toggle="collapse" data-target="#configurationPanel" aria-expanded="false" aria-controls="configurationPanel">
               <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
             </button>
@@ -36,9 +41,23 @@
 
       {% bootstrap_form_errors form %}
       {% include "compatible_index_sequences/_base_form_fields.html" %}
+      {% bootstrap_field form.config_dual %}
       {% buttons %}
         <button type="submit" class="btn btn-default">Submit</button>
       {% endbuttons %}
     </form>
   </div>
+
+  {% addtoblock "js" %}
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script>
+      $(function() {
+        $('#toggle-dual').change(function() {
+          var hiddenField = $('#id_config_dual'),
+              val = hiddenField.val();
+          hiddenField.val(val === 'true' ? 'false' : 'true');
+        })
+      })
+    </script>
+  {% endaddtoblock %}
 {% endblock content %}

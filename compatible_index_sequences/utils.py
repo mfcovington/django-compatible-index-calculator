@@ -64,17 +64,29 @@ def find_compatible_subset(index_set_list, subset_size_list, min_length,
 
 
 def find_incompatible_index_pairs(index_list, min_distance=3,
-                                  index_length=None):
+                                  index_length=None, sequences=True,
+                                  positions=False):
     if index_length is None:
         index_length = minimum_index_length_from_lists(index_list)
 
     incompatible_pairs = []
-    for pair in itertools.combinations(index_list, 2):
+    incompatible_positions = []
+    for pair in itertools.combinations(enumerate(index_list), 2):
         distance = hamming_distance(
-            pair[0][0:index_length].upper(), pair[1][0:index_length].upper())
+            pair[0][1][0:index_length].upper(),
+            pair[1][1][0:index_length].upper())
         if distance < min_distance:
-            incompatible_pairs.append(pair)
-    return incompatible_pairs
+            incompatible_pairs.append((pair[0][1], pair[1][1]))
+            incompatible_positions.append((pair[0][0], pair[1][0]))
+
+    if sequences and positions:
+        return (incompatible_pairs, incompatible_positions)
+    elif sequences:
+        return incompatible_pairs
+    elif positions:
+        return incompatible_positions
+    else:
+        raise ValueError('Sequences and/or positions must be set to True.')
 
 
 def generate_alignment(this, that, mark_unaligned=True, length=float('inf')):
@@ -112,12 +124,23 @@ def hamming_distance(this, that):
         return sum(1 for a, b in zip(this, that) if a != b)
 
 
-def index_list_from_samplesheet(request):
+def index_list_from_samplesheet(request=None, files=None):
+    if request is None and files is None:
+        raise ValueError('Need either a request object or files.')
+    elif files is None:
+        file_list = [
+            request.FILES.get('samplesheet_1'),
+            request.FILES.get('samplesheet_2')
+        ]
+    elif request is None:
+        file_list = [
+            files.get('samplesheet_1'),
+            files.get('samplesheet_2')
+        ]
+    else:
+        raise ValueError('Need either a request object or files, not both.')
+
     index_list = []
-    file_list = [
-        request.FILES.get('samplesheet_1'),
-        request.FILES.get('samplesheet_2')
-    ]
 
     for file in file_list:
         if file is None:

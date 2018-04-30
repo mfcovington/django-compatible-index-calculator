@@ -11,9 +11,10 @@ from .forms import (
 from .models import Index, IndexSet
 from .utils import (
     find_compatible_subset, find_incompatible_index_pairs,
-    generate_incompatible_alignments, index_list_from_samplesheet,
-    is_self_compatible, minimum_index_length_from_lists,
-    minimum_index_length_from_sets, optimize_set_order)
+    generate_incompatible_alignments, hamming_distance,
+    index_list_from_samplesheet, is_self_compatible,
+    minimum_index_length_from_lists, minimum_index_length_from_sets,
+    optimize_set_order)
 
 
 def generate_index_list_with_index_set_data(index_list):
@@ -134,20 +135,46 @@ def custom(request):
         form = CustomIndexListForm(request.POST, request.FILES)
         if form.is_valid():
             config_distance = form.cleaned_data['config_distance']
+            dual_indexed = form.cleaned_data['dual_indexed']
             config_length = form.cleaned_data['config_length']
-            custom_index_list = form.cleaned_data['index_list'].splitlines()
-            custom_index_list = list(filter(None, custom_index_list))
-            custom_index_list = [i.replace(' ', '') for i in custom_index_list]
-            custom_index_list.extend(index_list_from_samplesheet(request))
+            custom_index_list = form.cleaned_data['index_list']
+
+            if dual_indexed:
+                (custom_index_list, custom_index_list_2) = zip(
+                    *[pair.split(',') for pair in custom_index_list])
 
             if config_length is None:
                 index_length = minimum_index_length_from_lists(custom_index_list)
             else:
                 index_length = config_length
 
-            incompatible_index_pairs = find_incompatible_index_pairs(
+            incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
                 custom_index_list, min_distance=config_distance,
-                index_length=index_length)
+                index_length=index_length, sequences=True,
+                positions=True)
+
+            if dual_indexed:
+                subset_seq_2 = {
+                    e: [custom_index_list_2[i] for i in p]
+                    for e, p in enumerate(incompat_poss_1)
+                }
+
+                both_incompatible = []
+                for i, pair in subset_seq_2.items():
+                    distance = hamming_distance(
+                        pair[0][0:index_length].upper(),
+                        pair[1][0:index_length].upper())
+                    if distance < config_distance:
+                        both_incompatible.append(i)
+
+                incompatible_index_pairs = []
+                incompatible_index_pairs_2 = []
+                for i in both_incompatible:
+                    incompatible_index_pairs.append(incompat_seqs_1[i])
+                    incompatible_index_pairs_2.append(subset_seq_2[i])
+
+            else:
+                incompatible_index_pairs = incompat_seqs_1
 
             incompatible_alignments = generate_incompatible_alignments(
                 incompatible_index_pairs, length=index_length)
