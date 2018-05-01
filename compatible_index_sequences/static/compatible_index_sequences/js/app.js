@@ -78,6 +78,14 @@ $('#config-length-manual').click(function() {
   checkCompatibility();
 });
 
+// Toggle manual index length configuration
+$('#config-length-manual-2').click(function() {
+  $('#config-length-2').prop('disabled', function( i, val ) {
+    return !val;
+  });
+  checkCompatibility();
+});
+
 // Respond to manual index length changes
 $('#config-length').on('change paste keyup', function() {
   checkCompatibility();

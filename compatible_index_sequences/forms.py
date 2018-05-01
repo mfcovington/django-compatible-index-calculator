@@ -27,6 +27,10 @@ class BaseForm(forms.Form):
         label='Manually set index length (unchecked for auto)',
         required=False,
     )
+    config_length_2 = forms.IntegerField(
+        label='Manually set index 2 length (unchecked for auto)',
+        required=False,
+    )
     index_list = forms.CharField(
         label='Enter index sequences',
         required=False,

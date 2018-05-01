@@ -137,6 +137,7 @@ def custom(request):
             config_distance = form.cleaned_data['config_distance']
             dual_indexed = form.cleaned_data['dual_indexed']
             config_length = form.cleaned_data['config_length']
+            config_length_2 = form.cleaned_data['config_length_2']
             custom_index_list = form.cleaned_data['index_list']
 
             if dual_indexed:
@@ -147,6 +148,11 @@ def custom(request):
                 index_length = minimum_index_length_from_lists(custom_index_list)
             else:
                 index_length = config_length
+
+            if config_length_2 is None:
+                index_length_2 = minimum_index_length_from_lists(custom_index_list_2)
+            else:
+                index_length_2 = config_length_2
 
             incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
                 custom_index_list, min_distance=config_distance,
@@ -162,8 +168,8 @@ def custom(request):
                 both_incompatible = []
                 for i, pair in subset_seq_2.items():
                     distance = hamming_distance(
-                        pair[0][0:index_length].upper(),
-                        pair[1][0:index_length].upper())
+                        pair[0][0:index_length_2].upper(),
+                        pair[1][0:index_length_2].upper())
                     if distance < config_distance:
                         both_incompatible.append(i)
 
@@ -183,7 +189,7 @@ def custom(request):
 
             if dual_indexed:
                 incompatible_alignments_2 = generate_incompatible_alignments(
-                    incompatible_index_pairs_2, length=index_length)
+                    incompatible_index_pairs_2, length=index_length_2)
                 incompatible_alignments = [
                     '{} + {}'.format(a[0], a[1]) for a in zip(
                         incompatible_alignments, incompatible_alignments_2)]
