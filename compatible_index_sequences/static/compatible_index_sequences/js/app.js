@@ -91,6 +91,11 @@ $('#config-length').on('change paste keyup', function() {
   checkCompatibility();
 });
 
+// Respond to manual index length changes
+$('#config-length-2').on('change paste keyup', function() {
+  checkCompatibility();
+});
+
 // Respond to minimum hamming distances changes
 $('#config-distance').on('change paste keyup', function() {
   checkCompatibility();
@@ -291,17 +296,37 @@ function nameSampleSheet() {
 
 
 function updateNMerStatus( selected_length, min_index_length ) {
+  var nMerText = $('#config-length-manual').is(':checked')
+                   || $('#config-length-manual-2').is(':checked')
+                   || selected_length > 0
+                 ? '\u2014 Comparing '
+                 : '';
+
   if ($('#config-length-manual').is(':checked')) {
     manual_length = $('#config-length')[0].value;
     if ( manual_length == '' ) {
       manual_length = 'N';
     }
-    $('#n-mer').text('\u2014 Comparing ' + manual_length + '-mers');
-  } else if (selected_length > 0) {
-    $('#n-mer').text('\u2014 Comparing ' + min_index_length + '-mers');
-  } else {
-    $('#n-mer').text('');
+    nMerText += manual_length + '-mers (i7)';
+  } else if ( selected_length > 0 && ! $('#id_config_dual').val() ) {
+    nMerText += min_index_length + '-mers (i7)';
   }
+
+  if ($('#config-length-manual-2').is(':checked')) {
+    if ($('#config-length-manual').is(':checked')) {
+        nMerText += ' + ';
+    }
+
+    manual_length = $('#config-length-2')[0].value;
+    if ( manual_length == '' ) {
+      manual_length = 'N';
+    }
+    nMerText += manual_length + '-mers (i5)';
+  } else if ( selected_length > 0 && $('#id_config_dual').val() ) {
+    nMerText += min_index_length + '-mers (i5)';
+  }
+
+  $('#n-mer').text(nMerText);
 }
 
 $('#feedback-btn').tooltip().eq(0).tooltip('show').tooltip('disable').one('mouseout', function() {
