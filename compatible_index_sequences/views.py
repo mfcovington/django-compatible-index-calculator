@@ -144,15 +144,15 @@ def custom(request):
                 (custom_index_list, custom_index_list_2) = zip(
                     *[pair.split(',') for pair in custom_index_list])
 
+                if config_length_2 is None:
+                    index_length_2 = minimum_index_length_from_lists(custom_index_list_2)
+                else:
+                    index_length_2 = config_length_2
+
             if config_length is None:
                 index_length = minimum_index_length_from_lists(custom_index_list)
             else:
                 index_length = config_length
-
-            if config_length_2 is None:
-                index_length_2 = minimum_index_length_from_lists(custom_index_list_2)
-            else:
-                index_length_2 = config_length_2
 
             incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
                 custom_index_list, min_distance=config_distance,
