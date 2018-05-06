@@ -7,6 +7,12 @@ from django.db import models
 from .utils import hamming_distance
 
 
+INDEX_TYPE_CHOICES = [
+    ('i7', 'Index 1 (i7)'),
+    ('i5', 'Index 2 (i5)'),
+]
+
+
 class IndexSetManager(models.Manager):
 
     def get_by_natural_key(self, name):
@@ -43,6 +49,10 @@ class Index(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def index_type(self):
+        return self.index_set.index_type
+
 
 class IndexSet(models.Model):
 
@@ -57,6 +67,12 @@ class IndexSet(models.Model):
     description = models.TextField(
         blank=True,
         help_text='Enter a description of this index sequence set.',
+    )
+
+    index_type = models.CharField(
+        choices=INDEX_TYPE_CHOICES,
+        default='i7',
+        max_length=2,
     )
 
     url = models.URLField(
