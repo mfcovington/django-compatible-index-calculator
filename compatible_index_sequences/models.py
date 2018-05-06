@@ -4,7 +4,7 @@ import re
 from django.core.validators import RegexValidator
 from django.db import models
 
-from .utils import hamming_distance
+from .utils import hamming_distance, reverse_complement
 
 
 INDEX_TYPE_CHOICES = [
@@ -52,6 +52,10 @@ class Index(models.Model):
     @property
     def index_type(self):
         return self.index_set.index_type
+
+    @property
+    def reverse_complement(self):
+        return reverse_complement(self.sequence)
 
 
 class IndexSet(models.Model):

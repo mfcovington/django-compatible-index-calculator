@@ -243,3 +243,7 @@ def remove_incompatible_indexes_from_queryset(index_set, index_list, min_distanc
             incompatible_indexes.append(seq_1)
 
     return [i for i in index_set if i not in incompatible_indexes]
+
+
+def reverse_complement(seq):
+    return seq.translate(str.maketrans('ACGTacgt', 'TGCAtgca'))[::-1]
