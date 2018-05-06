@@ -1,10 +1,14 @@
 {% extends "compatible_index_sequences/base.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap3 sekizai_tags %}
 
 {% block title %}Interactive | {{ block.super }}{% endblock title %}
 
 {% block content %}
+  {% addtoblock "css" %}
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  {% endaddtoblock %}
+
   <div class="container">
 
     <div>
@@ -22,6 +26,7 @@
             <button type="button" class="btn btn-default btn-border" data-toggle="collapse" data-target="#configurationPanel" aria-expanded="false" aria-controls="configurationPanel">
               <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
             </button>
+            <input id="toggle-dual" type="checkbox" data-toggle="toggle" data-on="Dual-Indexed" data-off="Single-Indexed" data-onstyle="danger" data-offstyle="primary" data-size="mini" data-width="100">
             <button type="button" class="btn btn-info btn-border" data-toggle="tooltip" data-placement="top" title="Not Yet Implemented">
               <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
             </button>
@@ -85,4 +90,15 @@
     </div>
 
   </div>
+
+  {% addtoblock "js" %}
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script>
+      $(function() {
+        $('#toggle-dual').change(function() {
+          checkCompatibility();
+        })
+      })
+    </script>
+  {% endaddtoblock %}
 {% endblock content %}

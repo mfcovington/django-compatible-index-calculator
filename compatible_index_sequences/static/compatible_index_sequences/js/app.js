@@ -308,7 +308,7 @@ function updateNMerStatus( selected_length, min_index_length ) {
       manual_length = 'N';
     }
     nMerText += manual_length + '-mers (i7)';
-  } else if ( selected_length > 0 && ! $('#id_config_dual').val() ) {
+  } else if ( selected_length > 0 && ! $('#toggle-dual').prop('checked') ) {
     nMerText += min_index_length + '-mers (i7)';
   }
 
@@ -322,7 +322,7 @@ function updateNMerStatus( selected_length, min_index_length ) {
       manual_length = 'N';
     }
     nMerText += manual_length + '-mers (i5)';
-  } else if ( selected_length > 0 && $('#id_config_dual').val() ) {
+  } else if ( selected_length > 0 && $('#toggle-dual').prop('checked') ) {
     nMerText += min_index_length + '-mers (i5)';
   }
 
