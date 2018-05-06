@@ -54,7 +54,7 @@ class BaseForm(forms.Form):
 class AutoIndexListForm(BaseForm):
 
     index_set_1 = forms.ModelChoiceField(
-        queryset=IndexSet.objects.all(),
+        queryset=IndexSet.objects.filter(index_type='i7'),
         required=True,
     )
     subset_size_1 = forms.IntegerField(
@@ -64,7 +64,7 @@ class AutoIndexListForm(BaseForm):
     )
 
     index_set_2 = forms.ModelChoiceField(
-        queryset=IndexSet.objects.all(),
+        queryset=IndexSet.objects.filter(index_type='i7'),
         required=False,
     )
     subset_size_2 = forms.IntegerField(
@@ -74,7 +74,7 @@ class AutoIndexListForm(BaseForm):
     )
 
     index_set_3 = forms.ModelChoiceField(
-        queryset=IndexSet.objects.all(),
+        queryset=IndexSet.objects.filter(index_type='i7'),
         required=False,
     )
     subset_size_3 = forms.IntegerField(
