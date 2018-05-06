@@ -45,6 +45,26 @@ table.index-set {
   font-weight: bold;
 }
 
+/************************/
+/* Index Set Visibility */
+/************************/
+
+.index_set {
+  display: none;
+}
+
+.index_set.selected-set.selected-type {
+  display: block;
+}
+
+div.checkbox-inline {
+  display: none;
+}
+
+div.checkbox-inline.selected-type {
+  display: inline-block;
+}
+
 /******************/
 /* Toggle Buttons */
 /******************/

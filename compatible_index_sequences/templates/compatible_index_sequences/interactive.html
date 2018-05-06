@@ -72,7 +72,7 @@
             <div id="config-visibility" class="col-sm-12">
               <legend>Index Set Visibility</legend>
               {% for index_set in object_list %}
-                  <div class="checkbox-inline">
+                  <div class="checkbox-inline {% if index_set.index_type == 'i7' %}selected-type{% endif %}">
                     <label for="config-visibility-{{ index_set.id }}" class="control-label checkbox-inline"><input type="checkbox" id="config-visibility-{{ index_set.id }}" index_set_id="{{ index_set.id }}" {% if index_set.visible_in_interactive %}checked{% endif %}>{{ index_set.name }}</label>
                   </div>
               {% endfor %}
@@ -96,6 +96,9 @@
     <script>
       $(function() {
         $('#toggle-dual').change(function() {
+          $('.checkbox-inline').toggleClass('selected-type');
+          $('.index_set').toggleClass('selected-type');
+          $('.idx').removeClass('selected');
           checkCompatibility();
         })
       })

@@ -109,7 +109,7 @@ $(function () {
 // Toggle active index sets
 $('#config-visibility :checkbox').change(function() {
   var indexSetId = $(this).attr('index_set_id');
-  $('#index_set_' + indexSetId).toggle();
+  $('#index_set_' + indexSetId).toggleClass('selected-set');
   $('#index_set_' + indexSetId + ' .panel').find('.idx').removeClass('selected');
   checkCompatibility();
 });
