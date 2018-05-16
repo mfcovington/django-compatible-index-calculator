@@ -146,12 +146,13 @@ def index_list_from_samplesheet(request=None, files=None):
         if file is None:
             continue
         reader = csv.reader(codecs.iterdecode(file, 'utf-8'))
-        ok = 0
+        header_done = False
         for row in reader:
-            if ok == 1:
-                index_list.append(row[5])
-            if row[0] == 'Sample_ID':
-                ok = 1
+            if header_done:
+                index_list.append(row[index1_column])
+            if 'Sample_ID' in row:
+                header_done = True
+                index1_column = row.index('index')
 
     return index_list
 
