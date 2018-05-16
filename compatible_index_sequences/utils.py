@@ -141,6 +141,8 @@ def index_list_from_samplesheet(request=None, files=None):
         raise ValueError('Need either a request object or files, not both.')
 
     index_list = []
+    index_list_2 = []
+    dual_indexed = False
 
     for file in file_list:
         if file is None:
@@ -150,11 +152,22 @@ def index_list_from_samplesheet(request=None, files=None):
         for row in reader:
             if header_done:
                 index_list.append(row[index1_column])
+                if dual_indexed:
+                    index_list_2.append(row[index2_column])
             if 'Sample_ID' in row:
                 header_done = True
                 index1_column = row.index('index')
+                try:
+                    index2_column = row.index('index2')
+                except ValueError:
+                    pass
+                else:
+                    dual_indexed = True
 
-    return index_list
+    if dual_indexed:
+        return [",".join([i1, i2]) for i1, i2 in zip(index_list, index_list_2)]
+    else:
+        return index_list
 
 
 def is_timed_out(start_time, timeout):
