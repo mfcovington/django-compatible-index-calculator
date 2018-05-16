@@ -204,12 +204,22 @@ def custom(request):
 
             index_list = generate_index_list_with_index_set_data(
                 custom_index_list)
-            hidden_download_form = HiddenSampleSheetDownloadForm(
-                initial={'index_list_csv': ','.join([index['sequence'] for index in index_list])})
+            index_list_csv = ','.join([index['sequence'] for index in index_list])
             if dual_indexed:
                 index_list_2 = generate_index_list_with_index_set_data(
                     custom_index_list_2)
+                index_list_2_csv = ','.join([index['sequence'] for index in index_list_2])
                 index_list = list(zip(index_list, index_list_2))
+            else:
+                index_list_2_csv = []
+
+            hidden_download_form = HiddenSampleSheetDownloadForm(
+                initial={
+                    'index_list_csv': index_list_csv,
+                    'index_list_2_csv': index_list_2_csv,
+                    'dual_indexed': dual_indexed,
+                }
+            )
 
             context = {
                 'dual_indexed': dual_indexed,
@@ -247,11 +257,43 @@ def export_samplesheet(request):
         ['[Settings]', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
         ['[Data]', '', '', '', '', '', '', ''],
-        ['Sample_ID', 'Sample_Name', 'Sample_Plate', 'Sample_Well', 'I7_Index_ID', 'index', 'Sample_Project', 'Description'],
     ]
+
+    if request.POST.get('dual_indexed') == "True":
+        dual_indexed = True
+    else:
+        dual_indexed = False
+
+    header_row = ['Sample_ID', 'Sample_Name', 'Sample_Plate', 'Sample_Well', 'I7_Index_ID', 'index']
+
+    if dual_indexed:
+        for row in data:
+            row.extend(['', ''])
+        header_row.extend(['I5_Index_ID', 'index2', 'Sample_Project', 'Description'])
+        data.append(header_row)
+    else:
+        header_row.extend(['Sample_Project', 'Description'])
+        data.append(header_row)
+
     index_list_csv = request.POST.get('index_list_csv')
-    for index in index_list_csv.split(','):
-        data.append(['', '', '', '', '', index, '', ''])
+    index_list_2_csv = request.POST.get('index_list_2_csv')
+
+    if dual_indexed:
+        for index, index2 in zip(index_list_csv.split(','), index_list_2_csv.split(',')):
+            hit_list = []
+            hit2_list = []
+            for hit in lookup_index_set(index):
+                hit_list.append('{}:{}'.format(hit.index_set, hit.name))
+            for hit2 in lookup_index_set(index2):
+                hit2_list.append('{}:{}'.format(hit2.index_set, hit2.name))
+            data.append(
+                ['', '', '', '', ', '.join(hit_list), index, ', '.join(hit2_list), index2, '', ''])
+    else:
+        for index in index_list_csv.split(','):
+            hit_list = []
+            for hit in lookup_index_set(index):
+                hit_list.append('{}:{}'.format(hit.index_set, hit.name))
+            data.append(['', '', '', '', ', '.join(hit_list), index, '', ''])
 
     filename = request.POST.get('filename')
     if filename == '':

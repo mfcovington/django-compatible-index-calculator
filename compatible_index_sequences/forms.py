@@ -203,3 +203,11 @@ class HiddenSampleSheetDownloadForm(forms.Form):
         required=False,
         widget=forms.HiddenInput,
     )
+    index_list_2_csv = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput,
+    )
+    dual_indexed = forms.BooleanField(
+        initial=False,
+        widget=forms.HiddenInput,
+    )
