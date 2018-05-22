@@ -49,10 +49,10 @@ def auto(request):
                 form.cleaned_data['subset_size_3']
             ]
 
-            users_index_list = form.cleaned_data['index_list'].splitlines()
-            users_index_list.extend(index_list_from_samplesheet(request))
-            index_list = generate_index_list_with_index_set_data(users_index_list)
             order = optimize_set_order(*index_set_list)
+
+            index_list = form.cleaned_data['index_list']
+            index_list = generate_index_list_with_index_set_data(index_list)
 
             try:
                 custom_list = [i['sequence'] for i in index_list]

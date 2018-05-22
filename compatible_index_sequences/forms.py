@@ -139,6 +139,44 @@ class AutoIndexListForm(BaseForm):
         if len(selected_sets) > len(set(selected_sets)):
             raise forms.ValidationError('You selected the same index set multiple times.')
 
+        # config_dual = cleaned_data.get('config_dual')
+        config_dual = False    # Dual indexing not yet implemented for Auto Mode
+        index_list = cleaned_data.get('index_list')
+        samplesheet_1 = cleaned_data.get('samplesheet_1')
+        samplesheet_2 = cleaned_data.get('samplesheet_2')
+
+        custom_index_list = index_list.splitlines()
+        custom_index_list = list(filter(None, custom_index_list))
+        custom_index_list = [i.replace(' ', '') for i in custom_index_list]
+        custom_index_list.extend(index_list_from_samplesheet(files=self.files))
+
+        if len(custom_index_list) > 0:
+            comma_count = Counter()
+            for index in custom_index_list:
+                comma_count[index.count(',')] += 1
+                if re.search('[^acgt,]', index, flags=re.IGNORECASE):
+                    raise forms.ValidationError(
+                        'Input sequences must be composed of valid bases (e.g., ACGT).')
+
+            dual_detected = False
+            if len(comma_count) > 1:
+                raise forms.ValidationError(
+                    'Input is mix of single-indexing and dual-indexing.')
+            elif list(comma_count.keys())[0] == 1:
+                dual_detected = True
+            elif list(comma_count.keys())[0] != 0:
+                raise forms.ValidationError(
+                    'Input sequences are neither single-indexed nor dual-indexed.')
+
+            if config_dual != dual_detected:
+                raise forms.ValidationError(
+                    'Input sequences are inconsistent with choice of {}-indexing.'.format(
+                        'dual' if config_dual else 'single'))
+
+            cleaned_data['dual_indexed'] = dual_detected
+            cleaned_data['index_list'] = custom_index_list
+        return cleaned_data
+
 
 class CustomIndexListForm(BaseForm):
 

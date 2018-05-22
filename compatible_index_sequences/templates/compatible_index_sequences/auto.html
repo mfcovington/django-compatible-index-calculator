@@ -26,6 +26,10 @@
           Specify which index sets you are using and how many libraries from each.
           The Amaryllis sicTool will choose a compatible set of index sequences to use.
         </p>
+        <br>
+        <p>
+          If you are already working with specific index sequences, you can manually enter the sequences and/or upload a sample sheet with index sequences to incorporate them into your final set.
+        </p>
       </div>
 
       <div class="collapse" id="configurationPanel">
@@ -81,7 +85,21 @@
         </div>
       </div>
 
-      {% include "compatible_index_sequences/_base_form_fields.html" %}
+      <div class="form-group">
+        <div class="checkbox">
+          <label for="id_custom_selection">
+            <input class type="checkbox" id="id_custom_selection" name="custom_selection" data-toggle="collapse" data-target="#manualPanel">
+            Manually select some index sequences?
+          </label>
+        </div>
+      </div>
+
+      <div class="collapse" id="manualPanel">
+        <div class="well">
+          {% include "compatible_index_sequences/_base_form_fields.html" %}
+        </div>
+      </div>
+
       {% buttons %}
         <button type="submit" class="btn btn-default">Submit</button>
       {% endbuttons %}
