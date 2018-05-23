@@ -8,7 +8,12 @@
   <div class="container">
 
     {% if incompatible_indexes %}
-      <legend>Results</legend>
+      <legend>
+        Results
+        <small id="n-mer">
+          — Comparing {{ index_length }}-mers (i7){% if dual_indexed %} + {{ index_length_2 }}-mers (i5){% endif %}
+        </small>
+      </legend>
       <div id="incompatible-alignments">
         <div class="alert alert-danger">
           Incompatible index pairs detected!
@@ -37,6 +42,9 @@
               SampleSheet.csv
             </button>
           </div>
+          <small id="n-mer">
+            — Comparing {{ index_length }}-mers (i7){% if dual_indexed %} + {{ index_length_2 }}-mers (i5){% endif %}
+          </small>
         </form>
       </legend>
       <div class="alert alert-success">

@@ -223,11 +223,14 @@ def custom(request):
 
             context = {
                 'dual_indexed': dual_indexed,
+                'index_length': index_length,
                 'index_list': index_list,
                 'incompatible_indexes': [item for sublist in incompatible_alignments_seqs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
                 'hidden_download_form': hidden_download_form,
             }
+            if dual_indexed:
+                context['index_length_2'] = index_length_2
             return render(request, 'compatible_index_sequences/custom_results.html', context)
         else:
             print("INVALID INPUT")
