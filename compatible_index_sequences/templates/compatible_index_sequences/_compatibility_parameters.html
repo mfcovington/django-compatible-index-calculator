@@ -5,25 +5,25 @@
   <legend>Compatibility Parameters</legend>
 
   <div class="form-group col-sm-6">
-    <label class="control-label col-lg-8" for="config-length-manual">Manually Set Index Length <small>(unchecked for auto):</small></label>
+    <label class="control-label col-lg-8" for="id_config_length_manual">Manually Set Index Length <small>(unchecked for auto):</small></label>
     <div class="col-lg-4">
       <div class="input-group">
         <span class="input-group-addon">
-          <input id="config-length-manual" type="checkbox" aria-label="...">
+          {{ form.config_length_manual }}
         </span>
-        <input id="config-length" name="config_length" type="integer" class="form-control" aria-label="..." value="6" disabled>
+        {{ form.config_length }}
       </div>
     </div>
   </div>
 
   <div id="index_2_length" class="form-group col-sm-6" hidden>
-    <label class="control-label col-lg-8" for="config-length-manual-2">Manually Set Index 2 Length <small>(unchecked for auto):</small></label>
+    <label class="control-label col-lg-8" for="id_config_length_manual_2">Manually Set Index 2 Length <small>(unchecked for auto):</small></label>
     <div class="col-lg-4">
       <div class="input-group">
         <span class="input-group-addon">
-          <input id="config-length-manual-2" type="checkbox" aria-label="...">
+          {{ form.config_length_manual_2 }}
         </span>
-        <input id="config-length-2" name="config_length_2" type="integer" class="form-control" aria-label="..." value="6" disabled>
+        {{ form.config_length_2 }}
       </div>
     </div>
   </div>
@@ -42,5 +42,19 @@
 {% addtoblock "js" %}
   <script>
     $('#id_config_distance').addClass('form-control')
+    $('#id_config_length').addClass('form-control')
+    $('#id_config_length_2').addClass('form-control')
+
+    if ($('#id_config_length_manual').is(':checked')) {
+      $('#id_config_length').prop('disabled', false)
+    } else {
+      $('#id_config_length').prop('disabled', true)
+    }
+
+    if ($('#id_config_length_manual_2').is(':checked')) {
+      $('#id_config_length_2').prop('disabled', false)
+    } else {
+      $('#id_config_length_2').prop('disabled', true)
+    }
   </script>
 {% endaddtoblock %}

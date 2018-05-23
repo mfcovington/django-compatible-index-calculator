@@ -46,11 +46,23 @@ class CompatibilityParameters(forms.Form):
         label='Minimum Hamming distance',
         required=True,
     )
+
+    config_length_manual = forms.BooleanField(
+        initial=False,
+        required=False,
+    )
     config_length = forms.IntegerField(
+        initial=6,
         label='Manually set index length (unchecked for auto)',
         required=False,
     )
+
+    config_length_manual_2 = forms.BooleanField(
+        initial=False,
+        required=False,
+    )
     config_length_2 = forms.IntegerField(
+        initial=6,
         label='Manually set index 2 length (unchecked for auto)',
         required=False,
     )

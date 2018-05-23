@@ -71,28 +71,28 @@ $('.btn-toggle-sequences').click(function() {
 });
 
 // Toggle manual index length configuration
-$('#config-length-manual').click(function() {
-  $('#config-length').prop('disabled', function( i, val ) {
+$('#id_config_length_manual').click(function() {
+  $('#id_config_length').prop('disabled', function( i, val ) {
     return !val;
   });
   checkCompatibility();
 });
 
 // Toggle manual index length configuration
-$('#config-length-manual-2').click(function() {
-  $('#config-length-2').prop('disabled', function( i, val ) {
+$('#id_config_length_manual_2').click(function() {
+  $('#id_config_length_2').prop('disabled', function( i, val ) {
     return !val;
   });
   checkCompatibility();
 });
 
 // Respond to manual index length changes
-$('#config-length').on('change paste keyup', function() {
+$('#id_config_length').on('change paste keyup', function() {
   checkCompatibility();
 });
 
 // Respond to manual index length changes
-$('#config-length-2').on('change paste keyup', function() {
+$('#id_config_length_2').on('change paste keyup', function() {
   checkCompatibility();
 });
 
@@ -116,8 +116,8 @@ $('#config-visibility :checkbox').change(function() {
 
 
 function hamming(input1, input2, length) {
-  if ($('#config-length-manual').is(':checked')) {
-    length = $('#config-length')[0].value;
+  if ($('#id_config_length_manual').is(':checked')) {
+    length = $('#id_config_length')[0].value;
   } else if ( length == null ) {
     length = Math.min(input1.length, input2.length);
   }
@@ -296,14 +296,14 @@ function nameSampleSheet() {
 
 
 function updateNMerStatus( selected_length, min_index_length ) {
-  var nMerText = $('#config-length-manual').is(':checked')
-                   || $('#config-length-manual-2').is(':checked')
+  var nMerText = $('#id_config_length_manual').is(':checked')
+                   || $('#id_config_length_manual_2').is(':checked')
                    || selected_length > 0
                  ? '\u2014 Comparing '
                  : '';
 
-  if ($('#config-length-manual').is(':checked')) {
-    manual_length = $('#config-length')[0].value;
+  if ($('#id_config_length_manual').is(':checked')) {
+    manual_length = $('#id_config_length')[0].value;
     if ( manual_length == '' ) {
       manual_length = 'N';
     }
@@ -312,12 +312,12 @@ function updateNMerStatus( selected_length, min_index_length ) {
     nMerText += min_index_length + '-mers (i7)';
   }
 
-  if ($('#config-length-manual-2').is(':checked')) {
-    if ($('#config-length-manual').is(':checked')) {
+  if ($('#id_config_length_manual_2').is(':checked')) {
+    if ($('#id_config_length_manual').is(':checked')) {
         nMerText += ' + ';
     }
 
-    manual_length = $('#config-length-2')[0].value;
+    manual_length = $('#id_config_length_2')[0].value;
     if ( manual_length == '' ) {
       manual_length = 'N';
     }
