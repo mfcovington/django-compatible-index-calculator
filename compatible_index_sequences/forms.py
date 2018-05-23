@@ -94,8 +94,6 @@ class AutoIndexListForm(BaseForm):
 
     def clean(self):
         cleaned_data = super(AutoIndexListForm, self).clean()
-        config_distance = cleaned_data.get('config_distance')
-        config_length = cleaned_data.get('config_length')
         index_set_1 = cleaned_data.get('index_set_1')
         index_set_2 = cleaned_data.get('index_set_2')
         index_set_3 = cleaned_data.get('index_set_3')
@@ -142,8 +140,6 @@ class AutoIndexListForm(BaseForm):
         # config_dual = cleaned_data.get('config_dual')
         config_dual = False    # Dual indexing not yet implemented for Auto Mode
         index_list = cleaned_data.get('index_list')
-        samplesheet_1 = cleaned_data.get('samplesheet_1')
-        samplesheet_2 = cleaned_data.get('samplesheet_2')
 
         custom_index_list = index_list.splitlines()
         custom_index_list = list(filter(None, custom_index_list))
@@ -188,9 +184,7 @@ class CustomIndexListForm(BaseForm):
 
     def clean(self):
         cleaned_data = super(CustomIndexListForm, self).clean()
-        config_distance = cleaned_data.get('config_distance')
         config_dual = cleaned_data.get('config_dual')
-        config_length = cleaned_data.get('config_length')
         index_list = cleaned_data.get('index_list')
         samplesheet_1 = cleaned_data.get('samplesheet_1')
         samplesheet_2 = cleaned_data.get('samplesheet_2')
