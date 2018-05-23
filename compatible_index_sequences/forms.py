@@ -19,18 +19,6 @@ class BaseForm(forms.Form):
         self.fields['index_list'].widget = forms.Textarea(
             attrs={'placeholder': placeholder, 'rows': rows, })
 
-    config_distance = forms.IntegerField(
-        label='Minimum Hamming distance',
-        required=True,
-    )
-    config_length = forms.IntegerField(
-        label='Manually set index length (unchecked for auto)',
-        required=False,
-    )
-    config_length_2 = forms.IntegerField(
-        label='Manually set index 2 length (unchecked for auto)',
-        required=False,
-    )
     index_list = forms.CharField(
         label='Enter index sequences',
         required=False,
@@ -51,7 +39,24 @@ class BaseForm(forms.Form):
     )
 
 
-class AutoIndexListForm(BaseForm):
+class CompatibilityParameters(forms.Form):
+
+    config_distance = forms.IntegerField(
+        initial=3,
+        label='Minimum Hamming distance',
+        required=True,
+    )
+    config_length = forms.IntegerField(
+        label='Manually set index length (unchecked for auto)',
+        required=False,
+    )
+    config_length_2 = forms.IntegerField(
+        label='Manually set index 2 length (unchecked for auto)',
+        required=False,
+    )
+
+
+class AutoIndexListForm(BaseForm, CompatibilityParameters):
 
     index_set_1 = forms.ModelChoiceField(
         queryset=IndexSet.objects.filter(index_type='i7'),
@@ -174,7 +179,7 @@ class AutoIndexListForm(BaseForm):
         return cleaned_data
 
 
-class CustomIndexListForm(BaseForm):
+class CustomIndexListForm(BaseForm, CompatibilityParameters):
 
     config_dual = forms.BooleanField(
         label='Dual-Indexed?',

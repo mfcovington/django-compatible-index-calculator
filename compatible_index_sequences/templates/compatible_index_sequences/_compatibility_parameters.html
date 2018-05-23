@@ -1,3 +1,5 @@
+{% load bootstrap3 sekizai_tags %}
+
 <div class="col-sm-12">
 
   <legend>Compatibility Parameters</legend>
@@ -27,12 +29,18 @@
   </div>
 
   <div class="form-group col-sm-6">
-    <label class="control-label col-lg-8" for="config-distance">Minimum Hamming Distance:</label>
+    <label class="control-label col-lg-8" for="id_config_distance">Minimum Hamming Distance:</label>
     <div class="col-lg-4">
       <div class="input-group">
-        <input id="config-distance" name="config_distance" type="integer" class="form-control" aria-label="..." value="3">
+        {{ form.config_distance }}
       </div>
     </div>
   </div>
 
 </div>
+
+{% addtoblock "js" %}
+  <script>
+    $('#id_config_distance').addClass('form-control')
+  </script>
+{% endaddtoblock %}

@@ -97,7 +97,7 @@ $('#config-length-2').on('change paste keyup', function() {
 });
 
 // Respond to minimum hamming distances changes
-$('#config-distance').on('change paste keyup', function() {
+$('#id_config_distance').on('change paste keyup', function() {
   checkCompatibility();
 });
 
@@ -133,7 +133,7 @@ function hamming(input1, input2, length) {
 
 
 function checkCompatibility() {
-  var min_dist = $('#config-distance')[0].value;
+  var min_dist = $('#id_config_distance')[0].value;
   var selected = $('.idx.selected');
   var notSelected = $('.idx').not('.selected');
   var incompatible = new Array();
@@ -222,7 +222,7 @@ function deselectIncompatible(index) {
     return;
   }
 
-  var min_dist = $('#config-distance')[0].value;
+  var min_dist = $('#id_config_distance')[0].value;
   var allIndexes = $('.idx');
   var sequence1 = index.children('.sequence').text().trim();
 
@@ -245,7 +245,7 @@ function flashIncompatible(index) {
     return;
   }
 
-  var min_dist = $('#config-distance')[0].value;
+  var min_dist = $('#id_config_distance')[0].value;
   var allIndexes = $('.idx');
   var sequence1 = index.children('.sequence').text().trim();
 
