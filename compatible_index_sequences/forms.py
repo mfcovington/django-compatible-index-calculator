@@ -161,7 +161,8 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
         custom_index_list = index_list.splitlines()
         custom_index_list = list(filter(None, custom_index_list))
         custom_index_list = [i.replace(' ', '') for i in custom_index_list]
-        custom_index_list.extend(index_list_from_samplesheet(files=self.files))
+        samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+        custom_index_list.extend(samplesheet_index_set.keys())
 
         if len(custom_index_list) > 0:
             comma_count = Counter()
@@ -188,6 +189,7 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
 
             cleaned_data['dual_indexed'] = dual_detected
             cleaned_data['index_list'] = custom_index_list
+            cleaned_data['samplesheet_index_set'] = samplesheet_index_set
         return cleaned_data
 
 
@@ -213,7 +215,8 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
         custom_index_list = index_list.splitlines()
         custom_index_list = list(filter(None, custom_index_list))
         custom_index_list = [i.replace(' ', '') for i in custom_index_list]
-        custom_index_list.extend(index_list_from_samplesheet(files=self.files))
+        samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+        custom_index_list.extend(samplesheet_index_set.keys())
 
         comma_count = Counter()
         for index in custom_index_list:
@@ -239,6 +242,7 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
 
         cleaned_data['dual_indexed'] = dual_detected
         cleaned_data['index_list'] = custom_index_list
+        cleaned_data['samplesheet_index_set'] = samplesheet_index_set
         return cleaned_data
 
 
@@ -253,6 +257,10 @@ class HiddenSampleSheetDownloadForm(forms.Form):
         widget=forms.HiddenInput,
     )
     index_list_2_csv = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput,
+    )
+    sample_ids_csv = forms.CharField(
         required=False,
         widget=forms.HiddenInput,
     )

@@ -2,7 +2,7 @@ import codecs
 import csv
 import itertools
 import time
-from collections import deque
+from collections import deque, OrderedDict
 
 
 def find_compatible_subset(index_set_list, subset_size_list, min_length,
@@ -140,6 +140,7 @@ def index_list_from_samplesheet(request=None, files=None):
     else:
         raise ValueError('Need either a request object or files, not both.')
 
+    sample_ids = []
     index_list = []
     index_list_2 = []
     dual_indexed = False
@@ -151,11 +152,13 @@ def index_list_from_samplesheet(request=None, files=None):
         header_done = False
         for row in reader:
             if header_done:
+                sample_ids.append(row[sample_id_column])
                 index_list.append(row[index1_column])
                 if dual_indexed:
                     index_list_2.append(row[index2_column])
             if 'Sample_ID' in row:
                 header_done = True
+                sample_id_column = row.index('Sample_ID')
                 index1_column = row.index('index')
                 try:
                     index2_column = row.index('index2')
@@ -165,9 +168,12 @@ def index_list_from_samplesheet(request=None, files=None):
                     dual_indexed = True
 
     if dual_indexed:
-        return [",".join([i1, i2]) for i1, i2 in zip(index_list, index_list_2)]
+        return OrderedDict(zip(
+            [",".join([i1, i2]) for i1, i2 in zip(index_list, index_list_2)],
+            sample_ids
+        ))
     else:
-        return index_list
+        return OrderedDict(zip(index_list, sample_ids))
 
 
 def is_timed_out(start_time, timeout):
