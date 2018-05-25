@@ -161,7 +161,12 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
         custom_index_list = index_list.splitlines()
         custom_index_list = list(filter(None, custom_index_list))
         custom_index_list = [i.replace(' ', '') for i in custom_index_list]
-        samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+
+        try:
+            samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+        except ValueError as e:
+            raise forms.ValidationError(e)
+
         custom_index_list.extend(samplesheet_index_set.keys())
 
         if len(custom_index_list) > 0:
@@ -215,7 +220,12 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
         custom_index_list = index_list.splitlines()
         custom_index_list = list(filter(None, custom_index_list))
         custom_index_list = [i.replace(' ', '') for i in custom_index_list]
-        samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+
+        try:
+            samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+        except ValueError as e:
+            raise forms.ValidationError(e)
+
         custom_index_list.extend(samplesheet_index_set.keys())
 
         comma_count = Counter()

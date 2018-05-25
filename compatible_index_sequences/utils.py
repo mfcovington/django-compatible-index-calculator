@@ -167,12 +167,17 @@ def index_list_from_samplesheet(request=None, files=None):
                 else:
                     dual_indexed = True
 
+    if len(sample_ids) > len(set(sample_ids)):
+        raise ValueError('Duplicate sample IDs detected in uploaded sample sheet(s).')
+
     if dual_indexed:
-        return OrderedDict(zip(
-            [",".join([i1, i2]) for i1, i2 in zip(index_list, index_list_2)],
-            sample_ids
-        ))
+        index_list = [",".join([i1, i2]) for i1, i2 in zip(index_list, index_list_2)]
+        if len(index_list) > len(set(index_list)):
+            raise ValueError('Duplicate pairs of index sequences detected in uploaded sample sheet(s).')
+        return OrderedDict(zip(index_list, sample_ids))
     else:
+        if len(index_list) > len(set(index_list)):
+            raise ValueError('Duplicate index sequences detected in uploaded sample sheet(s).')
         return OrderedDict(zip(index_list, sample_ids))
 
 
