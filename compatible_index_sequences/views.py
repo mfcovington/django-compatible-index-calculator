@@ -244,10 +244,11 @@ def custom(request):
                 'incompatible_indexes': [item for sublist in incompatible_alignments_seqs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
                 'hidden_download_form': hidden_download_form,
-                'weblogo_base64': weblogo_base64([index['sequence'] for index in index_list]),
+                'weblogo_base64': weblogo_base64(index_list_seqs),
             }
             if dual_indexed:
                 context['index_length_2'] = index_length_2
+                context['weblogo_base64_2'] = weblogo_base64(index_list_2_seqs)
             return render(request, 'compatible_index_sequences/custom_results.html', context)
         else:
             print("INVALID INPUT")

@@ -1,5 +1,9 @@
 <div>
   <img class="seqlogo" alt="sequence logo (bit)" src="data:image/png;base64,{{ weblogo_base64.bit }}"/>
   <img class="seqlogo" alt="sequence logo (probability)" src="data:image/png;base64,{{ weblogo_base64.probability }}"/>
+  {% if weblogo_base64_2 %}
+    <img class="seqlogo" alt="Index 2 sequence logo (bit)" src="data:image/png;base64,{{ weblogo_base64_2.bit }}"/>
+    <img class="seqlogo" alt="Index 2 sequence logo (probability)" src="data:image/png;base64,{{ weblogo_base64_2.probability }}"/>
+  {% endif %}
 </div>
 <hr>
