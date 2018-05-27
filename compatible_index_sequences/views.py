@@ -15,7 +15,7 @@ from .utils import (
     generate_incompatible_alignments, hamming_distance,
     index_list_from_samplesheet, is_self_compatible,
     minimum_index_length_from_lists, minimum_index_length_from_sets,
-    optimize_set_order)
+    optimize_set_order, weblogo_base64)
 
 
 def generate_index_list_with_index_set_data(index_list):
@@ -129,6 +129,7 @@ def auto(request):
             context = {
                 'hidden_download_form': hidden_download_form,
                 'index_list': index_list,
+                'weblogo_base64': weblogo_base64([index['sequence'] for index in index_list]),
             }
             return render(request, 'compatible_index_sequences/auto_results.html', context)
         else:
@@ -243,6 +244,7 @@ def custom(request):
                 'incompatible_indexes': [item for sublist in incompatible_alignments_seqs for item in sublist],
                 'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
                 'hidden_download_form': hidden_download_form,
+                'weblogo_base64': weblogo_base64([index['sequence'] for index in index_list]),
             }
             if dual_indexed:
                 context['index_length_2'] = index_length_2

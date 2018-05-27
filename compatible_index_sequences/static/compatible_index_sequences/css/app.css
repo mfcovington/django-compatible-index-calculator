@@ -202,3 +202,12 @@ a#sictool-select-mode:active {
 p.legend-title {
   margin-bottom: 15px;
 }
+
+.seqlogo {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.seqlogo + .seqlogo {
+  margin-left: 10px;
+}

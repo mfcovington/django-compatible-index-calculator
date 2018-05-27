@@ -1,8 +1,13 @@
+import base64
 import codecs
 import csv
 import itertools
 import time
 from collections import deque, OrderedDict
+
+from weblogolib import (
+    Alphabet, ColorScheme, LogoData, LogoFormat, LogoOptions, Seq, SeqList, SymbolColor,
+    png_formatter)
 
 
 def find_compatible_subset(index_set_list, subset_size_list, min_length,
@@ -272,3 +277,34 @@ def remove_incompatible_indexes_from_queryset(index_set, index_list, min_distanc
 
 def reverse_complement(seq):
     return seq.translate(str.maketrans('ACGTacgt', 'TGCAtgca'))[::-1]
+
+
+def weblogo_base64(index_list):
+    illumina_colors = ColorScheme(
+            [
+                SymbolColor("G", "blue"),
+                SymbolColor("T", "black"),
+                SymbolColor("C", "green"),
+                SymbolColor("A", "red")
+            ],
+    )
+    ngs_bases = Alphabet('ACGT', zip('acgt', 'ACGT'))
+
+    sequences = SeqList(
+        (Seq(s, alphabet=ngs_bases) for s in index_list), alphabet=ngs_bases)
+    data = LogoData.from_seqs(sequences)
+    options = LogoOptions(
+        color_scheme=illumina_colors,
+        number_interval=1,
+        show_fineprint=False,
+    )
+
+    logo = {}
+    png = png_formatter(data, LogoFormat(data, options))
+    logo['bit'] = base64.b64encode(png)
+
+    options.unit_name = 'probability'
+    png = png_formatter(data, LogoFormat(data, options))
+    logo['probability'] = base64.b64encode(png)
+
+    return logo
