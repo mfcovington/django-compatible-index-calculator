@@ -8,6 +8,13 @@ from .models import IndexSet
 from .utils import index_list_from_samplesheet
 
 
+def clean_custom_index_text(custom_index_text):
+    custom_index_list = custom_index_text.splitlines()
+    custom_index_list = list(filter(None, custom_index_list))
+    custom_index_list = [i.replace(' ', '') for i in custom_index_list]
+    return custom_index_list
+
+
 class BaseForm(forms.Form):
     def __init__(self, *args, **kwargs):
         try:
@@ -156,11 +163,9 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
 
         # config_dual = cleaned_data.get('config_dual')
         config_dual = False    # Dual indexing not yet implemented for Auto Mode
-        index_list = cleaned_data.get('index_list')
 
-        custom_index_list = index_list.splitlines()
-        custom_index_list = list(filter(None, custom_index_list))
-        custom_index_list = [i.replace(' ', '') for i in custom_index_list]
+        custom_index_list = clean_custom_index_text(
+            cleaned_data.get('index_list'))
 
         try:
             samplesheet_index_set = index_list_from_samplesheet(files=self.files)
@@ -209,17 +214,17 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
     def clean(self):
         cleaned_data = super(CustomIndexListForm, self).clean()
         config_dual = cleaned_data.get('config_dual')
-        index_list = cleaned_data.get('index_list')
+        custom_index_text = cleaned_data.get('index_list')
         samplesheet_1 = cleaned_data.get('samplesheet_1')
         samplesheet_2 = cleaned_data.get('samplesheet_2')
 
-        if index_list == '' and samplesheet_1 is None and samplesheet_2 is None:
+        if (custom_index_text == '' and
+                samplesheet_1 is None and
+                samplesheet_2 is None):
             raise forms.ValidationError(
                 'Please enter index sequences and/or upload a sample sheet.')
 
-        custom_index_list = index_list.splitlines()
-        custom_index_list = list(filter(None, custom_index_list))
-        custom_index_list = [i.replace(' ', '') for i in custom_index_list]
+        custom_index_list = clean_custom_index_text(custom_index_text)
 
         try:
             samplesheet_index_set = index_list_from_samplesheet(files=self.files)
