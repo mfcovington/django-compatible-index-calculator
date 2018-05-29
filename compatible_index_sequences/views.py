@@ -247,8 +247,10 @@ def custom(request):
                 'weblogo_base64': weblogo_base64(index_list_seqs),
             }
             if dual_indexed:
-                context['index_length_2'] = index_length_2
-                context['weblogo_base64_2'] = weblogo_base64(index_list_2_seqs)
+                context.update({
+                    'index_length_2': index_length_2,
+                    'weblogo_base64_2': weblogo_base64(index_list_2_seqs),
+                })
             return render(request, 'compatible_index_sequences/custom_results.html', context)
         else:
             print("INVALID INPUT")
@@ -355,6 +357,8 @@ class InteractiveView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(InteractiveView, self).get_context_data(**kwargs)
-        context['form'] = CompatibilityParameters()
-        context['hidden_download_form'] = HiddenSampleSheetDownloadForm()
+        context.update({
+            'form': CompatibilityParameters(),
+            'hidden_download_form': HiddenSampleSheetDownloadForm(),
+        })
         return context
