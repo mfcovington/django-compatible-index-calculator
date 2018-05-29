@@ -201,12 +201,15 @@ def join_two_compatible_sets(a_sequences, b_sequences, b_is_self_compatible,
         return None
 
 
-def minimum_index_length_from_lists(*index_list):
-    index_list = [item for sublist in index_list for item in sublist]
-    if len(index_list) > 0:
-        return min([len(i) for i in index_list])
+def minimum_index_length_from_lists(*index_list, override_length=None):
+    if override_length is None:
+        index_list = [item for sublist in index_list for item in sublist]
+        if len(index_list) > 0:
+            return min([len(i) for i in index_list])
+        else:
+            return float('inf')
     else:
-        return float('inf')
+        return override_length
 
 
 def minimum_index_length_from_sets(index_set_list):
