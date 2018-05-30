@@ -48,6 +48,35 @@ def convert_index_list_to_indexing_data(custom_index_list):
     return indexing_data_set
 
 
+def process_custom_input(custom_index_text, config_dual, files):
+    custom_index_list = clean_custom_index_text(custom_index_text)
+    indexing_data_set = convert_index_list_to_indexing_data(
+        custom_index_list)
+
+    try:
+        indexing_data_set.add(index_list_from_samplesheet(
+            files=files))
+    except ValueError as e:
+        raise forms.ValidationError(e)
+
+    dual_detected = None
+    if len(indexing_data_set.index_data) > 0:
+        if indexing_data_set.get_indexing_type() == 'single':
+            dual_detected = False
+        elif indexing_data_set.get_indexing_type() == 'dual':
+            dual_detected = True
+        elif indexing_data_set.get_indexing_type() == 'mixed':
+            raise forms.ValidationError(
+                'Input is mix of single-indexing and dual-indexing.')
+
+        if config_dual != dual_detected:
+            raise forms.ValidationError(
+                'Input sequences are inconsistent with choice of {}-indexing.'.format(
+                    'dual' if config_dual else 'single'))
+
+    return (indexing_data_set, dual_detected)
+
+
 class BaseForm(forms.Form):
     def __init__(self, *args, **kwargs):
         try:
@@ -157,6 +186,7 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
         subset_size_1 = cleaned_data.get('subset_size_1')
         subset_size_2 = cleaned_data.get('subset_size_2')
         subset_size_3 = cleaned_data.get('subset_size_3')
+        custom_index_text = cleaned_data.get('index_list')
 
         try:
             set_size_1 = len(index_set_1.index_set.all())
@@ -196,31 +226,8 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
 
         # config_dual = cleaned_data.get('config_dual')
         config_dual = False    # Dual indexing not yet implemented for Auto Mode
-
-        custom_index_list = clean_custom_index_text(
-            cleaned_data.get('index_list'))
-        indexing_data_set = convert_index_list_to_indexing_data(
-            custom_index_list)
-
-        try:
-            indexing_data_set.add(index_list_from_samplesheet(
-                files=self.files))
-        except ValueError as e:
-            raise forms.ValidationError(e)
-
-        if len(indexing_data_set.index_data) > 0:
-            if indexing_data_set.get_indexing_type() == 'single':
-                dual_detected = False
-            elif indexing_data_set.get_indexing_type() == 'dual':
-                dual_detected = True
-            elif indexing_data_set.get_indexing_type() == 'mixed':
-                raise forms.ValidationError(
-                    'Input is mix of single-indexing and dual-indexing.')
-
-            if config_dual != dual_detected:
-                raise forms.ValidationError(
-                    'Input sequences are inconsistent with choice of {}-indexing.'.format(
-                        'dual' if config_dual else 'single'))
+        (indexing_data_set, dual_detected) = process_custom_input(
+            custom_index_text, config_dual, self.files)
 
         cleaned_data['indexing_data_set'] = indexing_data_set
         return cleaned_data
@@ -247,28 +254,8 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
             raise forms.ValidationError(
                 'Please enter index sequences and/or upload a sample sheet.')
 
-        custom_index_list = clean_custom_index_text(custom_index_text)
-        indexing_data_set = convert_index_list_to_indexing_data(
-            custom_index_list)
-
-        try:
-            indexing_data_set.add(index_list_from_samplesheet(
-                files=self.files))
-        except ValueError as e:
-            raise forms.ValidationError(e)
-
-        if indexing_data_set.get_indexing_type() == 'single':
-            dual_detected = False
-        elif indexing_data_set.get_indexing_type() == 'dual':
-            dual_detected = True
-        elif indexing_data_set.get_indexing_type() == 'mixed':
-            raise forms.ValidationError(
-                'Input is mix of single-indexing and dual-indexing.')
-
-        if config_dual != dual_detected:
-            raise forms.ValidationError(
-                'Input sequences are inconsistent with choice of {}-indexing.'.format(
-                    'dual' if config_dual else 'single'))
+        (indexing_data_set, dual_detected) = process_custom_input(
+            custom_index_text, config_dual, self.files)
 
         cleaned_data['dual_indexed'] = dual_detected
         cleaned_data['indexing_data_set'] = indexing_data_set

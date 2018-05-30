@@ -32,6 +32,104 @@ def lookup_index_set(index, complete_index_set=Index):
     return complete_index_set.objects.filter(sequence__iexact=index)
 
 
+def process_custom_input(indexing_data_set, config_distance, config_length,
+        config_length_2=None, dual_indexed=False):
+
+    custom_index_list = indexing_data_set.get_index_1_sequences()
+    if dual_indexed:
+        custom_index_list_2 = indexing_data_set.get_index_2_sequences()
+
+        index_length_2 = minimum_index_length_from_lists(
+            custom_index_list_2, override_length=config_length_2)
+
+    index_length = minimum_index_length_from_lists(
+        custom_index_list, override_length=config_length)
+
+    incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
+        custom_index_list, min_distance=config_distance,
+        index_length=index_length, sequences=True,
+        positions=True)
+
+    if dual_indexed:
+        subset_seq_2 = {
+            e: [custom_index_list_2[i] for i in p]
+            for e, p in enumerate(incompat_poss_1)
+        }
+
+        both_incompatible = []
+        for i, pair in subset_seq_2.items():
+            distance = hamming_distance(
+                pair[0][0:index_length_2].upper(),
+                pair[1][0:index_length_2].upper())
+            if distance < config_distance:
+                both_incompatible.append(i)
+
+        incompatible_index_pairs = []
+        incompatible_index_pairs_2 = []
+        for i in both_incompatible:
+            incompatible_index_pairs.append(incompat_seqs_1[i])
+            incompatible_index_pairs_2.append(subset_seq_2[i])
+
+    else:
+        incompatible_index_pairs = incompat_seqs_1
+
+    incompatible_alignments = generate_incompatible_alignments(
+        incompatible_index_pairs, length=index_length)
+
+    incompatible_alignments_seqs = []
+
+    if dual_indexed:
+        incompatible_alignments_2 = generate_incompatible_alignments(
+            incompatible_index_pairs_2, length=index_length_2)
+        incompatible_alignments = [
+            '{} + {}'.format(a[0], a[1]) for a in zip(
+                incompatible_alignments, incompatible_alignments_2)]
+        zipped_pairs = zip(
+            incompatible_index_pairs, incompatible_index_pairs_2)
+        for pair_1, pair_2 in zipped_pairs:
+            incompatible_alignments_seqs.append(
+                ['{}   {}'.format(i[0], i[1])
+                    for i in zip(pair_1, pair_2)])
+    else:
+        incompatible_alignments_seqs = incompatible_index_pairs
+
+    index_list = generate_index_list_with_index_set_data(
+        custom_index_list)
+    index_list_seqs = [index['sequence'] for index in index_list]
+    index_list_csv = ','.join(index_list_seqs)
+    if dual_indexed:
+        index_list_2 = generate_index_list_with_index_set_data(
+            custom_index_list_2)
+        index_list_2_seqs = [index['sequence'] for index in index_list_2]
+        index_list_2_csv = ','.join(index_list_2_seqs)
+        index_list = list(zip(index_list, index_list_2))
+    else:
+        index_list_2_csv = []
+
+    hidden_download_form = HiddenSampleSheetDownloadForm(
+        initial={
+            'index_list_csv': index_list_csv,
+            'index_list_2_csv': index_list_2_csv,
+            'sample_ids_csv': ','.join(indexing_data_set.get_sample_ids()),
+            'dual_indexed': dual_indexed,
+        }
+    )
+
+    context = {
+        'dual_indexed': dual_indexed,
+        'index_length': index_length,
+        'index_list': index_list,
+        'incompatible_indexes': [item for sublist in incompatible_alignments_seqs for item in sublist],
+        'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
+        'hidden_download_form': hidden_download_form,
+        'self_compatible': False if incompatible_alignments_seqs else True,
+    }
+    if dual_indexed:
+        context['index_length_2'] = index_length_2
+
+    return context
+
+
 def auto(request):
     form = AutoIndexListForm(rows=10)
     if request.method == 'POST':
@@ -54,14 +152,12 @@ def auto(request):
 
             order = optimize_set_order(*index_set_list)
 
-            custom_list = indexing_data_set.get_index_1_sequences()
-            index_list = generate_index_list_with_index_set_data(custom_list)
-
             index = {'set': [], 'size': []}
             for o in order:
                 index['set'].append(index_set_list[o])
                 index['size'].append(subset_size_list[o])
 
+            custom_list = indexing_data_set.get_index_1_sequences()
             if config_length is None:
                 min_length = min(
                     minimum_index_length_from_lists(custom_list),
@@ -70,19 +166,10 @@ def auto(request):
             else:
                 min_length = config_length
 
-            if not is_self_compatible(custom_list, config_distance, min_length):
-                incompatible_index_pairs = find_incompatible_index_pairs(
-                    custom_list, min_distance=config_distance,
-                    index_length=min_length)
-                incompatible_alignments = generate_incompatible_alignments(
-                    incompatible_index_pairs, length=min_length)
-                context = {
-                    'index_list': index_list,
-                    'incompatible_indexes':
-                        [item for sublist in incompatible_index_pairs for item in sublist],
-                    'incompatible_index_pairs':
-                        zip(incompatible_index_pairs, incompatible_alignments),
-                }
+            context = process_custom_input(
+                indexing_data_set, config_distance, min_length)
+
+            if not context['self_compatible']:
                 return render(
                     request, 'compatible_index_sequences/custom_results.html', context)
 
@@ -97,6 +184,7 @@ def auto(request):
                 timeout=timeout)
 
             if compatible_set:
+                index_list = generate_index_list_with_index_set_data(custom_list)
                 index_list.extend(
                     generate_index_list_with_index_set_data(compatible_set))
                 indexing_data_set.add([IndexingData(seq) for seq in compatible_set])
@@ -105,10 +193,10 @@ def auto(request):
                 print('WARNING: NO COMPATIBLE SETS FOUND')
 
             if find_compatible_subset.timed_out:
-                context = {
+                context.update({
                     'form': form,
                     'timed_out': True,
-                }
+                })
                 print('WARNING: TIMED OUT')
                 return render(
                     request, 'compatible_index_sequences/auto.html', context)
@@ -120,10 +208,10 @@ def auto(request):
                     'sample_ids_csv': ','.join(indexing_data_set.get_sample_ids()),
                 }
             )
-            context = {
+            context.update({
                 'hidden_download_form': hidden_download_form,
                 'index_list': index_list,
-            }
+            })
             return render(request, 'compatible_index_sequences/auto_results.html', context)
         else:
             print("INVALID INPUT")
@@ -142,96 +230,10 @@ def custom(request):
             config_length_2 = form.cleaned_data['config_length_2']
             indexing_data_set = form.cleaned_data['indexing_data_set']
 
-            custom_index_list = indexing_data_set.get_index_1_sequences()
-            if dual_indexed:
-                custom_index_list_2 = indexing_data_set.get_index_2_sequences()
+            context = process_custom_input(
+                indexing_data_set, config_distance, config_length,
+                config_length_2=config_length_2, dual_indexed=dual_indexed)
 
-                index_length_2 = minimum_index_length_from_lists(
-                    custom_index_list_2, override_length=config_length_2)
-
-            index_length = minimum_index_length_from_lists(
-                custom_index_list, override_length=config_length)
-
-            incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
-                custom_index_list, min_distance=config_distance,
-                index_length=index_length, sequences=True,
-                positions=True)
-
-            if dual_indexed:
-                subset_seq_2 = {
-                    e: [custom_index_list_2[i] for i in p]
-                    for e, p in enumerate(incompat_poss_1)
-                }
-
-                both_incompatible = []
-                for i, pair in subset_seq_2.items():
-                    distance = hamming_distance(
-                        pair[0][0:index_length_2].upper(),
-                        pair[1][0:index_length_2].upper())
-                    if distance < config_distance:
-                        both_incompatible.append(i)
-
-                incompatible_index_pairs = []
-                incompatible_index_pairs_2 = []
-                for i in both_incompatible:
-                    incompatible_index_pairs.append(incompat_seqs_1[i])
-                    incompatible_index_pairs_2.append(subset_seq_2[i])
-
-            else:
-                incompatible_index_pairs = incompat_seqs_1
-
-            incompatible_alignments = generate_incompatible_alignments(
-                incompatible_index_pairs, length=index_length)
-
-            incompatible_alignments_seqs = []
-
-            if dual_indexed:
-                incompatible_alignments_2 = generate_incompatible_alignments(
-                    incompatible_index_pairs_2, length=index_length_2)
-                incompatible_alignments = [
-                    '{} + {}'.format(a[0], a[1]) for a in zip(
-                        incompatible_alignments, incompatible_alignments_2)]
-                zipped_pairs = zip(
-                    incompatible_index_pairs, incompatible_index_pairs_2)
-                for pair_1, pair_2 in zipped_pairs:
-                    incompatible_alignments_seqs.append(
-                        ['{}   {}'.format(i[0], i[1])
-                            for i in zip(pair_1, pair_2)])
-            else:
-                incompatible_alignments_seqs = incompatible_index_pairs
-
-            index_list = generate_index_list_with_index_set_data(
-                custom_index_list)
-            index_list_seqs = [index['sequence'] for index in index_list]
-            index_list_csv = ','.join(index_list_seqs)
-            if dual_indexed:
-                index_list_2 = generate_index_list_with_index_set_data(
-                    custom_index_list_2)
-                index_list_2_seqs = [index['sequence'] for index in index_list_2]
-                index_list_2_csv = ','.join(index_list_2_seqs)
-                index_list = list(zip(index_list, index_list_2))
-            else:
-                index_list_2_csv = []
-
-            hidden_download_form = HiddenSampleSheetDownloadForm(
-                initial={
-                    'index_list_csv': index_list_csv,
-                    'index_list_2_csv': index_list_2_csv,
-                    'sample_ids_csv': ','.join(indexing_data_set.get_sample_ids()),
-                    'dual_indexed': dual_indexed,
-                }
-            )
-
-            context = {
-                'dual_indexed': dual_indexed,
-                'index_length': index_length,
-                'index_list': index_list,
-                'incompatible_indexes': [item for sublist in incompatible_alignments_seqs for item in sublist],
-                'incompatible_index_pairs': zip(incompatible_alignments_seqs, incompatible_alignments),
-                'hidden_download_form': hidden_download_form,
-            }
-            if dual_indexed:
-                context['index_length_2'] = index_length_2
             return render(request, 'compatible_index_sequences/custom_results.html', context)
         else:
             print("INVALID INPUT")
