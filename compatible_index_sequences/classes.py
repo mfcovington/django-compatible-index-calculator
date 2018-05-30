@@ -4,13 +4,38 @@ from typing import List
 
 @dataclass
 class IndexingData:
+    """
+    >>> i0 = IndexingData('CACACAC')
+    >>> i0
+    IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence=None, index_2_id=[], sample_id=None)
+    >>> i1 = IndexingData('CACACAC', sample_id='Control')
+    >>> i1
+    IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence=None, index_2_id=[], sample_id='Control')
+    >>> i2 = IndexingData('GTGTGTG', index_2_sequence='ATATATA')
+    >>> i2
+    IndexingData(index_1_sequence='GTGTGTG', index_1_id=[], index_2_sequence='ATATATA', index_2_id=[], sample_id=None)
+    >>> i3 = IndexingData('AAAAAAA', index_1_id='INDEX 03')
+    >>> i3
+    IndexingData(index_1_sequence='AAAAAAA', index_1_id=['INDEX 03'], index_2_sequence=None, index_2_id=[], sample_id=None)
+    >>> i4 = IndexingData('GTGTGTG', index_1_id='INDEX 03', index_2_sequence='ATATATA', index_2_id=['Set 1:INDEX 02', 'Set 5:INDEX 08'])
+    >>> i4
+    IndexingData(index_1_sequence='GTGTGTG', index_1_id=['INDEX 03'], index_2_sequence='ATATATA', index_2_id=['Set 1:INDEX 02', 'Set 5:INDEX 08'], sample_id=None)
+    >>> i1.indexing_type()
+    'single'
+    >>> i2.indexing_type()
+    'dual'
+    """
     index_1_sequence: str
-    index_1_name: str = None
-    index_1_set_names: List[str] = None
+    index_1_id: List[str] = field(default_factory=list)
     index_2_sequence: str = None
-    index_2_name: str = None
-    index_2_set_names: List[str] = None
+    index_2_id: List[str] = field(default_factory=list)
     sample_id: str = None
+
+    def __post_init__(self):
+        if type(self.index_1_id) is not list:
+            self.index_1_id = [self.index_1_id]
+        if type(self.index_2_id) is not list:
+            self.index_2_id = [self.index_2_id]
 
     def indexing_type(self):
         if self.index_1_sequence is None:
@@ -31,7 +56,7 @@ class IndexingDataSet:
     >>> s2 = IndexingDataSet([i2])
 
     >>> s1
-    IndexingDataSet(index_data=[IndexingData(index_1_sequence='CACACAC', index_1_name=None, index_1_set_names=None, index_2_sequence=None, index_2_name=None, index_2_set_names=None, sample_id=None)])
+    IndexingDataSet(index_data=[IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence=None, index_2_id=[], sample_id=None)])
     >>> s2  # doctest: +ELLIPSIS
     IndexingDataSet(index_data=[IndexingData(index_1_sequence='GTGTGTG', ...])
 
