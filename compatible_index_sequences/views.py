@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
+from .classes import IndexingData
 from .forms import (
     AutoIndexListForm, CompatibilityParameters, CustomIndexListForm,
     HiddenSampleSheetDownloadForm)
@@ -38,7 +39,7 @@ def auto(request):
         if form.is_valid():
             config_distance = form.cleaned_data['config_distance']
             config_length = form.cleaned_data['config_length']
-            samplesheet_index_set = form.cleaned_data['samplesheet_index_set']
+            indexing_data_set = form.cleaned_data['indexing_data_set']
 
             index_set_list = [
                 form.cleaned_data['index_set_1'],
@@ -53,13 +54,8 @@ def auto(request):
 
             order = optimize_set_order(*index_set_list)
 
-            index_list = form.cleaned_data['index_list']
-            index_list = generate_index_list_with_index_set_data(index_list)
-
-            try:
-                custom_list = [i['sequence'] for i in index_list]
-            except:
-                custom_list = []
+            custom_list = indexing_data_set.get_index_1_sequences()
+            index_list = generate_index_list_with_index_set_data(custom_list)
 
             index = {'set': [], 'size': []}
             for o in order:
@@ -80,8 +76,6 @@ def auto(request):
                     index_length=min_length)
                 incompatible_alignments = generate_incompatible_alignments(
                     incompatible_index_pairs, length=min_length)
-                index_list = generate_index_list_with_index_set_data(custom_list)
-
                 context = {
                     'index_list': index_list,
                     'incompatible_indexes':
@@ -99,12 +93,13 @@ def auto(request):
 
             compatible_set = find_compatible_subset(
                 index['set'], index['size'], min_length=min_length,
-                min_distance=config_distance, previous_list=custom_list,
+                min_distance=config_distance, previous_list=list(custom_list),
                 timeout=timeout)
 
             if compatible_set:
                 index_list.extend(
                     generate_index_list_with_index_set_data(compatible_set))
+                indexing_data_set.add([IndexingData(seq) for seq in compatible_set])
             else:
                 index_list = []
                 print('WARNING: NO COMPATIBLE SETS FOUND')
@@ -119,11 +114,10 @@ def auto(request):
                     request, 'compatible_index_sequences/auto.html', context)
 
             index_list_seqs = [index['sequence'] for index in index_list]
-            sample_ids = [samplesheet_index_set.get(s, '') for s in index_list_seqs]
             hidden_download_form = HiddenSampleSheetDownloadForm(
                 initial={
                     'index_list_csv': ','.join(index_list_seqs),
-                    'sample_ids_csv': ','.join(sample_ids),
+                    'sample_ids_csv': ','.join(indexing_data_set.get_sample_ids()),
                 }
             )
             context = {
@@ -146,12 +140,11 @@ def custom(request):
             dual_indexed = form.cleaned_data['dual_indexed']
             config_length = form.cleaned_data['config_length']
             config_length_2 = form.cleaned_data['config_length_2']
-            custom_index_list = form.cleaned_data['index_list']
-            samplesheet_index_set = form.cleaned_data['samplesheet_index_set']
+            indexing_data_set = form.cleaned_data['indexing_data_set']
 
+            custom_index_list = indexing_data_set.get_index_1_sequences()
             if dual_indexed:
-                (custom_index_list, custom_index_list_2) = zip(
-                    *[pair.split(',') for pair in custom_index_list])
+                custom_index_list_2 = indexing_data_set.get_index_2_sequences()
 
                 index_length_2 = minimum_index_length_from_lists(
                     custom_index_list_2, override_length=config_length_2)
@@ -217,17 +210,14 @@ def custom(request):
                 index_list_2_seqs = [index['sequence'] for index in index_list_2]
                 index_list_2_csv = ','.join(index_list_2_seqs)
                 index_list = list(zip(index_list, index_list_2))
-                sample_ids = [samplesheet_index_set.get(','.join([s1, s2]), '')
-                    for s1, s2 in zip(index_list_seqs, index_list_2_seqs)]
             else:
                 index_list_2_csv = []
-                sample_ids = [samplesheet_index_set.get(s, '') for s in index_list_seqs]
 
             hidden_download_form = HiddenSampleSheetDownloadForm(
                 initial={
                     'index_list_csv': index_list_csv,
                     'index_list_2_csv': index_list_2_csv,
-                    'sample_ids_csv': ','.join(sample_ids),
+                    'sample_ids_csv': ','.join(indexing_data_set.get_sample_ids()),
                     'dual_indexed': dual_indexed,
                 }
             )

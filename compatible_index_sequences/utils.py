@@ -4,6 +4,8 @@ import itertools
 import time
 from collections import deque, OrderedDict
 
+from .classes import IndexingData, IndexingDataSet
+
 
 def find_compatible_subset(index_set_list, subset_size_list, min_length,
                            min_distance=3, previous_list=[], timeout=10,
@@ -140,9 +142,7 @@ def index_list_from_samplesheet(request=None, files=None):
     else:
         raise ValueError('Need either a request object or files, not both.')
 
-    sample_ids = []
-    index_list = []
-    index_list_2 = []
+    indexing_data_set = IndexingDataSet()
     dual_indexed = False
 
     for file in file_list:
@@ -152,33 +152,36 @@ def index_list_from_samplesheet(request=None, files=None):
         header_done = False
         for row in reader:
             if header_done:
-                sample_ids.append(row[sample_id_column])
-                index_list.append(row[index1_column])
+                indexing_data = IndexingData(row[index1_column],
+                    index_1_name = row[index1_id_column],
+                    sample_id=row[sample_id_column])
                 if dual_indexed:
-                    index_list_2.append(row[index2_column])
+                    indexing_data.index_2_sequence = row[index2_column]
+                    indexing_data.index_2_name = row[index2_id_column]
+                indexing_data_set.add(indexing_data)
             if 'Sample_ID' in row:
                 header_done = True
                 sample_id_column = row.index('Sample_ID')
                 index1_column = row.index('index')
+                index1_id_column = row.index('I7_Index_ID')
                 try:
                     index2_column = row.index('index2')
+                    index2_id_column = row.index('I5_Index_ID')
                 except ValueError:
                     pass
                 else:
                     dual_indexed = True
 
-    if len(sample_ids) > len(set(sample_ids)):
+    if not indexing_data_set.has_unique_sample_ids():
         raise ValueError('Duplicate sample IDs detected in uploaded sample sheet(s).')
 
-    if dual_indexed:
-        index_list = [",".join([i1, i2]) for i1, i2 in zip(index_list, index_list_2)]
-        if len(index_list) > len(set(index_list)):
+    if not indexing_data_set.has_unique_index_seqs():
+        if dual_indexed:
             raise ValueError('Duplicate pairs of index sequences detected in uploaded sample sheet(s).')
-        return OrderedDict(zip(index_list, sample_ids))
-    else:
-        if len(index_list) > len(set(index_list)):
+        else:
             raise ValueError('Duplicate index sequences detected in uploaded sample sheet(s).')
-        return OrderedDict(zip(index_list, sample_ids))
+    else:
+        return indexing_data_set
 
 
 def is_timed_out(start_time, timeout):

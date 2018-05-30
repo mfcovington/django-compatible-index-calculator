@@ -4,6 +4,7 @@ import re
 from django import forms
 from django.core import validators
 
+from .classes import IndexingData, IndexingDataSet
 from .models import IndexSet
 from .utils import index_list_from_samplesheet
 
@@ -12,7 +13,39 @@ def clean_custom_index_text(custom_index_text):
     custom_index_list = custom_index_text.splitlines()
     custom_index_list = list(filter(None, custom_index_list))
     custom_index_list = [i.replace(' ', '') for i in custom_index_list]
+
+    if len(custom_index_list) > 0:
+        comma_count = Counter()
+        for index in custom_index_list:
+            comma_count[index.count(',')] += 1
+            if re.search('[^acgt,]', index, flags=re.IGNORECASE):
+                raise forms.ValidationError(
+                    'Input sequences must be composed of valid bases (e.g., ACGT).')
+
+        dual_detected = False
+        if len(comma_count) > 1:
+            raise forms.ValidationError(
+                'Input is mix of single-indexing and dual-indexing.')
+        elif list(comma_count.keys())[0] == 1:
+            dual_detected = True
+
     return custom_index_list
+
+
+def convert_index_list_to_indexing_data(custom_index_list):
+    indexing_data_set = IndexingDataSet()
+    for index_seq in custom_index_list:
+        if index_seq.count(',') == 0:
+            indexing_data_set.add(IndexingData(index_seq))
+        elif index_seq.count(',') == 1:
+            (index1_seq, index2_seq) = index_seq.split(',')
+            indexing_data_set.add(
+                IndexingData(index1_seq, index_2_sequence=index2_seq))
+        else:
+            raise forms.ValidationError(
+                'Input sequences are neither single-indexed nor dual-indexed.')
+
+    return indexing_data_set
 
 
 class BaseForm(forms.Form):
@@ -166,40 +199,30 @@ class AutoIndexListForm(BaseForm, CompatibilityParameters):
 
         custom_index_list = clean_custom_index_text(
             cleaned_data.get('index_list'))
+        indexing_data_set = convert_index_list_to_indexing_data(
+            custom_index_list)
 
         try:
-            samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+            indexing_data_set.add(index_list_from_samplesheet(
+                files=self.files))
         except ValueError as e:
             raise forms.ValidationError(e)
 
-        custom_index_list.extend(samplesheet_index_set.keys())
-
-        if len(custom_index_list) > 0:
-            comma_count = Counter()
-            for index in custom_index_list:
-                comma_count[index.count(',')] += 1
-                if re.search('[^acgt,]', index, flags=re.IGNORECASE):
-                    raise forms.ValidationError(
-                        'Input sequences must be composed of valid bases (e.g., ACGT).')
-
-            dual_detected = False
-            if len(comma_count) > 1:
+        if len(indexing_data_set.index_data) > 0:
+            if indexing_data_set.get_indexing_type() == 'single':
+                dual_detected = False
+            elif indexing_data_set.get_indexing_type() == 'dual':
+                dual_detected = True
+            elif indexing_data_set.get_indexing_type() == 'mixed':
                 raise forms.ValidationError(
                     'Input is mix of single-indexing and dual-indexing.')
-            elif list(comma_count.keys())[0] == 1:
-                dual_detected = True
-            elif list(comma_count.keys())[0] != 0:
-                raise forms.ValidationError(
-                    'Input sequences are neither single-indexed nor dual-indexed.')
 
             if config_dual != dual_detected:
                 raise forms.ValidationError(
                     'Input sequences are inconsistent with choice of {}-indexing.'.format(
                         'dual' if config_dual else 'single'))
 
-            cleaned_data['dual_indexed'] = dual_detected
-            cleaned_data['index_list'] = custom_index_list
-            cleaned_data['samplesheet_index_set'] = samplesheet_index_set
+        cleaned_data['indexing_data_set'] = indexing_data_set
         return cleaned_data
 
 
@@ -225,30 +248,22 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
                 'Please enter index sequences and/or upload a sample sheet.')
 
         custom_index_list = clean_custom_index_text(custom_index_text)
+        indexing_data_set = convert_index_list_to_indexing_data(
+            custom_index_list)
 
         try:
-            samplesheet_index_set = index_list_from_samplesheet(files=self.files)
+            indexing_data_set.add(index_list_from_samplesheet(
+                files=self.files))
         except ValueError as e:
             raise forms.ValidationError(e)
 
-        custom_index_list.extend(samplesheet_index_set.keys())
-
-        comma_count = Counter()
-        for index in custom_index_list:
-            comma_count[index.count(',')] += 1
-            if re.search('[^acgt,]', index, flags=re.IGNORECASE):
-                raise forms.ValidationError(
-                    'Input sequences must be composed of valid bases (e.g., ACGT).')
-
-        dual_detected = False
-        if len(comma_count) > 1:
+        if indexing_data_set.get_indexing_type() == 'single':
+            dual_detected = False
+        elif indexing_data_set.get_indexing_type() == 'dual':
+            dual_detected = True
+        elif indexing_data_set.get_indexing_type() == 'mixed':
             raise forms.ValidationError(
                 'Input is mix of single-indexing and dual-indexing.')
-        elif list(comma_count.keys())[0] == 1:
-            dual_detected = True
-        elif list(comma_count.keys())[0] != 0:
-            raise forms.ValidationError(
-                'Input sequences are neither single-indexed nor dual-indexed.')
 
         if config_dual != dual_detected:
             raise forms.ValidationError(
@@ -256,8 +271,7 @@ class CustomIndexListForm(BaseForm, CompatibilityParameters):
                     'dual' if config_dual else 'single'))
 
         cleaned_data['dual_indexed'] = dual_detected
-        cleaned_data['index_list'] = custom_index_list
-        cleaned_data['samplesheet_index_set'] = samplesheet_index_set
+        cleaned_data['indexing_data_set'] = indexing_data_set
         return cleaned_data
 
 
