@@ -91,7 +91,14 @@ class IndexingDataSet:
         elif type(other) is IndexingDataSet:
             self.index_data.extend(other.index_data)
         elif type(other) is str:
-            self.index_data.append(IndexingData(other))
+            if other.count(',') == 0:
+                self.index_data.append(IndexingData(other))
+            elif other.count(',') == 1:
+                (index_1, index_2) = other.split(',')
+                self.index_data.append(
+                    IndexingData(index_1, index_2_sequence=index_2))
+            elif other.count(',') > 1:
+                raise TypeError('Unsupported type ...')    # Fix wording
         elif type(other) is List[str]:
             self.index_data.append([IndexingData(seq) for seq in other])
         elif type(other) is list:
