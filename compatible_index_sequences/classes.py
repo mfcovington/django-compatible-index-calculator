@@ -151,20 +151,19 @@ class IndexingDataSet:
         if index_number == 1:
             index_list = self.get_index_1_sequences()
         elif index_number == 2:
-            index_list = self.get_index_2_sequences()
+            index_list = list(filter(None, self.get_index_2_sequences()))
         else:
             raise ValueError('Must choose index number of 1 or 2.')
-        index_list = [item for sublist in index_list for item in sublist]
         if len(index_list) > 0:
             return min([len(i) for i in index_list])
         else:
-            return float('inf')
+            return None
 
     def min_index_1_length(self):
-        return _get_min_index_length(1)
+        return self._get_min_index_length(1)
 
     def min_index_2_length(self):
-        return _get_min_index_length(2)
+        return self._get_min_index_length(2)
 
 
 if __name__ == '__main__':
