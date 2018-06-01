@@ -140,6 +140,25 @@ class IndexingDataSet:
         return ['' if sample.sample_id is None else sample.sample_id
             for sample in self.index_data]
 
+    def _get_min_index_length(self, index_number):
+        if index_number == 1:
+            index_list = self.get_index_1_sequences()
+        elif index_number == 2:
+            index_list = self.get_index_2_sequences()
+        else:
+            raise ValueError('Must choose index number of 1 or 2.')
+        index_list = [item for sublist in index_list for item in sublist]
+        if len(index_list) > 0:
+            return min([len(i) for i in index_list])
+        else:
+            return float('inf')
+
+    def min_index_1_length(self):
+        return _get_min_index_length(1)
+
+    def min_index_2_length(self):
+        return _get_min_index_length(2)
+
 
 if __name__ == '__main__':
     import doctest

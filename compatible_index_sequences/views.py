@@ -39,11 +39,11 @@ def process_custom_input(indexing_data_set, config_distance, config_length,
     if dual_indexed:
         custom_index_list_2 = indexing_data_set.get_index_2_sequences()
 
-        index_length_2 = minimum_index_length_from_lists(
-            custom_index_list_2, override_length=config_length_2)
+        index_length_2 = min(
+            indexing_data_set.min_index_2_length(), config_length_2)
 
-    index_length = minimum_index_length_from_lists(
-        custom_index_list, override_length=config_length)
+    index_length = min(
+        indexing_data_set.min_index_1_length(), config_length)
 
     incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
         custom_index_list, min_distance=config_distance,
@@ -158,13 +158,11 @@ def auto(request):
                 index['size'].append(subset_size_list[o])
 
             custom_list = indexing_data_set.get_index_1_sequences()
-            if config_length is None:
-                min_length = min(
-                    minimum_index_length_from_lists(custom_list),
-                    minimum_index_length_from_sets(index['set'])
-                )
-            else:
-                min_length = config_length
+            min_length = min(filter(None, (
+                indexing_data_set.min_index_1_length(),
+                minimum_index_length_from_sets(index['set']),
+                config_length,
+            )))
 
             context = process_custom_input(
                 indexing_data_set, config_distance, min_length)
