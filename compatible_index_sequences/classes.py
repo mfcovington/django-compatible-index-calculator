@@ -1,5 +1,53 @@
+import itertools
+
 from dataclasses import dataclass, field
 from typing import List
+
+
+def find_incompatible_index_pairs(index_list, min_distance=3,
+                                  index_length=None, sequences=True,
+                                  positions=False):
+    if index_length is None:
+        index_length = minimum_index_length_from_lists(index_list)
+
+    incompatible_pairs = []
+    incompatible_positions = []
+    for pair in itertools.combinations(enumerate(index_list), 2):
+        distance = hamming_distance(
+            pair[0][1][0:index_length].upper(),
+            pair[1][1][0:index_length].upper())
+        if distance < min_distance:
+            incompatible_pairs.append((pair[0][1], pair[1][1]))
+            incompatible_positions.append((pair[0][0], pair[1][0]))
+
+    if sequences and positions:
+        return (incompatible_pairs, incompatible_positions)
+    elif sequences:
+        return incompatible_pairs
+    elif positions:
+        return incompatible_positions
+    else:
+        raise ValueError('Sequences and/or positions must be set to True.')
+
+
+def hamming_distance(this, that):
+    if not this or not that or len(this) != len(that):
+        return None
+    elif this == that:
+        return 0
+    else:
+        return sum(1 for a, b in zip(this, that) if a != b)
+
+
+def minimum_index_length_from_lists(*index_list, override_length=None):
+    if override_length is None:
+        index_list = [item for sublist in index_list for item in sublist]
+        if len(index_list) > 0:
+            return min([len(i) for i in index_list])
+        else:
+            return float('inf')
+    else:
+        return override_length
 
 
 @dataclass
@@ -146,6 +194,27 @@ class IndexingDataSet:
     def get_sample_ids(self):
         return ['' if sample.sample_id is None else sample.sample_id
             for sample in self.index_data]
+
+    def incompatible_index_pairs(self, min_distance=3, length_1=None,
+                                 length_2=None, sequences=True,
+                                 positions=False):
+        if (self.get_indexing_type() == 'single'
+                or self.get_indexing_type() is None):
+            return find_incompatible_index_pairs(
+                self.get_index_1_sequences(), min_distance=min_distance,
+                index_length=length_1, sequences=sequences, positions=positions)
+        elif self.get_indexing_type() == 'dual':
+            raise ValueError('Dual not yet supported.')
+        elif self.get_indexing_type() == 'mixed':
+            raise ValueError(
+                'Checking for compatibility between single- and dual-indexed samples is not supported.')
+
+    def is_self_compatible(self, min_distance=3, length_1=None, length_2=None):
+        if self.incompatible_index_pairs(min_distance=min_distance,
+                                    length_1=length_1, length_2=length_2):
+            return False
+        else:
+            return True
 
     def _get_min_index_length(self, index_number):
         if index_number == 1:
