@@ -39,11 +39,11 @@ def process_custom_input(indexing_data_set, config_distance, config_length,
     if dual_indexed:
         custom_index_list_2 = indexing_data_set.get_index_2_sequences()
 
-        index_length_2 = min(
-            indexing_data_set.min_index_2_length(), config_length_2)
+        index_length_2 = indexing_data_set.min_index_2_length(
+            ) if config_length_2 is None else config_length_2
 
-    index_length = min(
-        indexing_data_set.min_index_1_length(), config_length)
+    index_length = indexing_data_set.min_index_1_length(
+        ) if config_length is None else config_length
 
     incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
         custom_index_list, min_distance=config_distance,
