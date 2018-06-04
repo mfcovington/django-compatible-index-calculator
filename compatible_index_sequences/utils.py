@@ -1,6 +1,7 @@
 import codecs
 import csv
 import itertools
+import re
 import time
 from collections import deque, OrderedDict
 
@@ -152,12 +153,16 @@ def index_list_from_samplesheet(request=None, files=None):
         header_done = False
         for row in reader:
             if header_done:
-                indexing_data = IndexingData(row[index1_column],
-                    index_1_name = row[index1_id_column],
+                index_1 = row[index1_column].replace(' ', '')
+                is_valid_sequence(index_1)
+                indexing_data = IndexingData(index_1,
+                    index_1_id = row[index1_id_column].split(','),
                     sample_id=row[sample_id_column])
                 if dual_indexed:
-                    indexing_data.index_2_sequence = row[index2_column]
-                    indexing_data.index_2_name = row[index2_id_column]
+                    index_2 = row[index2_column].replace(' ', '')
+                    is_valid_sequence(index_2)
+                    indexing_data.index_2_sequence = index_2
+                    indexing_data.index_2_id = row[index2_id_column].split(',')
                 indexing_data_set.add(indexing_data)
             if 'Sample_ID' in row:
                 header_done = True
@@ -186,6 +191,12 @@ def index_list_from_samplesheet(request=None, files=None):
 
 def is_timed_out(start_time, timeout):
     return time.time() - start_time > timeout
+
+
+def is_valid_sequence(sequence):
+    if re.search('[^acgt,]', sequence, flags=re.IGNORECASE):
+        raise ValueError(
+            'Input sequences must be composed of valid bases (e.g., ACGT).')
 
 
 def join_two_compatible_sets(a_sequences, b_sequences, b_is_self_compatible,
