@@ -45,33 +45,10 @@ def process_custom_input(indexing_data_set, config_distance, config_length,
     index_length = indexing_data_set.min_index_1_length(
         ) if config_length is None else config_length
 
-    incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
-        custom_index_list, min_distance=config_distance,
-        index_length=index_length, sequences=True,
-        positions=True)
-
     if dual_indexed:
-        subset_seq_2 = {
-            e: [custom_index_list_2[i] for i in p]
-            for e, p in enumerate(incompat_poss_1)
-        }
-
-        both_incompatible = []
-        for i, pair in subset_seq_2.items():
-            distance = hamming_distance(
-                pair[0][0:index_length_2].upper(),
-                pair[1][0:index_length_2].upper())
-            if distance < config_distance:
-                both_incompatible.append(i)
-
-        incompatible_index_pairs = []
-        incompatible_index_pairs_2 = []
-        for i in both_incompatible:
-            incompatible_index_pairs.append(incompat_seqs_1[i])
-            incompatible_index_pairs_2.append(subset_seq_2[i])
-
+        incompatible_index_pairs, incompatible_index_pairs_2 = indexing_data_set.incompatible_index_pairs()
     else:
-        incompatible_index_pairs = incompat_seqs_1
+        incompatible_index_pairs = indexing_data_set.incompatible_index_pairs()
 
     incompatible_alignments = generate_incompatible_alignments(
         incompatible_index_pairs, length=index_length)

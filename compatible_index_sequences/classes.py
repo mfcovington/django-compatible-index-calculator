@@ -198,13 +198,68 @@ class IndexingDataSet:
     def incompatible_index_pairs(self, min_distance=3, length_1=None,
                                  length_2=None, sequences=True,
                                  positions=False):
+        if self.get_indexing_type() == 'mixed':
+            raise ValueError(
+                'Checking for compatibility between single- and dual-indexed samples is not supported.')
+
+        index_length = self.min_index_1_length(
+            ) if length_1 is None else length_1
+
+        incompat_seqs_1, incompat_poss_1 = find_incompatible_index_pairs(
+            self.get_index_1_sequences(), min_distance=min_distance,
+            index_length=index_length, sequences=True,
+            positions=True)
+
         if (self.get_indexing_type() == 'single'
                 or self.get_indexing_type() is None):
-            return find_incompatible_index_pairs(
-                self.get_index_1_sequences(), min_distance=min_distance,
-                index_length=length_1, sequences=sequences, positions=positions)
+            if sequences and positions:
+                return (incompat_seqs_1, incompat_poss_1)
+            elif sequences:
+                return incompat_seqs_1
+            elif positions:
+                return incompat_poss_1
+            else:
+                raise ValueError('Sequences and/or positions must be set to True.')
+
         elif self.get_indexing_type() == 'dual':
-            raise ValueError('Dual not yet supported.')
+            index_length_2 = self.min_index_2_length(
+                ) if length_2 is None else length_2
+
+            subset_seq_2 = {
+                e: [self.get_index_2_sequences()[i] for i in p]
+                for e, p in enumerate(incompat_poss_1)
+            }
+
+            both_incompatible = []
+            for i, pair in subset_seq_2.items():
+                distance = hamming_distance(
+                    pair[0][0:index_length_2].upper(),
+                    pair[1][0:index_length_2].upper())
+                if distance < min_distance:
+                    both_incompatible.append(i)
+
+            incompatible_index_pairs = []
+            incompatible_index_pairs_2 = []
+            for i in both_incompatible:
+                incompatible_index_pairs.append(incompat_seqs_1[i])
+                incompatible_index_pairs_2.append(subset_seq_2[i])
+
+            if sequences and positions:
+                return [
+                    incompatible_index_pairs,
+                    incompatible_index_pairs_2,
+                    [incompat_poss_1[i] for i in both_incompatible],
+                ]
+            elif sequences:
+                return [
+                    incompatible_index_pairs,
+                    incompatible_index_pairs_2,
+                ]
+            elif positions:
+                return [incompat_poss_1[i] for i in both_incompatible]
+            else:
+                raise ValueError('Sequences and/or positions must be set to True.')
+
         elif self.get_indexing_type() == 'mixed':
             raise ValueError(
                 'Checking for compatibility between single- and dual-indexed samples is not supported.')
