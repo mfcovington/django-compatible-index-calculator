@@ -35,27 +35,21 @@ def lookup_index_set(index, complete_index_set=Index):
 def process_custom_input(indexing_data_set, config_distance, config_length,
         config_length_2=None, dual_indexed=False):
 
-    custom_index_list = indexing_data_set.get_index_1_sequences()
-    if dual_indexed:
-        custom_index_list_2 = indexing_data_set.get_index_2_sequences()
-
-        index_length_2 = indexing_data_set.min_index_2_length(
-            ) if config_length_2 is None else config_length_2
-
-    index_length = indexing_data_set.min_index_1_length(
-        ) if config_length is None else config_length
-
     if dual_indexed:
         incompatible_index_pairs, incompatible_index_pairs_2 = indexing_data_set.incompatible_index_pairs()
     else:
         incompatible_index_pairs = indexing_data_set.incompatible_index_pairs()
 
+    index_length = indexing_data_set.min_index_1_length(
+        ) if config_length is None else config_length
     incompatible_alignments = generate_incompatible_alignments(
         incompatible_index_pairs, length=index_length)
 
     incompatible_alignments_seqs = []
 
     if dual_indexed:
+        index_length_2 = indexing_data_set.min_index_2_length(
+            ) if config_length_2 is None else config_length_2
         incompatible_alignments_2 = generate_incompatible_alignments(
             incompatible_index_pairs_2, length=index_length_2)
         incompatible_alignments = [
@@ -71,12 +65,12 @@ def process_custom_input(indexing_data_set, config_distance, config_length,
         incompatible_alignments_seqs = incompatible_index_pairs
 
     index_list = generate_index_list_with_index_set_data(
-        custom_index_list)
+        indexing_data_set.get_index_1_sequences())
     index_list_seqs = [index['sequence'] for index in index_list]
     index_list_csv = ','.join(index_list_seqs)
     if dual_indexed:
         index_list_2 = generate_index_list_with_index_set_data(
-            custom_index_list_2)
+            indexing_data_set.get_index_2_sequences())
         index_list_2_seqs = [index['sequence'] for index in index_list_2]
         index_list_2_csv = ','.join(index_list_2_seqs)
         index_list = list(zip(index_list, index_list_2))
