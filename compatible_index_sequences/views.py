@@ -250,16 +250,17 @@ def export_samplesheet(request):
         header_row.extend(['Sample_Project', 'Description'])
         data.append(header_row)
 
+    index_list = request.POST.get('index_list_csv').split(',')
+    index_list_2 = request.POST.get('index_list_2_csv').split(',')
+
     sample_ids_csv = request.POST.get('sample_ids_csv')
-    index_list_csv = request.POST.get('index_list_csv')
-    index_list_2_csv = request.POST.get('index_list_2_csv')
+    if sample_ids_csv == '':
+        sample_ids = ['' for i in index_list]
+    else:
+        sample_ids = sample_ids_csv.split(',')
 
     if dual_indexed:
-        zipped_index_data = zip(
-            sample_ids_csv.split(','),
-            index_list_csv.split(','),
-            index_list_2_csv.split(',')
-        )
+        zipped_index_data = zip(sample_ids, index_list, index_list_2)
         for sample_id, index, index2 in zipped_index_data:
             hit_list = []
             hit2_list = []
@@ -270,10 +271,7 @@ def export_samplesheet(request):
             data.append(
                 [sample_id, '', '', '', ', '.join(hit_list), index, ', '.join(hit2_list), index2, '', ''])
     else:
-        zipped_index_data = zip(
-            sample_ids_csv.split(','),
-            index_list_csv.split(',')
-        )
+        zipped_index_data = zip(sample_ids, index_list)
         for sample_id, index in zipped_index_data:
             hit_list = []
             for hit in lookup_index_set(index):
