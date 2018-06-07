@@ -55,16 +55,16 @@ class IndexingData:
     """
     >>> i0 = IndexingData('CACACAC')
     >>> i0
-    IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence=None, index_2_id=[], sample_id=None)
+    IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence='', index_2_id=[], sample_id=None)
     >>> i1 = IndexingData('CACACAC', sample_id='Control')
     >>> i1
-    IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence=None, index_2_id=[], sample_id='Control')
+    IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence='', index_2_id=[], sample_id='Control')
     >>> i2 = IndexingData('GTGTGTG', index_2_sequence='ATATATA')
     >>> i2
     IndexingData(index_1_sequence='GTGTGTG', index_1_id=[], index_2_sequence='ATATATA', index_2_id=[], sample_id=None)
     >>> i3 = IndexingData('AAAAAAA', index_1_id='INDEX 03')
     >>> i3
-    IndexingData(index_1_sequence='AAAAAAA', index_1_id=['INDEX 03'], index_2_sequence=None, index_2_id=[], sample_id=None)
+    IndexingData(index_1_sequence='AAAAAAA', index_1_id=['INDEX 03'], index_2_sequence='', index_2_id=[], sample_id=None)
     >>> i4 = IndexingData('GTGTGTG', index_1_id='INDEX 03', index_2_sequence='ATATATA', index_2_id=['Set 1:INDEX 02', 'Set 5:INDEX 08'])
     >>> i4
     IndexingData(index_1_sequence='GTGTGTG', index_1_id=['INDEX 03'], index_2_sequence='ATATATA', index_2_id=['Set 1:INDEX 02', 'Set 5:INDEX 08'], sample_id=None)
@@ -75,7 +75,7 @@ class IndexingData:
     """
     index_1_sequence: str
     index_1_id: List[str] = field(default_factory=list)
-    index_2_sequence: str = None
+    index_2_sequence: str = ''
     index_2_id: List[str] = field(default_factory=list)
     sample_id: str = None
 
@@ -104,7 +104,7 @@ class IndexingDataSet:
     >>> s2 = IndexingDataSet([i2])
 
     >>> s1
-    IndexingDataSet(index_data=[IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence=None, index_2_id=[], sample_id=None)])
+    IndexingDataSet(index_data=[IndexingData(index_1_sequence='CACACAC', index_1_id=[], index_2_sequence='', index_2_id=[], sample_id=None)])
     >>> s2  # doctest: +ELLIPSIS
     IndexingDataSet(index_data=[IndexingData(index_1_sequence='GTGTGTG', ...])
 
