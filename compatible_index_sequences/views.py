@@ -36,9 +36,13 @@ def process_custom_input(indexing_data_set, config_distance, config_length,
         config_length_2=None, dual_indexed=False):
 
     if dual_indexed:
-        incompatible_index_pairs, incompatible_index_pairs_2 = indexing_data_set.incompatible_index_pairs()
+        incompatible_index_pairs, incompatible_index_pairs_2 = (
+            indexing_data_set.incompatible_index_pairs(
+                min_distance=config_distance, length_1=config_length,
+                length_2=config_length_2))
     else:
-        incompatible_index_pairs = indexing_data_set.incompatible_index_pairs()
+        incompatible_index_pairs = indexing_data_set.incompatible_index_pairs(
+            min_distance=config_distance, length_1=config_length)
 
     index_length = indexing_data_set.min_index_1_length(
         ) if config_length is None else config_length
